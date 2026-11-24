@@ -1,0 +1,291 @@
+{
+  "slides": 44,
+  "notes": 44,
+  "native_timing_slides": 0,
+  "transitions": 0,
+  "videos": 0,
+  "animated_media": 18,
+  "animations": [
+    {
+      "slide": 2,
+      "asset": "flux",
+      "frames": 5,
+      "durations_ms": [
+        2000,
+        2000,
+        2000,
+        2000,
+        3800
+      ],
+      "distinct_frames": 5,
+      "sha256": "ce79bd90f49c450e8ccdc684cf331706d6078139d829b98fe9ec1d705ec27208",
+      "browser_pixels_changed": true
+    },
+    {
+      "slide": 8,
+      "asset": "landmark",
+      "frames": 5,
+      "durations_ms": [
+        2000,
+        2000,
+        2000,
+        2000,
+        3800
+      ],
+      "distinct_frames": 5,
+      "sha256": "b9b13ca5b42d698e7532a0fb5610415e6a2565ae27120939d71da3b297394301",
+      "browser_pixels_changed": true
+    },
+    {
+      "slide": 9,
+      "asset": "tumbling",
+      "frames": 5,
+      "durations_ms": [
+        2000,
+        2000,
+        2000,
+        2000,
+        3800
+      ],
+      "distinct_frames": 5,
+      "sha256": "0d2571d72c6b6135acda696e0053c60888145969a40da6cbab5e9d0091586ce0",
+      "browser_pixels_changed": true
+    },
+    {
+      "slide": 10,
+      "asset": "glissante",
+      "frames": 5,
+      "durations_ms": [
+        2000,
+        2000,
+        2000,
+        2000,
+        3800
+      ],
+      "distinct_frames": 5,
+      "sha256": "723ebf94379a0a7186866301596d4d40349a40a0a177ae037b7c5f84870f4685",
+      "browser_pixels_changed": true
+    },
+    {
+      "slide": 11,
+      "asset": "decroissance",
+      "frames": 5,
+      "durations_ms": [
+        2000,
+        2000,
+        2000,
+        2000,
+        3800
+      ],
+      "distinct_frames": 5,
+      "sha256": "531889aa14e888585abc8048d116fcb5597ee3e15017839b2d6aacc4ea96a666",
+      "browser_pixels_changed": true
+    },
+    {
+      "slide": 13,
+      "asset": "a1",
+      "frames": 3,
+      "durations_ms": [
+        2000,
+        2000,
+        3800
+      ],
+      "distinct_frames": 3,
+      "sha256": "569a2e3da473b3def1a6794b88db2ed95180512ea8b6c3784e9030cf17e21d49",
+      "browser_pixels_changed": true
+    },
+    {
+      "slide": 15,
+      "asset": "a2",
+      "frames": 3,
+      "durations_ms": [
+        2000,
+        2000,
+        3800
+      ],
+      "distinct_frames": 3,
+      "sha256": "949c3a594de40f5b124ee8029717de5c66b0abf5050f71eb2b675c5ac75a844e",
+      "browser_pixels_changed": true
+    },
+    {
+      "slide": 17,
+      "asset": "a3",
+      "frames": 3,
+      "durations_ms": [
+        2000,
+        2000,
+        3800
+      ],
+      "distinct_frames": 3,
+      "sha256": "b39452e6096046b385090da1c9f77906ce17c005924187c08c32e0478ac33d3b",
+      "browser_pixels_changed": true
+    },
+    {
+      "slide": 19,
+      "asset": "a4",
+      "frames": 3,
+      "durations_ms": [
+        2000,
+        2000,
+        3800
+      ],
+      "distinct_frames": 3,
+      "sha256": "02a97e11cc963f9041b1be8da3039af2f8beba6254f6a236a6d0638ffaa1ddb5",
+      "browser_pixels_changed": true
+    },
+    {
+      "slide": 21,
+      "asset": "a5",
+      "frames": 3,
+      "durations_ms": [
+        2000,
+        2000,
+        3800
+      ],
+      "distinct_frames": 3,
+      "sha256": "6853ec9607e950fe1ac46a401a08e808966b587fd0412760a28304a7d70c26b9",
+      "browser_pixels_changed": true
+    },
+    {
+      "slide": 23,
+      "asset": "a6",
+      "frames": 3,
+      "durations_ms": [
+        2000,
+        2000,
+        3800
+      ],
+      "distinct_frames": 3,
+      "sha256": "54676244861c9d9f9735614f18341ad8dea5c6a23da9a4207a9a8aab099d6d88",
+      "browser_pixels_changed": true
+    },
+    {
+      "slide": 25,
+      "asset": "a7",
+      "frames": 3,
+      "durations_ms": [
+        2000,
+        2000,
+        3800
+      ],
+      "distinct_frames": 3,
+      "sha256": "65a6f1da63d1adbedfbe515572bcec74c18eaad04fcc046fc2701ec0139aad40",
+      "browser_pixels_changed": true
+    },
+    {
+      "slide": 29,
+      "asset": "reservoir",
+      "frames": 8,
+      "durations_ms": [
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        3800
+      ],
+      "distinct_frames": 8,
+      "sha256": "b9ea8617a452046e3f0cf6b0c7c1538876d377385cbdada7935a7edc5d07635a",
+      "browser_pixels_changed": true
+    },
+    {
+      "slide": 30,
+      "asset": "ares",
+      "frames": 4,
+      "durations_ms": [
+        2000,
+        2000,
+        2000,
+        3800
+      ],
+      "distinct_frames": 4,
+      "sha256": "7fc0ea578a40bfc442716ac1b6f804d558fed98aa0acfc0d34f4823f5c07491c",
+      "browser_pixels_changed": true
+    },
+    {
+      "slide": 31,
+      "asset": "dgim",
+      "frames": 16,
+      "durations_ms": [
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        3800
+      ],
+      "distinct_frames": 16,
+      "sha256": "c8aac5687a14e28a1f74621f7277fff30a439eaa88b5ee7b5fc2082a9c1d0e06",
+      "browser_pixels_changed": true
+    },
+    {
+      "slide": 32,
+      "asset": "gk",
+      "frames": 7,
+      "durations_ms": [
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        3800
+      ],
+      "distinct_frames": 7,
+      "sha256": "6dd5ea1bc9d9b2bb159839dc387cd6369e706f8ea133aac9629a8491ad005332",
+      "browser_pixels_changed": true
+    },
+    {
+      "slide": 33,
+      "asset": "blocs",
+      "frames": 8,
+      "durations_ms": [
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        3800
+      ],
+      "distinct_frames": 8,
+      "sha256": "5dc2ca92b2a6289cfb59f07aca020eb3260d312833acea6c6598df21b39508aa",
+      "browser_pixels_changed": true
+    },
+    {
+      "slide": 40,
+      "asset": "incident",
+      "frames": 10,
+      "durations_ms": [
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        2000,
+        3800
+      ],
+      "distinct_frames": 10,
+      "sha256": "de944c81e26e37529dcd37e3356f5de45271a7adc3cfe7e23a1aecf2c6897949",
+      "browser_pixels_changed": true
+    }
+  ],
+  "browser": "152.0.7977.64",
+  "browser_preview": "18 extraits du fichier PPTX et observ\u00e9s sous Chrome"
+}

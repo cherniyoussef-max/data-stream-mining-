@@ -1,0 +1,641 @@
+{
+  "flux": {
+    "title": "Arrivées sur le réseau",
+    "frames": 5,
+    "durations_ms": [
+      2000,
+      2000,
+      2000,
+      2000,
+      3800
+    ],
+    "states": [
+      [
+        "Événement 200 · Normal",
+        "État exact : Normal. Fenêtre 200, seuil P99 110 ms.\nL’incident est injecté aux événements 401 à 800."
+      ],
+      [
+        "Événement 400 · Normal",
+        "État exact : Normal. Fenêtre 200, seuil P99 110 ms.\nL’incident est injecté aux événements 401 à 800."
+      ],
+      [
+        "Événement 401 · Normal",
+        "État exact : Normal. Fenêtre 200, seuil P99 110 ms.\nL’incident est injecté aux événements 401 à 800."
+      ],
+      [
+        "Événement 403 · Alerte",
+        "État exact : Alerte. Fenêtre 200, seuil P99 110 ms.\nL’incident est injecté aux événements 401 à 800."
+      ],
+      [
+        "Événement 600 · Alerte",
+        "État exact : Alerte. Fenêtre 200, seuil P99 110 ms.\nL’incident est injecté aux événements 401 à 800."
+      ]
+    ]
+  },
+  "reservoir": {
+    "title": "Algorithm R",
+    "frames": 8,
+    "durations_ms": [
+      2000,
+      2000,
+      2000,
+      2000,
+      2000,
+      2000,
+      2000,
+      3800
+    ],
+    "states": [
+      [
+        "A arrive · remplissage",
+        "Capacité k=3 · 1 observations traitées · identifiant distinct par position."
+      ],
+      [
+        "B arrive · remplissage",
+        "Capacité k=3 · 2 observations traitées · identifiant distinct par position."
+      ],
+      [
+        "C arrive · remplissage",
+        "Capacité k=3 · 3 observations traitées · identifiant distinct par position."
+      ],
+      [
+        "D arrive · j=0 · remplacement",
+        "Capacité k=3 · 4 observations traitées · identifiant distinct par position."
+      ],
+      [
+        "E arrive · j=0 · remplacement",
+        "Capacité k=3 · 5 observations traitées · identifiant distinct par position."
+      ],
+      [
+        "F arrive · j=5 · rejet",
+        "Capacité k=3 · 6 observations traitées · identifiant distinct par position."
+      ],
+      [
+        "G arrive · j=2 · remplacement",
+        "Capacité k=3 · 7 observations traitées · identifiant distinct par position."
+      ],
+      [
+        "H arrive · j=3 · rejet",
+        "Capacité k=3 · 8 observations traitées · identifiant distinct par position."
+      ]
+    ]
+  },
+  "ares": {
+    "title": "A-Res",
+    "frames": 4,
+    "durations_ms": [
+      2000,
+      2000,
+      2000,
+      3800
+    ],
+    "states": [
+      [
+        "A · poids 1 · U=0.25 · inséré",
+        "Clé équivalente U^(1/w) = 0.2500. Minimum ρ avant l’arrivée : vide."
+      ],
+      [
+        "B · poids 2 · U=0.25 · inséré",
+        "Clé équivalente U^(1/w) = 0.5000. Minimum ρ avant l’arrivée : -0.327."
+      ],
+      [
+        "C · poids 4 · U=0.25 · remplace le minimum",
+        "Clé équivalente U^(1/w) = 0.7071. Minimum ρ avant l’arrivée : -0.327."
+      ],
+      [
+        "D · poids 2 · U=0.16 · rejeté",
+        "Clé équivalente U^(1/w) = 0.4000. Minimum ρ avant l’arrivée : 0.367."
+      ]
+    ]
+  },
+  "dgim": {
+    "title": "DGIM · groupes du plus récent au plus ancien",
+    "frames": 16,
+    "durations_ms": [
+      2000,
+      2000,
+      2000,
+      2000,
+      2000,
+      2000,
+      2000,
+      2000,
+      2000,
+      2000,
+      2000,
+      2000,
+      2000,
+      2000,
+      2000,
+      3800
+    ],
+    "states": [
+      [
+        "t=1 · bit 1 · fenêtre 1",
+        "Exact 1 · estimé 1 · erreur 0.0%.\nAucune fusion."
+      ],
+      [
+        "t=2 · bit 1 · fenêtre 11",
+        "Exact 2 · estimé 2 · erreur 0.0%.\nAucune fusion."
+      ],
+      [
+        "t=3 · bit 1 · fenêtre 111",
+        "Exact 3 · estimé 2 · erreur 33.3%.\nFusions : 1+1→2"
+      ],
+      [
+        "t=4 · bit 1 · fenêtre 1111",
+        "Exact 4 · estimé 3 · erreur 25.0%.\nAucune fusion."
+      ],
+      [
+        "t=5 · bit 1 · fenêtre 11111",
+        "Exact 5 · estimé 4 · erreur 20.0%.\nFusions : 1+1→2"
+      ],
+      [
+        "t=6 · bit 1 · fenêtre 111111",
+        "Exact 6 · estimé 5 · erreur 16.7%.\nAucune fusion."
+      ],
+      [
+        "t=7 · bit 1 · fenêtre 1111111",
+        "Exact 7 · estimé 5 · erreur 28.6%.\nFusions : 1+1→2 ; 2+2→4"
+      ],
+      [
+        "t=8 · bit 1 · fenêtre 11111111",
+        "Exact 8 · estimé 6 · erreur 25.0%.\nAucune fusion."
+      ],
+      [
+        "t=9 · bit 0 · fenêtre 11111110",
+        "Exact 7 · estimé 6 · erreur 14.3%.\nAucune fusion."
+      ],
+      [
+        "t=10 · bit 0 · fenêtre 11111100",
+        "Exact 6 · estimé 6 · erreur 0.0%.\nAucune fusion."
+      ],
+      [
+        "t=11 · bit 0 · fenêtre 11111000",
+        "Exact 5 · estimé 6 · erreur 20.0%.\nAucune fusion."
+      ],
+      [
+        "t=12 · bit 0 · fenêtre 11110000",
+        "Exact 4 · estimé 3 · erreur 25.0%.\nExpiration du plus ancien. Aucune fusion."
+      ],
+      [
+        "t=13 · bit 0 · fenêtre 11100000",
+        "Exact 3 · estimé 3 · erreur 0.0%.\nAucune fusion."
+      ],
+      [
+        "t=14 · bit 0 · fenêtre 11000000",
+        "Exact 2 · estimé 2 · erreur 0.0%.\nExpiration du plus ancien. Aucune fusion."
+      ],
+      [
+        "t=15 · bit 0 · fenêtre 10000000",
+        "Exact 1 · estimé 1 · erreur 0.0%.\nExpiration du plus ancien. Aucune fusion."
+      ],
+      [
+        "t=16 · bit 0 · fenêtre 00000000",
+        "Exact 0 · estimé 0 · erreur 0.0%.\nExpiration du plus ancien. Aucune fusion."
+      ]
+    ]
+  },
+  "gk": {
+    "title": "GK · résumé historique",
+    "frames": 7,
+    "durations_ms": [
+      2000,
+      2000,
+      2000,
+      2000,
+      2000,
+      2000,
+      3800
+    ],
+    "states": [
+      [
+        "Insérer 5 · n=1",
+        "g : incrément du rang inférieur. Δ : marge jusqu’au rang supérieur.\nBudget de compression : ⌊2εn⌋ = 0."
+      ],
+      [
+        "Insérer 1 · n=2",
+        "g : incrément du rang inférieur. Δ : marge jusqu’au rang supérieur.\nBudget de compression : ⌊2εn⌋ = 1."
+      ],
+      [
+        "Insérer 3 · n=3",
+        "g : incrément du rang inférieur. Δ : marge jusqu’au rang supérieur.\nBudget de compression : ⌊2εn⌋ = 1."
+      ],
+      [
+        "Insérer 2 · n=4",
+        "g : incrément du rang inférieur. Δ : marge jusqu’au rang supérieur.\nBudget de compression : ⌊2εn⌋ = 2."
+      ],
+      [
+        "Insérer 4 · n=5",
+        "g : incrément du rang inférieur. Δ : marge jusqu’au rang supérieur.\nBudget de compression : ⌊2εn⌋ = 2."
+      ],
+      [
+        "Insérer 6 · n=6",
+        "g : incrément du rang inférieur. Δ : marge jusqu’au rang supérieur.\nBudget de compression : ⌊2εn⌋ = 3."
+      ],
+      [
+        "Sélection du quantile q=0,5",
+        "Le tuple de 4 a pour bornes [3,4]. Erreur de rang 1, dans la marge 1,5."
+      ]
+    ]
+  },
+  "blocs": {
+    "title": "Quantiles récents",
+    "frames": 8,
+    "durations_ms": [
+      2000,
+      2000,
+      2000,
+      2000,
+      2000,
+      2000,
+      2000,
+      3800
+    ],
+    "states": [
+      [
+        "t=1 · B=4 · S=2 · fenêtre [99…99]",
+        "F : bloc fermé, O : bloc ouvert. Périmés : 0. Budget : 0.\nP99 récent 99. Maximum actif 99."
+      ],
+      [
+        "t=3 · B=4 · S=2 · fenêtre [99…2]",
+        "F : bloc fermé, O : bloc ouvert. Périmés : 0. Budget : 0.\nP99 récent 99. Maximum actif 99."
+      ],
+      [
+        "t=4 · B=4 · S=2 · fenêtre [99…3]",
+        "F : bloc fermé, O : bloc ouvert. Périmés : 0. Budget : 1.\nP99 récent 99. Maximum actif 99."
+      ],
+      [
+        "t=8 · B=4 · S=2 · fenêtre [99…7]",
+        "F : bloc fermé, O : bloc ouvert. Périmés : 0. Budget : 2.\nP99 récent 99. Maximum actif 99."
+      ],
+      [
+        "t=16 · B=4 · S=2 · fenêtre [99…15]",
+        "F : bloc fermé, O : bloc ouvert. Périmés : 0. Budget : 4.\nP99 récent 99. Maximum actif 99."
+      ],
+      [
+        "t=17 · B=4 · S=2 · fenêtre [1…16]",
+        "F : bloc fermé, O : bloc ouvert. Périmés : 1. Budget : 5.\nP99 récent 99. Maximum actif 16."
+      ],
+      [
+        "t=19 · B=4 · S=2 · fenêtre [3…18]",
+        "F : bloc fermé, O : bloc ouvert. Périmés : 3. Budget : 7.\nP99 récent 99. Maximum actif 18."
+      ],
+      [
+        "t=20 · B=4 · S=2 · fenêtre [4…19]",
+        "F : bloc fermé, O : bloc ouvert. Périmés : 0. Budget : 4.\nP99 récent 19. Maximum actif 19."
+      ]
+    ]
+  },
+  "incident": {
+    "title": "Détection et rétablissement",
+    "frames": 10,
+    "durations_ms": [
+      2000,
+      2000,
+      2000,
+      2000,
+      2000,
+      2000,
+      2000,
+      2000,
+      2000,
+      3800
+    ],
+    "states": [
+      [
+        "Événement 200 · Normal",
+        "État exact : Normal. Fenêtre 200, seuil P99 110 ms.\nL’incident est injecté aux événements 401 à 800."
+      ],
+      [
+        "Événement 400 · Normal",
+        "État exact : Normal. Fenêtre 200, seuil P99 110 ms.\nL’incident est injecté aux événements 401 à 800."
+      ],
+      [
+        "Événement 401 · Normal",
+        "État exact : Normal. Fenêtre 200, seuil P99 110 ms.\nL’incident est injecté aux événements 401 à 800."
+      ],
+      [
+        "Événement 403 · Alerte",
+        "État exact : Alerte. Fenêtre 200, seuil P99 110 ms.\nL’incident est injecté aux événements 401 à 800."
+      ],
+      [
+        "Événement 600 · Alerte",
+        "État exact : Alerte. Fenêtre 200, seuil P99 110 ms.\nL’incident est injecté aux événements 401 à 800."
+      ],
+      [
+        "Événement 800 · Alerte",
+        "État exact : Alerte. Fenêtre 200, seuil P99 110 ms.\nL’incident est injecté aux événements 401 à 800."
+      ],
+      [
+        "Événement 801 · Alerte",
+        "État exact : Alerte. Fenêtre 200, seuil P99 110 ms.\nL’incident est injecté aux événements 401 à 800."
+      ],
+      [
+        "Événement 925 · Alerte",
+        "État exact : Alerte. Fenêtre 200, seuil P99 110 ms.\nL’incident est injecté aux événements 401 à 800."
+      ],
+      [
+        "Événement 998 · Rétablissement",
+        "État exact : Rétablissement. Fenêtre 200, seuil P99 110 ms.\nL’incident est injecté aux événements 401 à 800."
+      ],
+      [
+        "Événement 1200 · Normal",
+        "État exact : Normal. Fenêtre 200, seuil P99 110 ms.\nL’incident est injecté aux événements 401 à 800."
+      ]
+    ]
+  },
+  "landmark": {
+    "title": "Landmark",
+    "frames": 5,
+    "durations_ms": [
+      2000,
+      2000,
+      2000,
+      2000,
+      3800
+    ],
+    "states": [
+      [
+        "Arrivée 3",
+        "Le repère B reste fixe et les nouveaux points agrandissent la fenêtre."
+      ],
+      [
+        "Arrivée 4",
+        "Le repère B reste fixe et les nouveaux points agrandissent la fenêtre."
+      ],
+      [
+        "Arrivée 5",
+        "Le repère B reste fixe et les nouveaux points agrandissent la fenêtre."
+      ],
+      [
+        "Arrivée 6",
+        "Le repère B reste fixe et les nouveaux points agrandissent la fenêtre."
+      ],
+      [
+        "Arrivée 7",
+        "Le repère B reste fixe et les nouveaux points agrandissent la fenêtre."
+      ]
+    ]
+  },
+  "tumbling": {
+    "title": "Tumbling",
+    "frames": 5,
+    "durations_ms": [
+      2000,
+      2000,
+      2000,
+      2000,
+      3800
+    ],
+    "states": [
+      [
+        "Arrivée 3",
+        "Un nouveau bloc commence après trois positions. Les blocs sont disjoints."
+      ],
+      [
+        "Arrivée 4",
+        "Un nouveau bloc commence après trois positions. Les blocs sont disjoints."
+      ],
+      [
+        "Arrivée 5",
+        "Un nouveau bloc commence après trois positions. Les blocs sont disjoints."
+      ],
+      [
+        "Arrivée 6",
+        "Un nouveau bloc commence après trois positions. Les blocs sont disjoints."
+      ],
+      [
+        "Arrivée 7",
+        "Un nouveau bloc commence après trois positions. Les blocs sont disjoints."
+      ]
+    ]
+  },
+  "glissante": {
+    "title": "Glissante",
+    "frames": 5,
+    "durations_ms": [
+      2000,
+      2000,
+      2000,
+      2000,
+      3800
+    ],
+    "states": [
+      [
+        "Arrivée 3",
+        "La fenêtre garde trois positions. La plus ancienne sort à chaque arrivée."
+      ],
+      [
+        "Arrivée 4",
+        "La fenêtre garde trois positions. La plus ancienne sort à chaque arrivée."
+      ],
+      [
+        "Arrivée 5",
+        "La fenêtre garde trois positions. La plus ancienne sort à chaque arrivée."
+      ],
+      [
+        "Arrivée 6",
+        "La fenêtre garde trois positions. La plus ancienne sort à chaque arrivée."
+      ],
+      [
+        "Arrivée 7",
+        "La fenêtre garde trois positions. La plus ancienne sort à chaque arrivée."
+      ]
+    ]
+  },
+  "decroissance": {
+    "title": "Decroissance",
+    "frames": 5,
+    "durations_ms": [
+      2000,
+      2000,
+      2000,
+      2000,
+      3800
+    ],
+    "states": [
+      [
+        "Arrivée 3",
+        "À chaque arrivée les poids précédents sont divisés par deux."
+      ],
+      [
+        "Arrivée 4",
+        "À chaque arrivée les poids précédents sont divisés par deux."
+      ],
+      [
+        "Arrivée 5",
+        "À chaque arrivée les poids précédents sont divisés par deux."
+      ],
+      [
+        "Arrivée 6",
+        "À chaque arrivée les poids précédents sont divisés par deux."
+      ],
+      [
+        "Arrivée 7",
+        "À chaque arrivée les poids précédents sont divisés par deux."
+      ]
+    ]
+  },
+  "a1": {
+    "title": "Lots pondérés distribués",
+    "frames": 3,
+    "durations_ms": [
+      2000,
+      2000,
+      3800
+    ],
+    "states": [
+      [
+        "Événements pondérés",
+        "Le poids traduit une préférence de sélection."
+      ],
+      [
+        "Deux unités de calcul",
+        "Les structures de tirage se construisent par partition."
+      ],
+      [
+        "Requête pondérée",
+        "Le modèle parallèle dépend de la loi de tirage demandée."
+      ]
+    ]
+  },
+  "a2": {
+    "title": "Un sketch qui expire",
+    "frames": 3,
+    "durations_ms": [
+      2000,
+      2000,
+      3800
+    ],
+    "states": [
+      [
+        "Zones temporelles",
+        "Chaque zone couvre un intervalle."
+      ],
+      [
+        "Mise à jour",
+        "Le sketch compte par zone et interroge l’intervalle actif."
+      ],
+      [
+        "Frontière déplacée",
+        "La sortie de la première zone évite de compter des fréquences anciennes."
+      ]
+    ]
+  },
+  "a3": {
+    "title": "Un même flux, plusieurs esquisses",
+    "frames": 3,
+    "durations_ms": [
+      2000,
+      2000,
+      3800
+    ],
+    "states": [
+      [
+        "Entrée commune",
+        "Même entrée pour chaque méthode dans une expérience."
+      ],
+      [
+        "Cinq résumés",
+        "Les représentations et notions d’erreur diffèrent."
+      ],
+      [
+        "Lecture de la figure 6b",
+        "Le résultat publié est propre à ce jeu et à ce protocole."
+      ]
+    ]
+  },
+  "a4": {
+    "title": "Réservoir de jointure",
+    "frames": 3,
+    "durations_ms": [
+      2000,
+      2000,
+      3800
+    ],
+    "states": [
+      [
+        "Deux flux",
+        "Le réservoir cible les tuples joints."
+      ],
+      [
+        "Index de correspondance",
+        "L’index aide à trouver les candidats."
+      ],
+      [
+        "Sélection sous prédicat",
+        "Le réservoir est construit sans matérialiser toute la jointure."
+      ]
+    ]
+  },
+  "a5": {
+    "title": "Compression déterministe",
+    "frames": 3,
+    "durations_ms": [
+      2000,
+      2000,
+      3800
+    ],
+    "states": [
+      [
+        "Univers totalement ordonné",
+        "Les comparaisons ordonnent les éléments."
+      ],
+      [
+        "Grouper dans une marge",
+        "Illustration de la marge additive, sans exécuter l’algorithme publié."
+      ],
+      [
+        "Énoncé asymptotique",
+        "La borne de l’article se compte en éléments stockés."
+      ]
+    ]
+  },
+  "a6": {
+    "title": "Exploiter un univers d’entiers",
+    "frames": 3,
+    "durations_ms": [
+      2000,
+      2000,
+      3800
+    ],
+    "states": [
+      [
+        "Latences entières",
+        "On connaît l’univers de valeurs de l’exemple."
+      ],
+      [
+        "Découpage numérique",
+        "Les opérations sur les entiers fournissent une information supplémentaire."
+      ],
+      [
+        "Garantie propre au modèle",
+        "La borne ne se transpose pas au GK par comparaison."
+      ]
+    ]
+  },
+  "a7": {
+    "title": "Quantile conditionnel en ligne",
+    "frames": 3,
+    "durations_ms": [
+      2000,
+      2000,
+      3800
+    ],
+    "states": [
+      [
+        "Mesures et covariable",
+        "Le modèle utilise une variable explicative."
+      ],
+      [
+        "Ajustement par lot",
+        "La régression quantile est mise à jour après l’arrivée."
+      ],
+      [
+        "Deux charges, deux cibles",
+        "Les quantiles dépendent de la charge. Notre P99 est marginal."
+      ]
+    ]
+  }
+}

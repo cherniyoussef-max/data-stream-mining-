@@ -1,0 +1,299 @@
+\documentclass[11pt,a4paper,twocolumn]{article}
+\usepackage[margin=16mm,columnsep=6mm]{geometry}
+\usepackage{amsmath,graphicx,booktabs,tabularx,array,xcolor,hyperref}
+\usepackage{fontspec}
+\setmainfont{Liberation Serif}
+\definecolor{navy}{HTML}{112841}
+\definecolor{teal}{HTML}{006D73}
+\hypersetup{colorlinks=true,linkcolor=teal,citecolor=teal,urlcolor=teal,
+ pdftitle={Échantillonnage et statistiques approchées sur les flux de données},
+ pdfauthor={Nasr elhak Khemiri, Wajdi Zayoud, Youssif Cherni},
+ pdfsubject={Projet 4, Master D3S, ISTIC},
+ pdfkeywords={flux de données, Reservoir Sampling, DGIM, Greenwald–Khanna, quantiles, latence}}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 1pt}
+\setlength{\emergencystretch}{2em}
+\newcommand{\topic}[1]{\textbf{\color{navy}#1}\par}
+\newcommand{\fig}[3]{\begin{center}\includegraphics[width=\columnwidth,height=#2,keepaspectratio]{#1}\par\refstepcounter{figure}\small\textbf{Figure \thefigure.} #3\end{center}}
+\newcommand{\tbl}[1]{\refstepcounter{table}\small\textbf{Tableau \thetable.} #1\par}
+\newcommand{\step}[1]{\texttt{#1}}
+\newcommand{\columnbreak}{\newpage}
+\graphicspath{{../../results/figures/}{../../presentation/screenshots/}}
+\input{measurements}
+\begin{document}
+\twocolumn[
+\begin{@twocolumnfalse}
+{\small\color{teal}\textbf{ISTIC \quad MASTER D3S \quad PROJET 4}}\par
+\vspace{3mm}
+{\huge\color{navy}\bfseries Échantillonnage et statistiques approchées sur les flux de données}\par
+{\Large Étude comparative, validation expérimentale et surveillance des latences}\par
+\vspace{2mm}
+{\large Nasr elhak Khemiri, Wajdi Zayoud et Youssif Cherni}\par
+\vspace{4mm}
+\textbf{Résumé.} Nous étudions la sélection d’observations, le comptage récent et les quantiles dans un flux synthétique de latences. Sur 10\,000 tirages, Pearson donne $\chi^2=\Pearson$ et $p=\PearsonP$. Le pire écart relatif DGIM observé est \DgMax\ pour une borne de 50\,\%. Le rang GK reste dans son budget sur la grille testée. À $N=10\,000$, $\varepsilon=0{,}05$, les blocs retiennent 2\,000 entrées contre 10\,000 pour la FIFO. Sur le scénario de référence, l’alerte démarre à \AlertAt\ et se lève à \RecoverAt. Le modèle de latence est synthétique et la borne d’espace du GK original reste non établie pour notre variante.\par
+\textbf{Mots-clés.} Flux de données, échantillonnage, fenêtre glissante, DGIM, GK, P99.\par
+\vspace{4mm}
+\end{@twocolumnfalse}]
+\section{Introduction}
+Les mesures de latence arrivent sans taille finale connue. Trier toutes les mesures permet de calculer un quantile exact, mais l’historique peut excéder la mémoire et retarder une décision sur l’état courant. Une latence extrême ponctuelle et un incident soutenu peuvent donner des signaux différents selon l’horizon, la taille de fenêtre et le quantile retenus.
+
+\topic{Question de recherche}
+Quels résumés à état contrôlé permettent de sélectionner des observations et d’approximer les statistiques utiles à une alerte ? Quelle erreur reste acceptable quand l’opérateur doit décider avec des données récentes ?
+
+\topic{Contributions}
+Nous livrons quatre implémentations classiques, un quantile récent pondéré par blocs, une dérivation des bornes utilisées et un protocole reproductible. Nous comparons la décision approchée à deux références distinctes : la règle de seuil calculée sur une FIFO exacte et les étiquettes d’incident connues du générateur.
+
+\topic{Périmètre}
+Le code traite un flux local, dans l’ordre d’arrivée. Les simulations contrôlent les ruptures et facilitent la reproductibilité. Les garanties sont exprimées en rangs ou comptages. Les millisecondes et le délai de décision font l’objet de mesures distinctes.
+\columnbreak
+\topic{Données, information, connaissance et décision}
+Dans le sens employé ici, le Knowledge Management consiste à rendre une observation réutilisable et interprétable. \textbf{Donnée :} une latence de 156\,ms. \textbf{Information :} le P99 récent et le nombre de dépassements dépassent leurs niveaux habituels. \textbf{Connaissance :} la hausse s’étend à suffisamment de positions pour signaler une détérioration de la fenêtre. \textbf{Décision :} examiner l’alerte, puis confirmer le rétablissement. Le tableau de bord garde visibles l’horizon et la référence exacte facultative.
+
+\topic{Pourquoi deux horizons ?}
+L’historique est utile pour décrire l’épisode dans son ensemble et conserver des échantillons de diagnostic. Une fenêtre récente répond à la question opérationnelle : le service est-il encore dégradé ? Après la fin d’un incident, des valeurs élevées peuvent rester dans l’historique tandis qu’elles quittent progressivement la fenêtre.
+
+\topic{Lecture des résultats}
+Les preuves exposent les conditions d’application des erreurs maximales. Les tests recherchent des écarts entre code et modèle. Les expériences quantifient la performance sur des régimes déclarés. Une p-valeur ne démontre pas l’uniformité et un maximum empirique ne remplace pas un théorème.
+\clearpage
+\section{Modèle et échantillonnage}
+Un flux est une séquence $x_1,\dots,x_t$ observée en une passe. L’instant est ici l’indice d’arrivée. Pour les quantiles exacts, nous choisissons la valeur au rang $k=\max(1,\lceil qn\rceil)$ dans l’ordre croissant. À cause des ex æquo, une valeur peut occuper plusieurs rangs. Le P99 décrit la queue : dans une fenêtre de 20 points il correspond au maximum.
+
+\topic{Quatre horizons}
+\emph{Landmark} : les données sont considérées depuis un repère fixe. \emph{Tumbling} : les blocs sont disjoints. \emph{Glissante} : l’arrivée fait avancer le début et la fin, donc un point peut appartenir à plusieurs fenêtres. \emph{Décroissance} : à l’âge $a$, l’influence peut valoir $e^{-\lambda a}$. Dans le prototype, la fenêtre est définie par un nombre d’observations, sans horodatage absolu de réseau.
+
+\subsection{Réservoir uniforme}
+Algorithm R est une réalisation classique de l’échantillonnage en une passe \cite{vitter1985}. Pour $t\le k$, stocker l’élément. Sinon, tirer $j$ uniformément dans $\{0,\dots,t-1\}$ et remplacer l’emplacement $j$ si $j<k$.
+\begin{equation}
+ \Pr(i\text{ retenu à }n)=
+ \frac{k}{i}\prod_{t=i+1}^n(1-1/t)=\frac{k}{n},\quad i>k.
+\end{equation}
+Pour $i\le k$, l’admission est certaine, puis le produit part de $k+1$. L’uniformité conjointe suit par récurrence : un sous-ensemble sans le nouveau point survit avec probabilité $(n-k)/n$. Pour un sous-ensemble qui le contient, chacun des $n-k$ anciens sous-ensembles compatibles l’atteint par un remplacement de probabilité $1/n$. Dans les deux cas, la probabilité finale est $1/\binom nk$. État $O(k)$, mise à jour $O(1)$.
+
+\topic{Trace courte}
+Avec $k=3$, remplir A, B, C. Sur D et E, tirer deux fois $j=0$. F est rejeté avec $j=5$. G remplace C avec $j=2$, H est rejeté avec $j=3$. Résultat E, B, G. Les valeurs doublons sont des observations distinctes.
+\columnbreak
+\subsection{Réservoir pondéré A-Res}
+Pour un poids positif fini $w_i$, la méthode A-Res \cite{efraimidis2006} attribue une clé croissante avec $U_i^{1/w_i}$, où les $U_i$ sont uniformes indépendantes. La représentation logarithmique de la course est plus stable pour des poids extrêmes :
+\begin{equation}
+ T_i=-\log(U_i)/w_i,\quad
+ \rho_i=\log(w_i)-\log[-\log(U_i)].
+\end{equation}
+$T_i$ suit une exponentielle de taux $w_i$. Le plus petit temps est sélectionné avec probabilité $w_i/\sum_j w_j$. L’absence de mémoire redonne la même règle sur les candidats restants. Pour $k>1$, il faut additionner les probabilités des ordres compatibles. La marginale n’est généralement pas $k w_i/\sum_j w_j$.
+
+\topic{Pseudocode}
+\begin{tabularx}{\columnwidth}{@{}rX@{}}
+1 & Vérifier $w>0$ et tirer $0<U<1$.\\
+2 & Calculer $\rho$ et ajouter un numéro d’arrivée pour départager.\\
+3 & Si le tas a moins de $k$ entrées, insérer.\\
+4 & Sinon, remplacer son minimum seulement si $\rho$ le dépasse.\\
+\end{tabularx}
+Au pire, une insertion ou un remplacement coûte $O(\log k)$ et l’état contient $O(k)$ entrées. Un refus lit le minimum. Les deux réservoirs utilisent des générateurs propres aux instances.
+
+\fig{01_uniforme.png}{47mm}{T1 : fréquence d’inclusion par position. La ligne horizontale marque l’espérance de 1\,000.}
+
+\topic{Exemple}
+Pour A, B, C, D de poids 1, 2, 4, 2 et $U=0{,}25,0{,}25,0{,}25,0{,}16$, les clés valent 0,25, 0,50, 0,7071 et 0,40. Avec $k=2$, C éjecte A. D est rejeté.
+\clearpage
+\section{État de l’art ciblé}
+\topic{Méthode de sélection}
+La revue vise les publications de 2022 à 2025 sur la pondération, l’expiration, l’estimation de rang et leur évaluation. Nous avons utilisé DOI, pages d’éditeur ACM, IEEE et Elsevier, actes OpenProceedings et manuscrits d’auteurs. Les cinq travaux fondateurs couvrent les principes qu’on implémente ou dont on s’inspire. La sélection privilégie les méthodes identifiables et les résultats rattachés à leur protocole ou à leur modèle. Elle ne constitue pas une revue systématique.
+
+\topic{Pondération et parallélisme}
+Hübschle-Schneider et Sanders \cite{huebschle2022} distinguent plusieurs lois de tirage et construisent en parallèle des tables alias et des structures de lots. Leur tableau 1 sépare le coût de préparation et celui de requête, selon modèle PRAM ou passage de messages. Cette diversité explique pourquoi une loi d’inclusion se fixe avant la stratégie d’exécution. Notre tas A-Res est séquentiel.
+
+\topic{Expiration et sketches}
+Gou et al. \cite{gou2023} réutilisent des sketches historiques dans des zones temporelles. Leur section 8.1 étudie CAIDA, des pages Web, un flux Zipf et StackOverflow. Les trois premiers jeux servent à des fenêtres de comptage. StackOverflow sert à une fenêtre temporelle. L’étude porte notamment sur fréquences et éléments dominants, avec budget mémoire fixé. Notre méthode de quantiles récents a une autre erreur.
+
+\topic{Comparaison expérimentale des quantiles}
+Fernando et al. \cite{fernando2023} comparent KLL, Moments, DDSketch, UDDSketch et ReqSketch sur Pareto, Uniforme, NYT et Power. Sous leurs paramètres, tous atteignent moins de 1\,\% d’erreur relative moyenne dans l’expérience uniforme (fig. 6b, §4.5.2). La queue Pareto pénalise l’estimation de KLL au P99 dans leur protocole (§4.5.1). Le résultat souligne la dépendance aux jeux et à la métrique. Notre évaluation sépare rang et erreur en millisecondes.
+
+\topic{Échantillonnage sur jointures}
+Dai et al. \cite{dai2024} utilisent un réservoir à prédicat et un index dynamique pour échantillonner une jointure sans matérialiser tous les résultats. La complexité presque linéaire s’interprète sous les hypothèses de leur cadre. Le protocole inclut des graphes Epinions et des requêtes relationnelles. Notre réservoir opère sur des positions indépendantes d’un flux unique, sans index de jointure.
+\columnbreak
+\topic{Compression déterministe}
+Gribelyuk et al. \cite{gribelyuk2024} combinent des idées de GK et de Khanna--Greenwald. Pour l’erreur additive de rang, ils démontrent dans leur modèle une borne asymptotique d’au plus $(2+o(1))\varepsilon^{-1}\log(\varepsilon n)$ éléments. Ce résultat est un repère scientifique pour distinguer une stratégie démontrée de notre passe simplifiée.
+
+\topic{Univers entier et limites du modèle}
+Gupta et al. \cite{gupta2024} exploitent les opérations d’un modèle à univers entier borné afin d’obtenir $O(1/\varepsilon)$ mots pour une estimation déterministe. Le passage d’éléments seulement comparables à des entiers manipulables est essentiel. La borne ne se transpose pas directement à notre liste de flottants.
+
+\topic{Quantiles conditionnels}
+Xie et al. \cite{xie2025} lissent la perte quantile et réutilisent des résumés historiques pendant la mise à jour de la régression. Simulations, vélos de Séoul et fonds indiciels illustrent leur méthode. Cette approche conditionne la réponse aux covariables et vise aussi l’inférence. Notre P99 porte sur une distribution marginale et la règle d’alerte ne fournit pas d’intervalle de confiance.
+
+\tbl{Comparaison fonctionnelle des travaux récents.}
+{\footnotesize
+\begin{tabularx}{\columnwidth}{@{}lXX@{}}
+\toprule Étude & Cible & Lien au projet\\ \midrule
+\cite{huebschle2022} & Tirages pondérés par lots & Réservoir, autre exécution\\
+\cite{gou2023} & Fréquences avec expiration & Expiration, autre agrégat\\
+\cite{fernando2023} & Quantiles descriptifs & Protocole erreur/coût\\
+\cite{dai2024} & Uniformité sur jointures & Autre population\\
+\cite{gribelyuk2024} & Rang comparatif & Borne d’espace démontrée\\
+\cite{gupta2024} & Rang sur entiers & Autre modèle de calcul\\
+\cite{xie2025} & Quantile conditionnel & Autre question d’inférence\\ \bottomrule
+\end{tabularx}}
+
+Ces travaux sont complémentaires. Un temps de jointure, une erreur de rang et une mesure d’inférence ne se comparent pas sur une échelle unique. Les quantiles glissants ont déjà été étudiés par Arasu et Manku \cite{arasu2004}. Notre apport est l’implémentation, la validation et le rapprochement des décisions.
+\clearpage
+\section{Comptage et quantiles}
+\subsection{DGIM}
+Pour compter les bits égaux à 1 dans les $N$ dernières positions, DGIM \cite{datar2002} maintient des groupes de tailles puissances de deux. Le timestamp désigne leur bit 1 le plus récent. Le code expire un groupe lorsque son âge atteint $N$, insère un singleton sur un 1, puis fusionne les deux plus anciens dès que trois groupes ont la même taille. L’horloge est modulo $N+1$. Le même résidu ne peut pas être réutilisé avant l’expiration.
+
+Un seul groupe actif peut couper la frontière. Pour ce groupe de taille $s$ et de contribution réelle $c$, $1\le c\le s$. S’il est singleton, il est exact. Pour $s\ge2$, il a été créé après la fusion laissant au moins $s-1$ \emph{bits égaux à 1} plus récents. Ces bits restent actifs aussi longtemps que sa fin. Si $F$ est leur compte total,
+\begin{equation}
+\widehat C=F+s/2,\qquad
+\frac{|\widehat C-(F+c)|}{F+c}\le\frac12 .
+\end{equation}
+La surestimation maximale est au premier bit du groupe, la sous-estimation relative maximale quand le groupe est entier. Au plus deux groupes par puissance de deux donnent $2\operatorname{bitlength}(N)$ entrées. Les tailles et timestamps demandent $O(\log^2N)$ bits en codage compact, hors surcharge des objets Python.
+
+\subsection{GK historique}
+Inspiré de Greenwald et Khanna \cite{gk2001}, le résumé ordonné contient des tuples $(v_i,g_i,\Delta_i)$ :
+\begin{equation}
+r_{\min}(v_i)=\textstyle\sum_{j\le i}g_j,\quad
+r_{\max}(v_i)=r_{\min}(v_i)+\Delta_i.
+\end{equation}
+Insérer $g=1$, $\Delta=0$ aux extrémités ou $\max(0,\lfloor2\varepsilon n\rfloor-1)$ à l’intérieur. Fusionner un tuple dans son successeur si $g_i+g_{i+1}+\Delta_{i+1}\le\lfloor2\varepsilon n\rfloor$, en gardant le minimum et le maximum. Le nouveau cumul préserve le rang du successeur. Requête : prendre le prédécesseur du premier $r_{\max}>qn+\varepsilon n$. Par l’invariant $g+\Delta\le2\varepsilon n$ en régime comprimé, son $r_{\min}$ est supérieur à $qn-\varepsilon n$. En début de flux, les rangs exacts entiers sont disponibles. Les extrémités restent exactes.
+
+L’espace $O(\varepsilon^{-1}\log(\varepsilon n))$ est celui de la stratégie originale en régime asymptotique. Nous conservons la variante vérifiée en rang, avec étude empirique de son espace.
+\columnbreak
+\subsection{Résumé récent par blocs}
+À l’instant $t$, $m=\min(t,N)$, $B=\lfloor\sqrt N\rfloor$ et $S=\lceil\varepsilon B\rceil$. Le bloc ouvert garde les valeurs brutes. Un bloc fermé est trié en groupes de taille $h_j\le S$. Le maximum de chaque groupe reçoit son effectif comme poids. On expire un bloc entier quand sa fin sort de la fenêtre.
+
+Soient $u<B$ les observations périmées qui subsistent dans le premier bloc et $E=C(S-1)$, avec $C$ blocs fermés. Pour un seuil, les comptes pondérés strict et large sous-comptent chacun la population retenue d’au plus $E$ : un seul groupe par bloc peut traverser le seuil. Posons $k=\max(1,\lceil qm\rceil)$ et $k'=\max(1,\lceil q(m+u)\rceil)$, donc $k\leq k'\leq k+u$. La sélection pondérée vérifie $W_{<}(x)<k'\le W_{\le}(x)$. En retirant au plus $u$ valeurs périmées, les comptes exacts vérifient
+\begin{equation}
+ C_{<}(x)<k+u+E,\quad C_{\le}(x)\ge k-u.
+\end{equation}
+La formulation reste valide si $x$ est un maximum périmé absent des actifs. Pour une valeur présente, son intervalle de rang va de $C_{<}+1$ à $C_{\le}$. L’état stocke au plus
+\begin{equation}
+B-1+(\lceil N/B\rceil+1)\lceil B/S\rceil
+\end{equation}
+entrées. À $\varepsilon$ fixe ce choix donne $O(\sqrt N/\varepsilon)$ entrées. Quand $S=1$, le gain peut disparaître. Le tri des représentants en requête utilise aussi un espace temporaire.
+
+\topic{Architecture du dépôt}
+\begin{center}
+\small
+\fbox{\step{streaming/generators.py} : flux synthétique}\\[-1mm]
+$\downarrow$\\[-1mm]
+\fbox{\step{streaming/engine.py} : moteur et seuils}\\
+$\downarrow$\\
+\fbox{\parbox{.86\columnwidth}{\centering
+\step{algorithms/} : R, A-Res, DGIM, GK historique, blocs récents\\
+FIFO exacte optionnelle et décision exacte}}\\
+$\downarrow\qquad\qquad\downarrow$\\
+\fbox{\step{demo.py} et \step{dashboard/app.py}}\quad
+\fbox{\step{evaluation/}}\\
+\refstepcounter{figure}\textbf{Figure \thefigure.} Chemin des mesures, états indépendants et sorties.
+\end{center}
+
+\tbl{Comparer les trois méthodes de quantiles.}
+{\footnotesize\begin{tabularx}{\columnwidth}{@{}lXX@{}}
+\toprule Méthode & Horizon et garantie & État\\\midrule
+GK & Historique, rang $\varepsilon n$ & Tuples, espace empirique pour la variante\\
+FIFO & Récent, exact & $N$ valeurs, tri à la requête\\
+Blocs & Récent, budget $u+E$ & $O(\sqrt N/\varepsilon)$ entrées à précision fixe\\
+\bottomrule\end{tabularx}}
+\clearpage
+\section{Protocole et validation}
+\topic{Environnement}
+\StudyCPU, environ \StudyRAM\ Mio de RAM, Linux, Python \StudyPython. Les versions logicielles et graines figurent dans \step{results/environment.json}. SciPy calcule les probabilités de queue et pytest exécute les assertions. Matplotlib utilise les mesures exportées pour les figures.
+
+\topic{Données}
+Le flux synthétique inclut des gaussiennes, des uniformes, des doublons, une queue lourde et des rafales. Le scénario principal passe de 30\,ms à 160\,ms entre 401 et 800 puis revient à 30\,ms. Les configurations DGIM utilisent des bits Bernoulli de densité 0,7 pour les courbes et des suites exhaustives courtes ou adversariales pour les tests.
+
+\topic{Paramètres}
+Profil complet : graines 42, 204 et 313, longueurs jusqu’à $10^6$ pour les réservoirs, fenêtre DGIM jusqu’à $10^4$ et rang GK jusqu’à $10^5$. Étude complémentaire : $N$ de 100 à 50\,000 pour la mémoire et cinq précisions, selon la méthode. Seuls les blocs et la FIFO sont comparés à fenêtre égale. GK résume l’historique.
+
+\topic{Temps et mémoire}
+Après préchauffage, trois répétitions d’ingestion et neuf requêtes P99 par répétition. Le chronomètre exclut la génération et \step{tracemalloc}. La mémoire est mesurée séparément, en distinguant pic d’ingestion, état retenu et supplément de requête après réinitialisation du pic. La FIFO optionnelle ajoute $O(N)$ entrées. Les octets ne représentent pas toute la mémoire du navigateur ou du processus.
+
+\fig{04_dgim_erreur.png}{54mm}{Erreurs DGIM échantillonnées. Maximum \DgMax, sous la ligne théorique de 50\,\%.}
+\columnbreak
+\tbl{Tests T1 à T5 et observations de validation.}
+{\footnotesize
+\begin{tabularx}{\columnwidth}{@{}lX@{}}
+\toprule Test & Vérification\\ \midrule
+T1 & 10\,000 tirages avec $n=100,k=10$. $\chi^2=\Pearson$, $p=\PearsonP$.\\
+T2 & A-Res $k=1,2,3$, tests marginaux et poids extrêmes. Pour $k=1$ et poids 1, 2, 4 : 13,88\,\%, 28,97\,\%, 57,15\,\%.\\
+T3 & Oracle FIFO après chaque insertion. Zéro violation de la borne sur les tests.\\
+T4 & Âges, ordre, tailles et retour du compteur. Aucun invariant violé sur la grille.\\
+T5 & Rang exact et doublons, cinq $\varepsilon$, huit quantiles et valeurs proches de zéro. Aucune violation sur la grille.\\
+\bottomrule
+\end{tabularx}}
+
+\topic{T1 : test et dépendance}
+Sous uniformité, l’espérance de chaque inclusion vaut 1\,000. Les indicatrices de positions d’un même tirage sont dépendantes. Avec $p=10/100$ et $M=10\,000$ tirages, la variance diagonale vaut $Mp(1-p)$ et la covariance hors diagonale vaut $-Mp(1-p)/99$. Dans le sous-espace à somme nulle, la variance est $1\,000(90/99)$ dans chaque direction. Diviser Pearson par $90/99$ et utiliser 99 degrés de liberté fournit $p_\mathrm{aj}=\PearsonAdj$. Il s’agit d’un ajustement asymptotique et d’une non-réjection.
+
+\topic{T2 : référence exacte}
+Pour des poids 1, 2, 4, $k=2$, sommer les six ordres de sélection donne des marginales 0,39048, 0,71429, 0,89524. Les fréquences observées sont 0,3874, 0,7179, 0,8947. Des essais à cinq poids contrôlent $k=3$.
+
+\topic{Critère de rang}
+La cible T5 brute est $qn$. Lorsqu’aucun rang entier valide n’est dans l’intervalle, on prend l’entier valide le plus proche. Pour une valeur répétée, on mesure la distance à l’intervalle des rangs qu’elle occupe. Le seuil récent peut ne pas appartenir à la fenêtre et se juge alors par les deux inégalités de CDF.
+\clearpage
+\section{Résultats et discussion}
+\topic{Erreur DGIM et quantiles historiques}
+Pour les requêtes DGIM exportées, l’erreur relative moyenne est \DgMean, le 95e centile \DgP. La normalisation à compte zéro utilise un dénominateur au moins un dans les courbes, tandis que les tests exigent un résultat nul. Le GK atteint son budget dans certaines requêtes de taille $10^5$ à $\varepsilon=0{,}05$. La médiane des erreurs de valeur est \MedErr\,ms pour P50 et \TailErr\,ms pour P99.
+
+\fig{08_gk_erreur.png}{50mm}{Erreur de rang normalisée GK. Les points non nuls sont comparés à la diagonale $\varepsilon$.}
+
+\topic{Stress mémoire}
+Croissante, décroissante, rafales, extrêmes alternés, permutation modulaire et autres distributions testent la sensibilité à l’ordre. Pour $\varepsilon=0{,}01$ et $n=100\,000$, le maximum observé est \GKState\ tuples sur les ordres mesurés. La mesure ne détermine pas un pire cas universel. Quand $n$ est petit devant $1/\varepsilon$, la structure peut rester proche du flux brut.
+
+\topic{P99 récent}
+Le benchmark récent réunit \RecentCount\ requêtes sur cinq scénarios, avec fenêtres 50, 100, 200 et 500. L’écart maximal est \RecentMax\ rangs, l’écart relatif maximal \RecentNorm. Aucun résultat n’excède son budget. Le budget absolu évolue avec le nombre de blocs et les positions périmées retenues. Une borne en rang n’impose aucun écart uniforme en millisecondes, spécialement près d’une rupture.
+\columnbreak
+\fig{18_memoire_echelle.png}{55mm}{Pics d’ingestion FIFO et blocs récents. Les couleurs indiquent la précision demandée.}
+
+\tbl{Coût de calcul du P99 à $N=10\,000$, $\varepsilon=0{,}05$ pour les blocs.}
+{\footnotesize\begin{tabularx}{\columnwidth}{@{}lXX@{}}
+\toprule & FIFO & Blocs\\\midrule
+Entrées & 10\,000 & 2\,000\\
+Pic ingestion (octets) & \FifoBytes & \BlockBytes\\
+Supplément requête (octets) & \FifoQueryMem & \BlockQueryMem\\
+Insertion médiane (ns) & \FifoTime & \BlockTime\\
+P99 médian (ms) & \FifoQuery & \BlockQuery\\\bottomrule
+\end{tabularx}}
+
+\topic{Interprétation du coût}
+Dans cette configuration, la FIFO ajoute les éléments plus vite que les blocs. Sa requête trie davantage de valeurs. Pour $\varepsilon$ suffisamment petit, les blocs ne regroupent plus de valeurs et peuvent coûter plus que la FIFO. Les mesures d’allocation dépendent de l’environnement Python et du protocole d’ingestion.
+
+\fig{15_rang_recent.png}{45mm}{Erreur et budget de rang sur le scénario à incidents répétés.}
+\clearpage
+\section{Application de surveillance}
+Le tableau de bord expose la médiane récente, le P99 récent, le P99 historique et le compte DGIM. L’oracle exact est facultatif. La règle surveille deux seuils, médiane $>80$\,ms ou P99 $>110$\,ms dans la configuration de référence, et attend $\min(20,N)$ valeurs.
+
+\fig{alerte.png}{67mm}{Capture réelle sous Chrome pendant un incident forcé. L’image d’origine est fournie dans la livraison.}
+
+\topic{Deux références, deux résultats}
+Pour le scénario de référence, les 1\,200 décisions approchées et exactes concordent. Par rapport à l’incident simulé, on obtient 398 vrais positifs, 603 vrais négatifs, 197 faux positifs et 2 faux négatifs. Cela donne exactitude \Accuracy, précision \Precision, rappel \Recall, spécificité \Specificity\ et F1 \Fone. La fenêtre retient encore des latences incidentes lorsque le générateur est déjà revenu à son régime normal.
+
+\topic{Chronologie}
+Incident 401--800. Alerte à \AlertAt, soit deux événements après l’entrée en incident. Rétablissement à \RecoverAt, 197 événements après le retour du générateur. Le P99 historique vaut encore 182,51\,ms au rétablissement, contre 48,21\,ms pour l’approché récent. Les résultats sont liés au scénario et aux seuils.
+\columnbreak
+\fig{20_sensibilite.png}{53mm}{Balayage contrôlé en $N$ et $\varepsilon$, même flux, graine 42 et mêmes seuils.}
+
+\topic{Stabilité et réactivité}
+Sur ce flux, à $\varepsilon=0{,}05$, le F1 contre les étiquettes passe de \SmallF\ pour $N=50$ à \LargeF\ pour $N=500$. Une fenêtre longue peut conserver l’incident bien après la fin. Un petit $N$ fait du P99 une mesure très proche du maximum : un seul point élevé peut prolonger une décision. Les délais non observés dans les 1\,200 événements sont laissés indéfinis.
+
+\fig{17_decisions.png}{48mm}{Décision approchée, décision exacte et étiquette. Petit décalage vertical pour distinguer les traits.}
+
+\topic{Validation du navigateur}
+Deux cycles démarrage/pause, changements de paramètres, navigation et téléchargement ont été rejoués sur Chrome. Le test confronte les 500 événements exportés à l’identifiant de fin et au P99 de l’interface. Les captures ne représentent pas le benchmark principal, mais une intervention manuelle.
+\clearpage
+\section{Conclusion et perspectives}
+Les quatre algorithmes ont des rôles complémentaires. R produit un réservoir uniforme, A-Res privilégie les mesures pondérées, DGIM borne l’erreur de comptage sur une fenêtre et GK borne le rang historique. Les blocs récents permettent de prendre une décision sur l’état courant avec un budget explicite. Les essais donnent un résultat reproductible : une alerte approchée peut suivre la règle exacte tout en différant de l’étiquette d’incident.
+
+\topic{Limites}
+La charge est synthétique, l’ordre d’arrivée est supposé fiable et tous les événements ont une position unique. Aucune calibration de production n’est revendiquée. L’alerte combine des seuils simples, sans hystérésis. Une erreur de rang faible peut suffire à déplacer la valeur autour d’un seuil. Une fenêtre trop longue prolonge les alertes et une fenêtre trop courte devient sensible aux points extrêmes. Les blocs peuvent retourner un seuil périmé, et un $\varepsilon$ faible annule leur gain de taille. La variante GK ne dispose pas de preuve d’espace générale dans ce travail.
+
+\topic{Perspectives testables}
+Évaluer le détecteur sur une trace contrôlée puis annotée. Comparer une règle avec hystérésis à la règle fixe en publiant les délais et les deux matrices. Vérifier la compression du GK original avant toute revendication de son espace. Pour un déploiement futur, Kafka peut transporter les événements, Flink ou Spark les traiter en flux et DataSketches fournir des résumés industrialisés. Le prototype Python sert à examiner les états et rejouer un scénario local.
+
+\topic{Reproduction}
+Installer \step{requirements.txt}, exécuter \step{python -m pytest -v}, puis \step{evaluation.benchmark}, \step{evaluation.final\_study} et \step{evaluation.sensitivity}. Les statistiques de l’article sont dérivées des CSV et JSON par \step{evaluation/article.py}.
+
+\columnbreak
+\begingroup
+\footnotesize
+\bibliographystyle{unsrt}
+\bibliography{references}
+\endgroup
+\end{document}

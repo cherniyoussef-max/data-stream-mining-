@@ -1,0 +1,14 @@
+{
+  "status": "passed",
+  "browser": "152.0.7977.64",
+  "url": "http://127.0.0.1:18765",
+  "timer_config_seconds": 0.6,
+  "two_batch_elapsed_seconds": [
+    1.271,
+    1.035
+  ],
+  "paused_observation_seconds": 1.4,
+  "download_rows": 500,
+  "download_last_event": 551,
+  "console_errors": []
+}

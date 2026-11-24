@@ -1,0 +1,17 @@
+# Protocole
+
+Les graines sont fixées à l’avance : 42 et 204 (rapide), plus 313 (complet). Pour T1, 10 000 tirages avec graines 0 à 9 999, k=10 et n=100, donc 1 000 inclusions attendues par position. Les indicatrices d’un même réservoir ont une covariance négative : sur le sous-espace orthogonal au vecteur constant, la covariance est un facteur (100−10)/(100−1) fois celle du multinomial. On publie le test de Pearson demandé et son ajustement asymptotique. Une non-rejection ne prouve pas l’uniformité.
+
+Pour T2, graines 10 000 à 19 999, poids 1,2,4 et k=1 ou 2. La référence pour k=2 énumère les six couples ordonnés dans la course exponentielle. Le test utilise cinq écarts types binomiaux marginaux par position et vérifie l’ordre des taux.
+
+Pour DGIM, les tests comparent chaque insertion et la structure à une fenêtre exacte. Le benchmark échantillonne des points réguliers dans des flux Bernoulli à densité 0,7. Pour GK, les tests vérifient huit quantiles et cinq précisions parmi neuf distributions et neuf tailles intermédiaires. Le benchmark utilise ε=0,001, 0,01 et 0,05, et trois distributions. La précision est une erreur de rang, avec erreur en ms exportée séparément.
+
+Le temps d’insertion et le temps de requête sont mesurés avec perf_counter_ns, hors génération de l’entrée et calcul de la référence. DGIM est chronométré par appel, donc le coût de l’horloge influence les petites opérations. Les réservoirs et GK sont chronométrés par séries. Pas de préchauffage séparé. Les graines servent de répétitions. La mémoire est mesurée séparément avec tracemalloc pendant l’ingestion (fenêtre récente seule ou FIFO seul), hors tri à la requête et hors système. Si l’oracle est activé, le moteur conserve les deux structures et le coût total inclut les deux états, les autres algorithmes et l’interface.
+
+Le profil complet mesure les réservoirs jusqu’à 10⁶ événements, GK jusqu’à 10⁵ et DGIM jusqu’à N=10⁴. Les fichiers CSV contiennent les configurations et observations, le JSON résume les mesures, et les figures sont régénérées par le même programme.
+
+L’étude indépendante ajoute un préchauffage unique de 100 points, trois répétitions d’ingestion et neuf requêtes P99 par répétition. Les médianes et écarts types décrivent les répétitions. Le pic d’ingestion correspond à une exécution avec allocations de mesures fraîches. Pour la requête, le pic est réinitialisé et on soustrait les allocations retenues avant le tri. Le comparatif FIFO/blocs concerne le même horizon. GK est exporté séparément car il résume tout l’historique. `oracle_entries` indique combien d’entrées la FIFO facultative ajouterait, sans additionner des pics mesurés séparément.
+
+L’alerte exacte utilise le même démarrage et les mêmes seuils que l’approchée. Comparez les deux sur les 1 200 événements de chaque scénario. L’étiquette d’incident est active seulement dans chaque intervalle injecté. Ces deux références donnent deux matrices distinctes. Un score de précision est mis à zéro quand aucune alerte n’est prédite et un rappel à zéro quand la référence ne contient aucun positif. Les délais indéfinis sont enregistrés comme null.
+
+Le balayage V3 conserve une trace de 1 200 événements, graine 42, avec les seuils de référence. Il croise N=50,100,200,500 et ε=0,005,0,05,0,15. La figure de sensibilité ne relie pas un délai si le rétablissement dépasse la durée observée. Les valeurs sont dans `results/alert_sensitivity.csv`. L’expérience des blocs exporte séparément B, la population active, le budget par compression et la contamination du bloc frontière.

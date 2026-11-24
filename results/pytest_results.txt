@@ -1,0 +1,124 @@
+<local-home>/anaconda3/lib/python3.13/site-packages/pytest_asyncio/plugin.py:306: PytestDeprecationWarning: The configuration option "asyncio_default_fixture_loop_scope" is unset.
+The event loop scope for asynchronous fixtures will default to the fixture scope. Future versions of pytest-asyncio will default the loop scope for asynchronous fixtures to "function" scope. Set the default fixture loop scope explicitly in order to avoid unexpected behavior in the future. Valid fixture loop scopes are: "function", "class", "module", "package", "session". Set it to "fixture-scope" to keep the current behavior.
+
+  warnings.warn(PytestDeprecationWarning(_DEFAULT_FIXTURE_LOOP_SCOPE_UNSET))
+============================= test session starts ==============================
+platform linux -- Python 3.13.9, pytest-9.2.0, pluggy-1.7.0 -- <local-home>/anaconda3/bin/python
+cachedir: .pytest_cache
+rootdir: <local-home>/Documents/ChatGPT/dtata-stream-mining
+configfile: pyproject.toml
+testpaths: tests, tests.py
+plugins: anyio-4.10.0, asyncio-1.5.0, cov-7.1.0, dash-2.14.2
+asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 87 items
+
+tests/test_dashboard.py::test_dashboard_controls PASSED                  [  1%]
+tests/test_independent.py::test_pearson_covariance_adjustment PASSED     [  2%]
+tests/test_independent.py::test_weighted_larger_k[weights0] PASSED       [  3%]
+tests/test_independent.py::test_weighted_larger_k[weights1] PASSED       [  4%]
+tests/test_independent.py::test_gk_very_low_quantiles[0.001] PASSED      [  5%]
+tests/test_independent.py::test_gk_very_low_quantiles[0.005] PASSED      [  6%]
+tests/test_independent.py::test_gk_very_low_quantiles[0.01] PASSED       [  8%]
+tests/test_independent.py::test_gk_very_low_quantiles[0.05] PASSED       [  9%]
+tests/test_independent.py::test_gk_very_low_quantiles[0.1] PASSED        [ 10%]
+tests/test_independent.py::test_recent_cdf_inequalities[1] PASSED        [ 11%]
+tests/test_independent.py::test_recent_cdf_inequalities[4] PASSED        [ 12%]
+tests/test_independent.py::test_recent_cdf_inequalities[7] PASSED        [ 13%]
+tests/test_independent.py::test_recent_cdf_inequalities[9] PASSED        [ 14%]
+tests/test_independent.py::test_recent_cdf_inequalities[17] PASSED       [ 16%]
+tests/test_independent.py::test_recent_cdf_inequalities[100] PASSED      [ 17%]
+tests/test_independent.py::test_expired_representative_is_a_threshold PASSED [ 18%]
+tests/test_independent.py::test_exact_alert_reference_and_reset PASSED   [ 19%]
+tests/test_project.py::test_t1_uniform PASSED                            [ 20%]
+tests/test_project.py::test_t2_weighted[1] PASSED                        [ 21%]
+tests/test_project.py::test_t2_weighted[2] PASSED                        [ 22%]
+tests/test_project.py::test_t3_t4_exhaustive[1] PASSED                   [ 24%]
+tests/test_project.py::test_t3_t4_exhaustive[2] PASSED                   [ 25%]
+tests/test_project.py::test_t3_t4_exhaustive[3] PASSED                   [ 26%]
+tests/test_project.py::test_t3_t4_exhaustive[5] PASSED                   [ 27%]
+tests/test_project.py::test_t3_t4_exhaustive[8] PASSED                   [ 28%]
+tests/test_project.py::test_t3_t4_exhaustive[13] PASSED                  [ 29%]
+tests/test_project.py::test_t3_t4_wrap_and_patterns[32] PASSED           [ 31%]
+tests/test_project.py::test_t3_t4_wrap_and_patterns[100] PASSED          [ 32%]
+tests/test_project.py::test_t3_t4_wrap_and_patterns[500] PASSED          [ 33%]
+tests/test_project.py::test_t3_t4_wrap_and_patterns[1000] PASSED         [ 34%]
+tests/test_project.py::test_t3_t4_wrap_and_patterns[5000] PASSED         [ 35%]
+tests/test_project.py::test_t5_rank[uniforme-0.001] PASSED               [ 36%]
+tests/test_project.py::test_t5_rank[uniforme-0.005] PASSED               [ 37%]
+tests/test_project.py::test_t5_rank[uniforme-0.01] PASSED                [ 39%]
+tests/test_project.py::test_t5_rank[uniforme-0.05] PASSED                [ 40%]
+tests/test_project.py::test_t5_rank[uniforme-0.1] PASSED                 [ 41%]
+tests/test_project.py::test_t5_rank[gaussienne-0.001] PASSED             [ 42%]
+tests/test_project.py::test_t5_rank[gaussienne-0.005] PASSED             [ 43%]
+tests/test_project.py::test_t5_rank[gaussienne-0.01] PASSED              [ 44%]
+tests/test_project.py::test_t5_rank[gaussienne-0.05] PASSED              [ 45%]
+tests/test_project.py::test_t5_rank[gaussienne-0.1] PASSED               [ 47%]
+tests/test_project.py::test_t5_rank[d\xe9rive-0.001] PASSED              [ 48%]
+tests/test_project.py::test_t5_rank[d\xe9rive-0.005] PASSED              [ 49%]
+tests/test_project.py::test_t5_rank[d\xe9rive-0.01] PASSED               [ 50%]
+tests/test_project.py::test_t5_rank[d\xe9rive-0.05] PASSED               [ 51%]
+tests/test_project.py::test_t5_rank[d\xe9rive-0.1] PASSED                [ 52%]
+tests/test_project.py::test_t5_rank[constante-0.001] PASSED              [ 54%]
+tests/test_project.py::test_t5_rank[constante-0.005] PASSED              [ 55%]
+tests/test_project.py::test_t5_rank[constante-0.01] PASSED               [ 56%]
+tests/test_project.py::test_t5_rank[constante-0.05] PASSED               [ 57%]
+tests/test_project.py::test_t5_rank[constante-0.1] PASSED                [ 58%]
+tests/test_project.py::test_t5_rank[croissante-0.001] PASSED             [ 59%]
+tests/test_project.py::test_t5_rank[croissante-0.005] PASSED             [ 60%]
+tests/test_project.py::test_t5_rank[croissante-0.01] PASSED              [ 62%]
+tests/test_project.py::test_t5_rank[croissante-0.05] PASSED              [ 63%]
+tests/test_project.py::test_t5_rank[croissante-0.1] PASSED               [ 64%]
+tests/test_project.py::test_t5_rank[d\xe9croissante-0.001] PASSED        [ 65%]
+tests/test_project.py::test_t5_rank[d\xe9croissante-0.005] PASSED        [ 66%]
+tests/test_project.py::test_t5_rank[d\xe9croissante-0.01] PASSED         [ 67%]
+tests/test_project.py::test_t5_rank[d\xe9croissante-0.05] PASSED         [ 68%]
+tests/test_project.py::test_t5_rank[d\xe9croissante-0.1] PASSED          [ 70%]
+tests/test_project.py::test_t5_rank[r\xe9p\xe9titions-0.001] PASSED      [ 71%]
+tests/test_project.py::test_t5_rank[r\xe9p\xe9titions-0.005] PASSED      [ 72%]
+tests/test_project.py::test_t5_rank[r\xe9p\xe9titions-0.01] PASSED       [ 73%]
+tests/test_project.py::test_t5_rank[r\xe9p\xe9titions-0.05] PASSED       [ 74%]
+tests/test_project.py::test_t5_rank[r\xe9p\xe9titions-0.1] PASSED        [ 75%]
+tests/test_project.py::test_t5_rank[queue lourde-0.001] PASSED           [ 77%]
+tests/test_project.py::test_t5_rank[queue lourde-0.005] PASSED           [ 78%]
+tests/test_project.py::test_t5_rank[queue lourde-0.01] PASSED            [ 79%]
+tests/test_project.py::test_t5_rank[queue lourde-0.05] PASSED            [ 80%]
+tests/test_project.py::test_t5_rank[queue lourde-0.1] PASSED             [ 81%]
+tests/test_project.py::test_t5_rank[rafales-0.001] PASSED                [ 82%]
+tests/test_project.py::test_t5_rank[rafales-0.005] PASSED                [ 83%]
+tests/test_project.py::test_t5_rank[rafales-0.01] PASSED                 [ 85%]
+tests/test_project.py::test_t5_rank[rafales-0.05] PASSED                 [ 86%]
+tests/test_project.py::test_t5_rank[rafales-0.1] PASSED                  [ 87%]
+tests/test_project.py::test_recent_bound[1] PASSED                       [ 88%]
+tests/test_project.py::test_recent_bound[4] PASSED                       [ 89%]
+tests/test_project.py::test_recent_bound[100] PASSED                     [ 90%]
+tests/test_project.py::test_recent_bound[625] PASSED                     [ 91%]
+tests/test_project.py::test_alert_and_recovery PASSED                    [ 93%]
+tests/test_project.py::test_invalid_inputs_and_compatibility PASSED      [ 94%]
+tests/test_project.py::test_reproducibility_and_sample_copy PASSED       [ 95%]
+tests.py::test_reservoir_uniformity PASSED                               [ 96%]
+tests.py::test_dgim_count PASSED                                         [ 97%]
+tests.py::test_gk_quantile PASSED                                        [ 98%]
+tests.py::test_reservoir_chi2_uniformity PASSED                          [100%]
+
+=============================== warnings summary ===============================
+../../../anaconda3/lib/python3.13/site-packages/jupyter_client/connect.py:22
+  <local-home>/anaconda3/lib/python3.13/site-packages/jupyter_client/connect.py:22: DeprecationWarning: Jupyter is migrating its paths to use standard platformdirs
+  given by the platformdirs library.  To remove this warning and
+  see the appropriate new directories, set the environment variable
+  `JUPYTER_PLATFORM_DIRS=1` and then run `jupyter --paths`.
+  The use of platformdirs will be the default in `jupyter_core` v6
+    from jupyter_core.paths import jupyter_data_dir, jupyter_runtime_dir, secure_write
+
+../../../anaconda3/lib/python3.13/site-packages/dash/_jupyter.py:31
+  <local-home>/anaconda3/lib/python3.13/site-packages/dash/_jupyter.py:31: DeprecationWarning: The `ipykernel.comm.Comm` class has been deprecated. Please use the `comm` module instead.For creating comms, use the function `from comm import create_comm`.
+    _dash_comm = Comm(target_name="dash")
+
+../../../anaconda3/lib/python3.13/site-packages/dash/testing/plugin.py:92
+  <local-home>/anaconda3/lib/python3.13/site-packages/dash/testing/plugin.py:92: PytestRemovedIn10Warning: The hookimpl pytest_addhooks uses old-style configuration options (marks or attributes).
+  Please use the pytest.hookimpl(tryfirst=True) decorator instead
+   to configure the hooks.
+   See https://docs.pytest.org/en/latest/deprecations.html#configuring-hook-specs-impls-using-markers
+    @pytest.mark.tryfirst
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================== 87 passed, 3 warnings in 6.84s ========================

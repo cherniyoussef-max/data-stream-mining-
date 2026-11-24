@@ -1,0 +1,134 @@
+{
+  "profile": "full",
+  "rows": 6758,
+  "seeds": [
+    42,
+    204,
+    313
+  ],
+  "lengths": [
+    1000,
+    10000,
+    100000,
+    1000000
+  ],
+  "windows": [
+    100,
+    500,
+    1000,
+    5000,
+    10000
+  ],
+  "dgim_max_error": 0.3333333333333333,
+  "gk_max_error_fraction": 0.05,
+  "violations": 0,
+  "timing_ns": {
+    "Reservoir": {
+      "median": 255.1008,
+      "min": 254.6374,
+      "max": 505.5298
+    },
+    "WeightedReservoir": {
+      "median": 279.9395,
+      "min": 265.9867,
+      "max": 509.5968
+    }
+  },
+  "memory": [
+    {
+      "algorithm": "FIFO exact",
+      "seed": 42,
+      "window": 10000,
+      "n": 20000,
+      "state": 10000,
+      "memory_bytes": 323800,
+      "peak_bytes": 327080
+    },
+    {
+      "algorithm": "Fenêtre approchée",
+      "seed": 42,
+      "window": 10000,
+      "n": 20000,
+      "state": 2000,
+      "memory_bytes": 186520,
+      "peak_bytes": 191752
+    }
+  ],
+  "transitions": [
+    {
+      "t": 1,
+      "latency": 29.13545802253243,
+      "median": 29.13545802253243,
+      "p95": 29.13545802253243,
+      "p99": 29.13545802253243,
+      "historical": 29.13545802253243,
+      "estimated": 0,
+      "state": "Initialisation",
+      "exact_median": 29.13545802253243,
+      "exact_p95": 29.13545802253243,
+      "exact_p99": 29.13545802253243,
+      "exact_count": 0,
+      "exact_state": "Initialisation"
+    },
+    {
+      "t": 20,
+      "latency": 29.362060237375296,
+      "median": 29.362060237375296,
+      "p95": 36.98135211959486,
+      "p99": 37.86648496322429,
+      "historical": 37.86648496322429,
+      "estimated": 0,
+      "state": "Normal",
+      "exact_median": 29.362060237375296,
+      "exact_p95": 36.98135211959486,
+      "exact_p99": 37.86648496322429,
+      "exact_count": 0,
+      "exact_state": "Normal"
+    },
+    {
+      "t": 403,
+      "latency": 147.27380736741094,
+      "median": 30.01258530359044,
+      "p95": 42.01480613165759,
+      "p99": 147.27380736741094,
+      "historical": 49.98161318137063,
+      "estimated": 2,
+      "state": "Alerte",
+      "exact_median": 30.01258530359044,
+      "exact_p95": 41.99627883096894,
+      "exact_p99": 147.27380736741094,
+      "exact_count": 3,
+      "exact_state": "Alerte"
+    },
+    {
+      "t": 998,
+      "latency": 34.71971912111012,
+      "median": 28.964791569533517,
+      "p95": 40.46903796071566,
+      "p99": 48.214285788669336,
+      "historical": 182.51235245839197,
+      "estimated": 2,
+      "state": "Rétablissement",
+      "exact_median": 28.964791569533517,
+      "exact_p95": 40.46903796071566,
+      "exact_p99": 48.214285788669336,
+      "exact_count": 2,
+      "exact_state": "Rétablissement"
+    },
+    {
+      "t": 999,
+      "latency": 41.23582178395979,
+      "median": 29.15634539221677,
+      "p95": 40.61360294670024,
+      "p99": 48.214285788669336,
+      "historical": 182.51235245839197,
+      "estimated": 1,
+      "state": "Normal",
+      "exact_median": 28.964791569533517,
+      "exact_p95": 40.46903796071566,
+      "exact_p99": 43.23212275185926,
+      "exact_count": 1,
+      "exact_state": "Normal"
+    }
+  ]
+}
