@@ -1,7 +1,7 @@
 from bisect import bisect_right
 from collections import deque
 import math
-from typing import Collection
+from typing import Collection, Iterable
 
 from .sampling import positive_int
 
@@ -32,16 +32,20 @@ class GKQuantile:
         self.eps = eps
         self.n = 0
         self.sample: list[tuple[float, int, int]] = []
-        self._period = max(1, int(0.5 / eps)) if eps >= 1e-18 else None
+        numerator, denominator = eps.as_integer_ratio()
+        self._twice_eps = 2 * numerator
+        self._eps_denominator = denominator
+        period = 0.5 / eps
+        self._period = max(1, int(period) if math.isfinite(period) else denominator // self._twice_eps)
 
     def add(self, x: float) -> None:
         _check_value(x)
         index = bisect_right(self.sample, x, key=lambda row: row[0])
         self.n += 1
-        limit = math.floor(2 * self.eps * self.n)
+        limit = self._twice_eps * self.n // self._eps_denominator
         delta = max(0, limit - 1) if 0 < index < len(self.sample) else 0
         self.sample.insert(index, (x, 1, delta))
-        if limit >= 2 and self._period and self.n % self._period == 0:
+        if limit >= 2 and self.n % self._period == 0:
             self._compress(limit)
 
     def _compress(self, limit: int) -> None:
@@ -130,15 +134,31 @@ class WindowQuantiles:
         return tuple(self._pending)
 
     def quantile(self, q: float) -> float:
-        _check_q(q)
+        return self.quantiles((q,))[0]
+
+    def quantiles(self, qs: Iterable[float]) -> tuple[float, ...]:
+        """Return quantiles in caller order, using one sort and one scan."""
+        probabilities = tuple(qs)
+        for q in probabilities:
+            _check_q(q)
+        if not probabilities:
+            return ()
         if not self.n:
             raise ValueError("La fenêtre est vide.")
+        retained_count = min(self.n, self.size) + self.stale_count
+        targets = sorted((max(1, math.ceil(q * retained_count)), index)
+                         for index, q in enumerate(probabilities))
         rows = [(x, 1) for x in self._pending]
         for _, representatives in self._completed:
             rows.extend(representatives)
-        target = max(1, math.ceil(q * sum(weight for _, weight in rows)))
+        answers = [0.] * len(targets)
+        cumulative = 0
+        cursor = 0
         for x, weight in sorted(rows):
-            target -= weight
-            if target <= 0:
-                return x
+            cumulative += weight
+            while cursor < len(targets) and targets[cursor][0] <= cumulative:
+                answers[targets[cursor][1]] = x
+                cursor += 1
+            if cursor == len(targets):
+                return tuple(answers)
         raise AssertionError("Rang hors fenêtre")

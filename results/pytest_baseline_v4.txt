@@ -1,0 +1,298 @@
+V3 3e79273, environnement isolé, test source inchangé.
+
+============================= test session starts ==============================
+platform linux -- Python 3.13.9, pytest-9.2.0, pluggy-1.7.0 -- <validation-temp>/bin/python
+cachedir: .pytest_cache
+hypothesis profile 'default'
+rootdir: <checkout>
+configfile: pyproject.toml
+testpaths: tests, tests.py
+plugins: anyio-4.16.0, hypothesis-6.170.17
+collecting ... collected 87 items
+
+tests/test_dashboard.py::test_dashboard_controls FAILED                  [  1%]
+tests/test_independent.py::test_pearson_covariance_adjustment PASSED     [  2%]
+tests/test_independent.py::test_weighted_larger_k[weights0] PASSED       [  3%]
+tests/test_independent.py::test_weighted_larger_k[weights1] PASSED       [  4%]
+tests/test_independent.py::test_gk_very_low_quantiles[0.001] PASSED      [  5%]
+tests/test_independent.py::test_gk_very_low_quantiles[0.005] PASSED      [  6%]
+tests/test_independent.py::test_gk_very_low_quantiles[0.01] PASSED       [  8%]
+tests/test_independent.py::test_gk_very_low_quantiles[0.05] PASSED       [  9%]
+tests/test_independent.py::test_gk_very_low_quantiles[0.1] PASSED        [ 10%]
+tests/test_independent.py::test_recent_cdf_inequalities[1] PASSED        [ 11%]
+tests/test_independent.py::test_recent_cdf_inequalities[4] PASSED        [ 12%]
+tests/test_independent.py::test_recent_cdf_inequalities[7] PASSED        [ 13%]
+tests/test_independent.py::test_recent_cdf_inequalities[9] PASSED        [ 14%]
+tests/test_independent.py::test_recent_cdf_inequalities[17] PASSED       [ 16%]
+tests/test_independent.py::test_recent_cdf_inequalities[100] PASSED      [ 17%]
+tests/test_independent.py::test_expired_representative_is_a_threshold PASSED [ 18%]
+tests/test_independent.py::test_exact_alert_reference_and_reset PASSED   [ 19%]
+tests/test_project.py::test_t1_uniform PASSED                            [ 20%]
+tests/test_project.py::test_t2_weighted[1] PASSED                        [ 21%]
+tests/test_project.py::test_t2_weighted[2] PASSED                        [ 22%]
+tests/test_project.py::test_t3_t4_exhaustive[1] PASSED                   [ 24%]
+tests/test_project.py::test_t3_t4_exhaustive[2] PASSED                   [ 25%]
+tests/test_project.py::test_t3_t4_exhaustive[3] PASSED                   [ 26%]
+tests/test_project.py::test_t3_t4_exhaustive[5] PASSED                   [ 27%]
+tests/test_project.py::test_t3_t4_exhaustive[8] PASSED                   [ 28%]
+tests/test_project.py::test_t3_t4_exhaustive[13] PASSED                  [ 29%]
+tests/test_project.py::test_t3_t4_wrap_and_patterns[32] PASSED           [ 31%]
+tests/test_project.py::test_t3_t4_wrap_and_patterns[100] PASSED          [ 32%]
+tests/test_project.py::test_t3_t4_wrap_and_patterns[500] PASSED          [ 33%]
+tests/test_project.py::test_t3_t4_wrap_and_patterns[1000] PASSED         [ 34%]
+tests/test_project.py::test_t3_t4_wrap_and_patterns[5000] PASSED         [ 35%]
+tests/test_project.py::test_t5_rank[uniforme-0.001] PASSED               [ 36%]
+tests/test_project.py::test_t5_rank[uniforme-0.005] PASSED               [ 37%]
+tests/test_project.py::test_t5_rank[uniforme-0.01] PASSED                [ 39%]
+tests/test_project.py::test_t5_rank[uniforme-0.05] PASSED                [ 40%]
+tests/test_project.py::test_t5_rank[uniforme-0.1] PASSED                 [ 41%]
+tests/test_project.py::test_t5_rank[gaussienne-0.001] PASSED             [ 42%]
+tests/test_project.py::test_t5_rank[gaussienne-0.005] PASSED             [ 43%]
+tests/test_project.py::test_t5_rank[gaussienne-0.01] PASSED              [ 44%]
+tests/test_project.py::test_t5_rank[gaussienne-0.05] PASSED              [ 45%]
+tests/test_project.py::test_t5_rank[gaussienne-0.1] PASSED               [ 47%]
+tests/test_project.py::test_t5_rank[d\xe9rive-0.001] PASSED              [ 48%]
+tests/test_project.py::test_t5_rank[d\xe9rive-0.005] PASSED              [ 49%]
+tests/test_project.py::test_t5_rank[d\xe9rive-0.01] PASSED               [ 50%]
+tests/test_project.py::test_t5_rank[d\xe9rive-0.05] PASSED               [ 51%]
+tests/test_project.py::test_t5_rank[d\xe9rive-0.1] PASSED                [ 52%]
+tests/test_project.py::test_t5_rank[constante-0.001] PASSED              [ 54%]
+tests/test_project.py::test_t5_rank[constante-0.005] PASSED              [ 55%]
+tests/test_project.py::test_t5_rank[constante-0.01] PASSED               [ 56%]
+tests/test_project.py::test_t5_rank[constante-0.05] PASSED               [ 57%]
+tests/test_project.py::test_t5_rank[constante-0.1] PASSED                [ 58%]
+tests/test_project.py::test_t5_rank[croissante-0.001] PASSED             [ 59%]
+tests/test_project.py::test_t5_rank[croissante-0.005] PASSED             [ 60%]
+tests/test_project.py::test_t5_rank[croissante-0.01] PASSED              [ 62%]
+tests/test_project.py::test_t5_rank[croissante-0.05] PASSED              [ 63%]
+tests/test_project.py::test_t5_rank[croissante-0.1] PASSED               [ 64%]
+tests/test_project.py::test_t5_rank[d\xe9croissante-0.001] PASSED        [ 65%]
+tests/test_project.py::test_t5_rank[d\xe9croissante-0.005] PASSED        [ 66%]
+tests/test_project.py::test_t5_rank[d\xe9croissante-0.01] PASSED         [ 67%]
+tests/test_project.py::test_t5_rank[d\xe9croissante-0.05] PASSED         [ 68%]
+tests/test_project.py::test_t5_rank[d\xe9croissante-0.1] PASSED          [ 70%]
+tests/test_project.py::test_t5_rank[r\xe9p\xe9titions-0.001] PASSED      [ 71%]
+tests/test_project.py::test_t5_rank[r\xe9p\xe9titions-0.005] PASSED      [ 72%]
+tests/test_project.py::test_t5_rank[r\xe9p\xe9titions-0.01] PASSED       [ 73%]
+tests/test_project.py::test_t5_rank[r\xe9p\xe9titions-0.05] PASSED       [ 74%]
+tests/test_project.py::test_t5_rank[r\xe9p\xe9titions-0.1] PASSED        [ 75%]
+tests/test_project.py::test_t5_rank[queue lourde-0.001] PASSED           [ 77%]
+tests/test_project.py::test_t5_rank[queue lourde-0.005] PASSED           [ 78%]
+tests/test_project.py::test_t5_rank[queue lourde-0.01] PASSED            [ 79%]
+tests/test_project.py::test_t5_rank[queue lourde-0.05] PASSED            [ 80%]
+tests/test_project.py::test_t5_rank[queue lourde-0.1] PASSED             [ 81%]
+tests/test_project.py::test_t5_rank[rafales-0.001] PASSED                [ 82%]
+tests/test_project.py::test_t5_rank[rafales-0.005] PASSED                [ 83%]
+tests/test_project.py::test_t5_rank[rafales-0.01] PASSED                 [ 85%]
+tests/test_project.py::test_t5_rank[rafales-0.05] PASSED                 [ 86%]
+tests/test_project.py::test_t5_rank[rafales-0.1] PASSED                  [ 87%]
+tests/test_project.py::test_recent_bound[1] PASSED                       [ 88%]
+tests/test_project.py::test_recent_bound[4] PASSED                       [ 89%]
+tests/test_project.py::test_recent_bound[100] PASSED                     [ 90%]
+tests/test_project.py::test_recent_bound[625] PASSED                     [ 91%]
+tests/test_project.py::test_alert_and_recovery PASSED                    [ 93%]
+tests/test_project.py::test_invalid_inputs_and_compatibility PASSED      [ 94%]
+tests/test_project.py::test_reproducibility_and_sample_copy PASSED       [ 95%]
+tests.py::test_reservoir_uniformity PASSED                               [ 96%]
+tests.py::test_dgim_count PASSED                                         [ 97%]
+tests.py::test_gk_quantile PASSED                                        [ 98%]
+tests.py::test_reservoir_chi2_uniformity PASSED                          [100%]
+
+=================================== FAILURES ===================================
+___________________________ test_dashboard_controls ____________________________
+
+    def test_dashboard_controls():
+>       app = AppTest.from_file("dashboard/app.py").run()
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_dashboard.py:10:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+cls = <class 'streamlit.testing.v1.app_test.AppTest'>
+script_path = PosixPath('dashboard/app.py'), default_timeout = 3
+
+    @classmethod
+    def from_file(
+        cls, script_path: str | Path, *, default_timeout: float = 3
+    ) -> AppTest:
+        """
+        Create an ``AppTest`` for an app entrypoint defined in a file.
+
+        This option is most convenient for CI workflows and testing of
+        published apps. The script must be executable on its own and so must
+        contain all necessary imports. For a multipage app, pass the main
+        script that you would supply to ``streamlit run``. To test a
+        file-based child page, initialize from the main script and use
+        ``AppTest.switch_page()``.
+
+        Parameters
+        ----------
+        script_path: str | Path
+            Path to the app's entrypoint script. An absolute path is used as
+            given. A relative path is resolved against the Python file that
+            calls ``AppTest.from_file()``.
+
+        default_timeout: float
+            Default time in seconds before a script run is timed out. Can be
+            overridden for individual ``.run()`` calls.
+
+        Returns
+        -------
+        AppTest
+            A simulated Streamlit app for testing. The simulated app can be
+            executed via ``.run()``.
+
+        Raises
+        ------
+        FileNotFoundError
+            If ``script_path`` does not point to an existing file.
+
+        Examples
+        --------
+        Initialize a multipage app from its entrypoint, then switch to a page:
+
+        >>> at = AppTest.from_file("app.py").run()
+        >>> at.switch_page("pages/settings.py").run()
+        """
+        script_path = Path(script_path)
+        if script_path.is_absolute():
+            path = script_path
+        else:
+            stack = traceback.StackSummary.extract(traceback.walk_stack(None))
+            caller_file = Path(stack[1].filename)
+            path = caller_file.parent / script_path
+
+        if not path.is_file():
+>           raise FileNotFoundError(
+                f"AppTest script not found at {path.resolve()}. Relative paths are "
+                "resolved against the file that calls AppTest.from_file()."
+            )
+E           FileNotFoundError: AppTest script not found at <checkout>/tests/dashboard/app.py. Relative paths are resolved against the file that calls AppTest.from_file().
+
+../project4-v4clean.N5pA1t/lib/python3.13/site-packages/streamlit/testing/v1/app_test.py:619: FileNotFoundError
+=========================== short test summary info ============================
+FAILED tests/test_dashboard.py::test_dashboard_controls - FileNotFoundError: ...
+========================= 1 failed, 86 passed in 5.82s =========================
+
+V3 3e79273, exécution complémentaire avec Streamlit 1.51.0 (interpréteur système).
+
+============================= test session starts ==============================
+platform linux -- Python 3.13.9, pytest-9.2.0, pluggy-1.7.0 -- <system-python>/bin/python
+cachedir: .pytest_cache
+rootdir: <checkout>
+configfile: pyproject.toml
+testpaths: tests, tests.py
+plugins: anyio-4.10.0, asyncio-1.5.0, cov-7.1.0, dash-2.14.2
+asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 87 items
+
+tests/test_dashboard.py::test_dashboard_controls PASSED                  [  1%]
+tests/test_independent.py::test_pearson_covariance_adjustment PASSED     [  2%]
+tests/test_independent.py::test_weighted_larger_k[weights0] PASSED       [  3%]
+tests/test_independent.py::test_weighted_larger_k[weights1] PASSED       [  4%]
+tests/test_independent.py::test_gk_very_low_quantiles[0.001] PASSED      [  5%]
+tests/test_independent.py::test_gk_very_low_quantiles[0.005] PASSED      [  6%]
+tests/test_independent.py::test_gk_very_low_quantiles[0.01] PASSED       [  8%]
+tests/test_independent.py::test_gk_very_low_quantiles[0.05] PASSED       [  9%]
+tests/test_independent.py::test_gk_very_low_quantiles[0.1] PASSED        [ 10%]
+tests/test_independent.py::test_recent_cdf_inequalities[1] PASSED        [ 11%]
+tests/test_independent.py::test_recent_cdf_inequalities[4] PASSED        [ 12%]
+tests/test_independent.py::test_recent_cdf_inequalities[7] PASSED        [ 13%]
+tests/test_independent.py::test_recent_cdf_inequalities[9] PASSED        [ 14%]
+tests/test_independent.py::test_recent_cdf_inequalities[17] PASSED       [ 16%]
+tests/test_independent.py::test_recent_cdf_inequalities[100] PASSED      [ 17%]
+tests/test_independent.py::test_expired_representative_is_a_threshold PASSED [ 18%]
+tests/test_independent.py::test_exact_alert_reference_and_reset PASSED   [ 19%]
+tests/test_project.py::test_t1_uniform PASSED                            [ 20%]
+tests/test_project.py::test_t2_weighted[1] PASSED                        [ 21%]
+tests/test_project.py::test_t2_weighted[2] PASSED                        [ 22%]
+tests/test_project.py::test_t3_t4_exhaustive[1] PASSED                   [ 24%]
+tests/test_project.py::test_t3_t4_exhaustive[2] PASSED                   [ 25%]
+tests/test_project.py::test_t3_t4_exhaustive[3] PASSED                   [ 26%]
+tests/test_project.py::test_t3_t4_exhaustive[5] PASSED                   [ 27%]
+tests/test_project.py::test_t3_t4_exhaustive[8] PASSED                   [ 28%]
+tests/test_project.py::test_t3_t4_exhaustive[13] PASSED                  [ 29%]
+tests/test_project.py::test_t3_t4_wrap_and_patterns[32] PASSED           [ 31%]
+tests/test_project.py::test_t3_t4_wrap_and_patterns[100] PASSED          [ 32%]
+tests/test_project.py::test_t3_t4_wrap_and_patterns[500] PASSED          [ 33%]
+tests/test_project.py::test_t3_t4_wrap_and_patterns[1000] PASSED         [ 34%]
+tests/test_project.py::test_t3_t4_wrap_and_patterns[5000] PASSED         [ 35%]
+tests/test_project.py::test_t5_rank[uniforme-0.001] PASSED               [ 36%]
+tests/test_project.py::test_t5_rank[uniforme-0.005] PASSED               [ 37%]
+tests/test_project.py::test_t5_rank[uniforme-0.01] PASSED                [ 39%]
+tests/test_project.py::test_t5_rank[uniforme-0.05] PASSED                [ 40%]
+tests/test_project.py::test_t5_rank[uniforme-0.1] PASSED                 [ 41%]
+tests/test_project.py::test_t5_rank[gaussienne-0.001] PASSED             [ 42%]
+tests/test_project.py::test_t5_rank[gaussienne-0.005] PASSED             [ 43%]
+tests/test_project.py::test_t5_rank[gaussienne-0.01] PASSED              [ 44%]
+tests/test_project.py::test_t5_rank[gaussienne-0.05] PASSED              [ 45%]
+tests/test_project.py::test_t5_rank[gaussienne-0.1] PASSED               [ 47%]
+tests/test_project.py::test_t5_rank[d\xe9rive-0.001] PASSED              [ 48%]
+tests/test_project.py::test_t5_rank[d\xe9rive-0.005] PASSED              [ 49%]
+tests/test_project.py::test_t5_rank[d\xe9rive-0.01] PASSED               [ 50%]
+tests/test_project.py::test_t5_rank[d\xe9rive-0.05] PASSED               [ 51%]
+tests/test_project.py::test_t5_rank[d\xe9rive-0.1] PASSED                [ 52%]
+tests/test_project.py::test_t5_rank[constante-0.001] PASSED              [ 54%]
+tests/test_project.py::test_t5_rank[constante-0.005] PASSED              [ 55%]
+tests/test_project.py::test_t5_rank[constante-0.01] PASSED               [ 56%]
+tests/test_project.py::test_t5_rank[constante-0.05] PASSED               [ 57%]
+tests/test_project.py::test_t5_rank[constante-0.1] PASSED                [ 58%]
+tests/test_project.py::test_t5_rank[croissante-0.001] PASSED             [ 59%]
+tests/test_project.py::test_t5_rank[croissante-0.005] PASSED             [ 60%]
+tests/test_project.py::test_t5_rank[croissante-0.01] PASSED              [ 62%]
+tests/test_project.py::test_t5_rank[croissante-0.05] PASSED              [ 63%]
+tests/test_project.py::test_t5_rank[croissante-0.1] PASSED               [ 64%]
+tests/test_project.py::test_t5_rank[d\xe9croissante-0.001] PASSED        [ 65%]
+tests/test_project.py::test_t5_rank[d\xe9croissante-0.005] PASSED        [ 66%]
+tests/test_project.py::test_t5_rank[d\xe9croissante-0.01] PASSED         [ 67%]
+tests/test_project.py::test_t5_rank[d\xe9croissante-0.05] PASSED         [ 68%]
+tests/test_project.py::test_t5_rank[d\xe9croissante-0.1] PASSED          [ 70%]
+tests/test_project.py::test_t5_rank[r\xe9p\xe9titions-0.001] PASSED      [ 71%]
+tests/test_project.py::test_t5_rank[r\xe9p\xe9titions-0.005] PASSED      [ 72%]
+tests/test_project.py::test_t5_rank[r\xe9p\xe9titions-0.01] PASSED       [ 73%]
+tests/test_project.py::test_t5_rank[r\xe9p\xe9titions-0.05] PASSED       [ 74%]
+tests/test_project.py::test_t5_rank[r\xe9p\xe9titions-0.1] PASSED        [ 75%]
+tests/test_project.py::test_t5_rank[queue lourde-0.001] PASSED           [ 77%]
+tests/test_project.py::test_t5_rank[queue lourde-0.005] PASSED           [ 78%]
+tests/test_project.py::test_t5_rank[queue lourde-0.01] PASSED            [ 79%]
+tests/test_project.py::test_t5_rank[queue lourde-0.05] PASSED            [ 80%]
+tests/test_project.py::test_t5_rank[queue lourde-0.1] PASSED             [ 81%]
+tests/test_project.py::test_t5_rank[rafales-0.001] PASSED                [ 82%]
+tests/test_project.py::test_t5_rank[rafales-0.005] PASSED                [ 83%]
+tests/test_project.py::test_t5_rank[rafales-0.01] PASSED                 [ 85%]
+tests/test_project.py::test_t5_rank[rafales-0.05] PASSED                 [ 86%]
+tests/test_project.py::test_t5_rank[rafales-0.1] PASSED                  [ 87%]
+tests/test_project.py::test_recent_bound[1] PASSED                       [ 88%]
+tests/test_project.py::test_recent_bound[4] PASSED                       [ 89%]
+tests/test_project.py::test_recent_bound[100] PASSED                     [ 90%]
+tests/test_project.py::test_recent_bound[625] PASSED                     [ 91%]
+tests/test_project.py::test_alert_and_recovery PASSED                    [ 93%]
+tests/test_project.py::test_invalid_inputs_and_compatibility PASSED      [ 94%]
+tests/test_project.py::test_reproducibility_and_sample_copy PASSED       [ 95%]
+tests.py::test_reservoir_uniformity PASSED                               [ 96%]
+tests.py::test_dgim_count PASSED                                         [ 97%]
+tests.py::test_gk_quantile PASSED                                        [ 98%]
+tests.py::test_reservoir_chi2_uniformity PASSED                          [100%]
+
+=============================== warnings summary ===============================
+<system-python>/lib/python3.13/site-packages/jupyter_client/connect.py:22
+  <system-python>/lib/python3.13/site-packages/jupyter_client/connect.py:22: DeprecationWarning: Jupyter is migrating its paths to use standard platformdirs
+  given by the platformdirs library.  To remove this warning and
+  see the appropriate new directories, set the environment variable
+  `JUPYTER_PLATFORM_DIRS=1` and then run `jupyter --paths`.
+  The use of platformdirs will be the default in `jupyter_core` v6
+    from jupyter_core.paths import jupyter_data_dir, jupyter_runtime_dir, secure_write
+
+<system-python>/lib/python3.13/site-packages/dash/_jupyter.py:31
+  <system-python>/lib/python3.13/site-packages/dash/_jupyter.py:31: DeprecationWarning: The `ipykernel.comm.Comm` class has been deprecated. Please use the `comm` module instead.For creating comms, use the function `from comm import create_comm`.
+    _dash_comm = Comm(target_name="dash")
+
+<system-python>/lib/python3.13/site-packages/dash/testing/plugin.py:92
+  <system-python>/lib/python3.13/site-packages/dash/testing/plugin.py:92: PytestRemovedIn10Warning: The hookimpl pytest_addhooks uses old-style configuration options (marks or attributes).
+  Please use the pytest.hookimpl(tryfirst=True) decorator instead
+   to configure the hooks.
+   See https://docs.pytest.org/en/latest/deprecations.html#configuring-hook-specs-impls-using-markers
+    @pytest.mark.tryfirst
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================== 87 passed, 3 warnings in 6.83s ========================

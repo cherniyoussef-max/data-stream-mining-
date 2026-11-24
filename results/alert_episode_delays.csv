@@ -1,0 +1,37 @@
+seed,scenario,strategy,start,end,detected_at,detection_delay,recovery_delay,active_at_start
+42,référence,seuil,401,800,403,2,197,False
+42,référence,persistance,401,800,412,11,43,False
+42,graduel,seuil,301,580,337,36,99,False
+42,graduel,persistance,301,580,342,41,45,False
+42,répété,seuil,101,180,102,1,495,False
+42,répété,seuil,701,850,706,5,,False
+42,répété,persistance,101,180,112,11,43,False
+42,répété,persistance,701,850,712,11,45,False
+42,isolé,seuil,311,311,311,0,53,True
+42,isolé,persistance,311,311,,,,False
+42,sous seuil,seuil,401,480,,,,False
+42,sous seuil,persistance,401,480,,,,False
+204,référence,seuil,401,800,403,2,197,False
+204,référence,persistance,401,800,412,11,43,False
+204,graduel,seuil,301,580,335,34,99,False
+204,graduel,persistance,301,580,343,42,42,False
+204,répété,seuil,101,180,102,1,495,False
+204,répété,seuil,701,850,706,5,,False
+204,répété,persistance,101,180,112,11,43,False
+204,répété,persistance,701,850,712,11,45,False
+204,isolé,seuil,311,311,311,0,53,True
+204,isolé,persistance,311,311,,,,False
+204,sous seuil,seuil,401,480,,,,False
+204,sous seuil,persistance,401,480,,,,False
+313,référence,seuil,401,800,403,2,197,False
+313,référence,persistance,401,800,412,11,43,False
+313,graduel,seuil,301,580,336,35,99,False
+313,graduel,persistance,301,580,344,43,43,False
+313,répété,seuil,101,180,102,1,495,False
+313,répété,seuil,701,850,706,5,,False
+313,répété,persistance,101,180,112,11,43,False
+313,répété,persistance,701,850,712,11,45,False
+313,isolé,seuil,311,311,311,0,53,True
+313,isolé,persistance,311,311,,,,False
+313,sous seuil,seuil,401,480,,,,False
+313,sous seuil,persistance,401,480,,,,False

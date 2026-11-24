@@ -105,7 +105,7 @@ def confusion(predictions, reference):
                 f1=2*tp/max(1,2*tp+fp+fn), agreement=(tp+tn)/len(reference))
 
 
-def alert_study():
+def alert_study(seed=42):
     configurations = (
         ("référence", 200, .01, 80, 110, 160, [(401,800)]),
         ("graduel", 100, .05, 70, 100, 145, [(301,580)]),
@@ -115,8 +115,8 @@ def alert_study():
     )
     all_rows, scores = [], []
     for name,n,eps,median_limit,p99_limit,severity,intervals in configurations:
-        rng = random.Random(42)
-        monitor = Monitor(size=n, eps=eps, median=median_limit, p99=p99_limit, evaluate=True)
+        rng = random.Random(seed)
+        monitor = Monitor(size=n, eps=eps, seed=seed, median=median_limit, p99=p99_limit, evaluate=True)
         rows = []
         for i in range(1, 1201):
             incident = next(((a,b) for a,b in intervals if a <= i <= b), None)

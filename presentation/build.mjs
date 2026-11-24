@@ -7,6 +7,7 @@ const manifest = await read("presentation/animations/trace.json");
 const statistic = (await read("results/statistical_results.json")).uniform;
 const nTests = (await fs.readFile("results/pytest_results.txt","utf8")).match(/(\d+) passed/)[1];
 const incident = analysis.alerts[1];
+const comparison = (await read("results/alert_comparison.json")).means;
 const names = ["Nasr elhak Khemiri","Wajdi Zayoud","Youssif Cherni"];
 const sections = ["Introduction","Fondements théoriques","État de l’art","Approches et méthodes","Technologies","Conclusion et application concrète"];
 const rows = [];
@@ -44,7 +45,7 @@ const articles = [
   ["Expiration pour les sketches","Gou et al. · IEEE TKDE 2023","Un historique complet ne suffit pas à isoler les fréquences récentes. L’étude utilise notamment CAIDA, Web, Zipf et StackOverflow (§8.1).","Zones temporelles","Le cadre adapte des sketches à une frontière temporelle. Les expériences dépendent de la requête et du budget ; notre P99 traite un autre agrégat.", "10.1109/TKDE.2022.3151140"],
   ["Comparer des esquisses de quantiles","Fernando, Bindra et Daudjee · EDBT 2023","Même problème, cinq méthodes, mais des choix de représentation et d’erreur différents. Jeux Pareto, Uniforme, NYT et Power.","Résultat conditionné au jeu","Dans la figure 6b, les cinq méthodes restent sous 1 % d’erreur relative moyenne sur le jeu uniforme. La figure 6a montre que la queue Pareto change le résultat.", "10.48786/edbt.2023.34"],
   ["Sélection sur des jointures","Dai, Hu et Yi · SIGMOD 2024","La taille d’une jointure dépasse parfois celle des entrées. L’objectif est d’échantillonner ses résultats sans les matérialiser.","Index et réservoir à prédicat","L’index propose des candidats compatibles. La section expérimentale inclut le graphe Epinions et des requêtes relationnelles. Notre réservoir cible une autre population.", "10.1145/3654921"],
-  ["Résumé déterministe par comparaisons","Gribelyuk, Sawettamalya, Wu et Yu · PODS 2024","Peut-on simplifier un sketch déterministe tout en conservant une bonne borne d’espace dans le modèle de comparaison ?","Une borne en éléments stockés","Le théorème publié borne asymptotiquement l’état par (2+o(1)) ε⁻¹ log(εn). Notre passe sur les tuples n’implémente pas cette méthode.", "10.1145/3651610"],
+  ["Résumé déterministe par comparaisons","Gribelyuk, Sawettamalya, Wu et Yu · PODS 2024","Peut-on simplifier un sketch déterministe tout en conservant une bonne borne d’espace dans le modèle de comparaison ?","Une borne en éléments stockés","Le résumé officiel annonce une borne asymptotique de (2+o(1)) ε⁻¹ log(εn). Notre passe sur les tuples utilise une autre compression.", "10.1145/3651610"],
   ["Estimation sur univers entier","Gupta, Singhal et Wu · FOCS 2024","Avec un univers entier borné, peut-on gagner de la place par rapport au modèle qui autorise seulement les comparaisons ?","L’hypothèse du modèle est essentielle","Les opérations sur l’univers permettent O(1/ε) mots dans le cadre théorique étudié. Le découpage illustré explique l’information disponible, pas le pseudocode exact.", "10.1109/FOCS61266.2024.00075"],
   ["Inférence conditionnelle","Xie, Yan, Jiang et Kong · Journal of Econometrics 2025","Une régression quantile suit un quantile de réponse associé à des covariables. Les lignes historiques ne sont pas conservées intégralement.","Mise à jour d’un modèle par lots","Le lissage et les résumés de lots rendent la mise à jour possible. Les applications de l’article incluent les vélos à Séoul et les fonds indiciels.", "10.1016/j.jeconom.2024.105924"],
 ];
@@ -73,7 +74,7 @@ add(3,"DGIM : compter les bits égaux à 1","Au plus deux groupes par taille, er
     "À sept, deux fusions se propagent. Observer le huitième bit puis les zéros. À douze, l’ancien groupe expire. La borne utilise les bits égaux à 1 plus récents et le demi-compte du groupe frontière.",
     {owner:names[1],anim:"dgim"});
 add(3,"GK : retrouver un rang historique","Tuples (valeur, g, Δ) et tolérance εn",
-    "Suivre les six arrivées. Les rangs minimal et maximal encadrent chaque valeur. Le prédécesseur admissible donne 4 pour une cible de rang 3. L’erreur est de 1. La mémoire de la variante est mesurée, sans théorème général.",
+    "Suivre les six arrivées. Le prédécesseur admissible donne 4 pour une cible de rang 3. L’erreur est de 1. Après compression, le coût des paires anciennes et le comptage des insertions récentes donnent une borne en O(min(n, √(n/ε))) tuples pour notre variante.",
     {owner:names[1],anim:"gk"});
 add(3,"Quantiles récents par blocs","État brut entre les fermetures, résumés pondérés après tri",
     "Le bloc ouvert reste exact. Un groupe fermé transmet un maximum et son effectif. Le premier bloc peut retenir des valeurs périmées. À t égal à 20, il expire et la valeur 99 ne contribue plus.",
@@ -85,7 +86,7 @@ add(3,"Tests T1 à T5","Garanties et mesures jouent des rôles distincts",
     `T1 donne p = ${statistic.p.toFixed(4)}. T2 teste les marginales pondérées. T3 et T4 contrôlent le compte et la structure de DGIM. T5 compare les rangs avec et sans doublons. Le journal final compte ${nTests} tests.`,
     {table:[["Tests","Preuve expérimentale"],["T1–T2","Inclusion uniforme et pondérée"],["T3–T4","Erreur relative et invariants par insertion"],["T5","Rangs exacts et cas près de zéro"]]});
 add(3,"Mémoire et temps, même horizon","FIFO et blocs récents jusqu’à N = 50 000",
-    "La FIFO insère rapidement mais trie davantage de valeurs à la requête. À N=10 000 et epsilon 0,05, les blocs gardent 2 000 entrées. À précision plus fine, les groupes peuvent rester unitaires.",
+    "La FIFO insère rapidement mais trie davantage de valeurs à la requête. À N=10 000 et epsilon 0,05, les blocs gardent 2 000 entrées. P50, P95 et P99 partagent désormais un tri et un parcours. À précision plus fine, les groupes peuvent rester unitaires.",
     {img:"results/figures/18_memoire_echelle.png"});
 
 add(4,"Technologies du prototype","Le noyau s’exécute localement",
@@ -103,12 +104,12 @@ add(5,"Incident, détection et retour","Trace réelle du scénario simulé",
 add(5,"Deux références d’alerte","Règle exacte et étiquette du générateur",
     `Le scénario de référence produit ${analysis.alerts[0].tp+analysis.alerts[0].tn} décisions identiques à la règle exacte. Contre les étiquettes, F1 vaut ${incident.f1.toFixed(2)}, avec ${incident.fp} faux positifs et ${incident.fn} manqués. Les fausses alertes incluent le délai de vidange.`,
     {img:"results/figures/21_confusion.png"});
-add(5,"Sensibilité de la surveillance","Modifier N et ε sur la même trace",
-    "Les paramètres, la graine et les seuils restent fixes sauf N et epsilon. Expliquer sur le graphe comment une grande fenêtre peut retarder le retour et modifier le score face aux étiquettes.",
-    {img:"results/figures/20_sensibilite.png"});
+add(5,"Deux stratégies sur cinq scénarios","F1 moyen face aux étiquettes d’incident",
+    `Pour les incidents répétés, le F1 passe de ${comparison.seuil["répété"].toFixed(2)} à ${comparison.persistance["répété"].toFixed(2)}. La persistance réduit les faux positifs, mais écarte l’incident isolé. Les deux règles manquent le scénario sous seuil. La règle de seuil reste la référence du tableau de bord.`,
+    {img:"results/figures/22_alertes_strategies.png"});
 add(5,"Conclusion et perspectives","Des résumés distincts rendent les décisions interprétables",
-    "Les résultats répondent à notre question : R et A-Res échantillonnent, DGIM compte, et les deux horizons de quantiles répondent à des usages distincts. Tester une vraie trace, une hystérésis et la compression GK originale serait la suite.",
-    {items:["T1–T5 validés, budget de rang récent explicite","Alerte reproductible, pareil à la règle exacte sur le cas principal","Limites : données simulées, absence de preuve d’espace pour la variante GK"]});
+    "R et A-Res échantillonnent, DGIM compte et les deux horizons de quantiles répondent à des usages distincts. La règle facultative favorise les incidents soutenus. Une trace annotée et une meilleure borne pour GK restent des pistes.",
+    {items:["T1–T5 validés, budget de rang récent explicite","P50/P95/P99 récupérés avec un seul tri","GK : borne sous-linéaire propre à la variante"]});
 add(5,"Références et questions","Douze notices dans le rapport et le BibTeX",
     "Les fondations viennent de Vitter, Efraimidis–Spirakis, Datar et al., Greenwald–Khanna et Arasu–Manku. Les sept DOI récents sont indiqués dans leurs diapositives et dans le rapport.",
     {items:["Vitter, 1985 · Reservoir Sampling","Efraimidis–Spirakis, 2006 · A-Res","Datar et al., 2002 · DGIM","Greenwald–Khanna, 2001 · rang historique","Arasu–Manku, 2004 · quantiles glissants","Merci. Questions et démonstration libre."]});

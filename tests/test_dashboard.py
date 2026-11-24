@@ -1,3 +1,5 @@
+from pathlib import Path
+
 from streamlit.testing.v1 import AppTest
 
 
@@ -7,7 +9,8 @@ def click(app, label):
 
 
 def test_dashboard_controls():
-    app = AppTest.from_file("dashboard/app.py").run()
+    dashboard = Path(__file__).resolve().parents[1] / "dashboard" / "app.py"
+    app = AppTest.from_file(dashboard).run()
     assert not app.exception
     click(app, "Avancer d’un événement")
     assert app.metric[0].value == "200"

@@ -49,7 +49,7 @@ class Monitor:
         if self.exact is not None:
             self.exact.append(latency)
         n = self.gk.n
-        median, p95, p99 = (self.recent.quantile(q) for q in (.50, .95, .99))
+        median, p95, p99 = self.recent.quantiles((.50, .95, .99))
         row = dict(t=n, latency=latency, median=median, p95=p95, p99=p99,
                    historical=self.gk.quantile(.99), estimated=self.dgim.count(),
                    state=self.alerts.update(min(n, self.dgim.N), median, p99))

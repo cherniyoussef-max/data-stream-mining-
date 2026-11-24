@@ -86,7 +86,7 @@ def main():
     for name in ("Nasr","Wajdi","Youssif"):
         script_pdf([row for row in rows if row["owner"].startswith(name)],
                    root/f"Script_{name}_FR.pdf",f"Script oral · {name}")
-    markdown_pdf(root/"QUESTIONS.md",root/"Questions_Reponses_Soutenance.pdf","57 questions de soutenance")
+    markdown_pdf(root/"QUESTIONS.md",root/"Questions_Reponses_Soutenance.pdf","59 questions de soutenance")
     markdown_pdf("docs/MANUAL_EXERCISES.md","docs/EXERCICES_CORRIGES_FINAL.pdf","Exercices corrigés")
 
 

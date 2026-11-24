@@ -18,4 +18,4 @@ libreoffice --headless --convert-to pdf --outdir /chemin /chemin/posters.pptx
 python -m evaluation.academic_pdfs
 ```
 
-Renommer le PDF d’affiches en `Data_Stream_Mining_Final_Statique.pdf`. Le commutateur `--browser` du module d’incorporation vérifie aussi la lecture des GIF extraits avec Playwright et Chrome. Voir [le détail de la validation](ANIMATION_VALIDATION.md).
+Renommer le PDF d’affiches en `Data_Stream_Mining_Final_Statique.pdf`. Pour une révision des textes ou des figures, réutiliser les GIF et affiches du dépôt. Le commutateur `--browser` du module d’incorporation vérifie aussi la lecture des GIF extraits avec Playwright et Chrome. Sans le module Codex, ouvrir et modifier le PPTX livré dans un éditeur compatible, ou présenter le PDF statique. Voir [le détail de la validation](ANIMATION_VALIDATION.md).

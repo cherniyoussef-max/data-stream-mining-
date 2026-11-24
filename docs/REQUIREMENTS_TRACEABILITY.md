@@ -33,7 +33,7 @@
 | R29 | Exercices | MANUAL_EXERCISES.md | quatre traces canoniques et un exemple de blocs | PASS |
 | R30 | Reproductibilité | README.md | tests, CLI et deux profils exécutés | PASS |
 | R31 | Rapport et preuves | report/main.tex | 8 pages compilées Tectonic, métadonnées et citations contrôlées | PASS |
-| R32 | État de l’art récent détaillé | ARTICLE_ANALYSIS_DETAILED.md | sept études et deux tables, certains tableaux d’origine et dépôts restent non vérifiés | PARTIAL |
+| R32 | État de l’art récent détaillé | ARTICLE_ANALYSIS_DETAILED.md | cinq textes intégraux relus, notices primaires contrôlées pour Gribelyuk et Xie, accès intégral et certains artefacts non confirmés | PARTIAL |
 | R33 | Jeu de données réel | datasets/README.md | scénario synthétique autorisé | OPTIONAL |
 | R34 | Contrôles Streamlit | evaluation/browser.py | Chrome, journal JSON et CSV téléchargé | PASS |
 | R35 | Corpus récent vérifié | BIBLIOGRAPHY_VERIFICATION.md | sept DOI et bibliographie éditable | PASS |
@@ -41,11 +41,14 @@
 | R37 | Architecture et captures réelles | report/main.tex, presentation/screenshots/ | diagramme logiciel dans l’article et la slide 28, captures Chrome | PASS |
 | R38 | Présentation en six parties avec médias animés | presentation/ | 44 diapositives, 18 GIF incorporés, 99 images distinctes, lecture des GIF extraits sous Chrome, ouverture du fichier dans Impress | PASS |
 | R39 | Scripts synchronisés et trois orateurs | presentation/slides.json | notes PowerPoint, quatre PDF, numérotation commune | PASS |
-| R40 | Questions de soutenance | presentation/QUESTIONS.md | 57 réponses et PDF | PASS |
+| R40 | Questions de soutenance | presentation/QUESTIONS.md | 59 réponses et PDF | PASS |
 | R41 | Rang et mémoire de la fenêtre récente | MATHEMATICAL_GUARANTEES.md | inégalités de CDF, tests et courbes | PASS |
-| R42 | Borne d’espace de GK simplifié | algorithms/quantiles.py | rang prouvé, croissance mesurée, théorème d’espace absent pour la variante | PARTIAL |
+| R42 | Borne d’espace de GK simplifié | algorithms/quantiles.py, MATHEMATICAL_GUARANTEES.md | preuve de O(min(n, √(n/ε))) tuples pour cette passe, essais adverses | PASS |
 | R43 | Alertes exactes et approchées | evaluation/final_study.py | matrices et délais sur cinq scénarios | PASS |
 | R44 | Fenêtres de taille croissante et temps | evaluation/final_study.py | CSV jusqu’à N=50 000, trois répétitions et pic de requête séparé | PASS |
 | R45 | Sensibilité N et epsilon sur trace commune | evaluation/sensitivity.py | douze configurations, matrice de confusion et délais publiés | PASS |
+| R46 | Quantiles récents groupés | algorithms/quantiles.py, evaluation/query_benchmark.py | identité sur 1 200 états et mesures appariées | PASS |
+| R47 | Propriétés génératives | tests/test_properties_v4.py | oracles de rang, de comptage et de fenêtre, bords et doublons | PASS |
+| R48 | Deux stratégies d’alerte | evaluation/alert_comparison.py | 30 comparaisons, confusion et délais par épisode | PASS |
 
-Sur les 44 lignes non optionnelles, 42 PASS et 2 PARTIAL, soit 95,5 % de couverture stricte de cette grille interne. Le choix C autorisé conserve la variante GK et laisse sa borne d’espace générale ouverte. Le contrôle de lecture se limite aux GIF extraits dans Chrome et à l’ouverture du fichier dans Impress.
+La grille compte 46 PASS, 1 PARTIAL et 1 OPTIONAL. Les 47 lignes non optionnelles sont couvertes à 97,9 % selon le décompte strict des PASS. R42 valide la borne prouvée pour la variante du dépôt. Pour la soutenance, Chrome a lu les GIF extraits et Impress a ouvert le PPTX.

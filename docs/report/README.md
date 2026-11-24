@@ -6,6 +6,8 @@ La source éditable est `main.tex`. Le document est composé en LaTeX avec Tecto
 python -m evaluation.benchmark --profile full
 python -m evaluation.final_study
 python -m evaluation.sensitivity
+python -m evaluation.alert_comparison
+python -m evaluation.query_benchmark
 python -m evaluation.article
 ```
 

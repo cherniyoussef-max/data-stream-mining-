@@ -27,7 +27,22 @@ Pour chaque tuple (v,g,Δ), le rang minimal r est la somme préfixe des g, et le
 
 Pour 0<q<1, poser t=qn sans décalage. Quand εn≥1/2, on cherche le premier tuple de borne haute supérieure à t+εn et on renvoie son prédécesseur. Celui-ci a une borne haute ≤t+εn. Puisque la borne haute du successeur dépasse t+εn et que son g+Δ≤2εn, la borne basse du prédécesseur dépasse t−εn. Si aucun tuple ne dépasse le seuil, le maximum est admissible. Si le minimum dépasse le seuil, aucun rang admissible n’existe et le minimum est rendu. Quand εn<1/2, la représentation est exacte et le rang entier valide le plus proche est utilisé (égalité départagée vers l’entier pair). Pour q=0 et q=1 on impose les extrémités exactes. Avec des répétitions, une valeur occupe tous les rangs de #strictement-inférieurs+1 à #inférieurs-ou-égaux. Un ordre stable entre ex aequo permet de raisonner sur les occurrences. La variante conserve les invariants de rang de GK avec balayage simplifié. L’espace du GK original est O((1/ε)log(εn)) entrées quand εn est suffisamment grand et O(n) au démarrage. Ce théorème dépend d’une autre stratégie de compression.
 
+### Espace de la compression GK utilisée
+
+Cette preuve concerne le balayage de notre variante, en **nombre de tuples**, pour ε fixé. Elle établit une borne sous-linéaire moins serrée que celle de GK classique. Le code calcule $K_t=\lfloor 2\varepsilon t\rfloor$ avec des entiers à partir de la valeur rationnelle exacte du flottant ε.
+
+1. Juste après une compression à l’instant $t$, pour toute paire adjacente de survivants $(i,j)$ dont le prédécesseur $i$ n’est pas le minimum, $g_i+g_j+\Delta_j>K_t$. Sinon le balayage aurait fusionné $i$ dans $j$. Le balayage va de droite à gauche. Une fusion ultérieure depuis la gauche peut augmenter $g_i$ et préserve l’inégalité. La somme des $g$ vaut $t$.
+2. Pour un survivant $j$ inséré au temps $s_j$, son $\Delta_j$ ne change jamais et vérifie $\Delta_j\le 2\varepsilon s_j$, y compris pour les extrêmes où il vaut zéro. Fixons un âge entier $a\ge1/\varepsilon$. Pour un successeur d’âge au moins $a$, $K_t-\Delta_j\ge 2\varepsilon a-1\ge\varepsilon a$. Hors les deux premiers tuples, chaque tel successeur définit une paire dont la somme des $g$ est donc supérieure à $\varepsilon a$.
+3. Chaque $g$ se trouve dans au plus deux paires adjacentes. Les vieux successeurs ainsi comptés sont donc au plus $2t/(\varepsilon a)$. Les tuples plus jeunes sont au plus $a$, car une insertion crée un seul tuple. La taille juste après compression est bornée par $2+a+2t/(\varepsilon a)$.
+4. Si $t\ge1/\varepsilon$, prendre $a=\lceil\sqrt{t/\varepsilon}\rceil$ donne $O(\sqrt{t/\varepsilon})$. Entre deux compressions, au plus $O(1/\varepsilon)$ tuples sont ajoutés. Le premier balayage est aussi atteint après $O(1/\varepsilon)$ insertions. Pour $n<1/\varepsilon$, la borne triviale $n$ suffit. On conclut $O(\min(n,\sqrt{n/\varepsilon}))$ tuples, tampon de compression compris à un facteur constant près.
+
+Les compteurs Python ont une taille qui peut croître avec $\log n$. Cette preuve ne revendique donc ni une borne en octets constants par tuple ni la borne originale $O(\varepsilon^{-1}\log(\varepsilon n))$. Le test par propriétés vérifie l’inégalité des paires survivantes et la conservation de la masse des rangs.
+
 ## Quantiles récents par blocs
+
+### Requête groupée et budget
+
+Le lot P50/P95/P99 trie les mêmes représentants une seule fois. Les rangs cibles triés sont consommés lors d’un balayage cumulatif commun. L’ordre demandé, les doublons de requêtes et les extrémités sont conservés. Sur $R$ représentants et $Q$ probabilités, le temps est $O(R\log R+Q\log Q+R+Q)$ et l’espace de travail $O(R+Q)$.
 
 Poser B=⌊√N⌋ et S=⌈εB⌉. Le bloc en cours est exact. Dans chaque bloc fermé et trié, les groupes successifs de S valeurs sont représentés par leur maximum pondéré par leur effectif. Pour une valeur x, seule une grappe par bloc peut être coupée par x, donc la fonction cumulative pondérée sous-compte d’au plus S−1 par bloc. La fenêtre inclut temporairement u≤B−1 valeurs périmées du premier bloc. Une cible discrète ⌈qn⌉ décalée à ⌈q(n+u)⌉ augmente d’au plus u. En retirant les anciennes observations, le déficit de rang est borné par u. Le dépassement de rang est borné par u + (S−1) fois le nombre de blocs fermés, en évaluant les individus strictement sous la valeur retournée. Une valeur périmée peut tomber entre deux rangs actifs et on mesure alors l’écart à son insertion. La borne est additive, distincte de la borne GK.
 

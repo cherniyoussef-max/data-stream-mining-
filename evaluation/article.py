@@ -32,6 +32,8 @@ def build():
     gk = [r for r in raw if r["algorithm"] == "GK"]
     growth = read_csv("gk_growth.csv")
     sensitivity = read_csv("alert_sensitivity.csv")
+    query = next(row for row in read_json("query_benchmark.json") if row["N"] == 1000)["measurements"]
+    alert_means = read_json("alert_comparison.json")["means"]
     identifiers = ("algorithm", "seed", "window", "n", "k", "eps", "q", "distribution")
     assert len(raw) == len({tuple(row[key] for key in identifiers) for row in raw})
 
@@ -65,6 +67,9 @@ def build():
         "Accuracy": percent(incident["accuracy"]), "Precision": percent(incident["precision"]),
         "Recall": percent(incident["recall"]), "Specificity": percent(incident["specificity"]),
         "Fone": number(incident["f1"], 2), "SmallF": f1(50), "LargeF": f1(500),
+        "QueryGain": number(query["v3"]["query_ns"]/query["v4"]["query_ns"], 2),
+        "RepeatBase": number(alert_means["seuil"]["répété"], 3),
+        "RepeatPersist": number(alert_means["persistance"]["répété"], 3),
     }
     (target/"measurements.tex").write_text(
         "% Fichier produit à partir des résultats exportés.\n" +

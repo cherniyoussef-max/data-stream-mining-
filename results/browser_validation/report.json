@@ -1,14 +1,17 @@
 {
   "status": "passed",
   "browser": "152.0.7977.64",
-  "url": "http://127.0.0.1:18765",
+  "url": "http://127.0.0.1:18767",
   "timer_config_seconds": 0.6,
   "two_batch_elapsed_seconds": [
-    1.271,
-    1.035
+    0.976,
+    1.063
   ],
   "paused_observation_seconds": 1.4,
   "download_rows": 500,
   "download_last_event": 551,
+  "manual_controls_disabled_during_playback": true,
+  "download_without_advancing": true,
+  "oracle_disabled_and_rank_budget_visible": true,
   "console_errors": []
 }

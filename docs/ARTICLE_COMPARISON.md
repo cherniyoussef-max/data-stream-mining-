@@ -25,3 +25,5 @@
 | Xie et al. | Lots avec covariables, régression quantile | Inférence et simulation | Résumé des lots, coût dépend du modèle | Un P99 descriptif s’interprète autrement qu’un P99 conditionnel |
 
 Le temps d’une jointure, l’erreur en rang et la couverture d’un intervalle statistique évaluent des tâches distinctes. Les utiliser comme classement global induirait une comparaison trompeuse. Les [analyses détaillées](ARTICLE_ANALYSIS_DETAILED.md) précisent les exemples et les limites de chaque rapprochement. Les sept méthodes avancées sont étudiées, et le projet implémente uniquement les algorithmes classiques et sa méthode par blocs.
+
+La table de contrôle V4 des fiches indique les sections ou figures vérifiées et les éditions dont le texte intégral demeure inaccessible. Elle distingue aussi les dépôts explicitement cités dans les manuscrits de ceux dont la disponibilité n’a pas été vérifiée.

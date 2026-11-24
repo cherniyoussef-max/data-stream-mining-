@@ -39,7 +39,7 @@ L’[étude complémentaire](../results/final_study.json) balaie six tailles de 
 
 L’incident commence à 401 et la récupération du générateur à 801. L’alerte arrive deux événements après le début, et le rétablissement 197 événements après le retour du générateur. Ce délai correspond à l’expiration des mesures élevées dans une fenêtre de 200 positions. Au rétablissement le P99 historique est de 182,51 ms et le P99 récent de 48,21 ms. Les seuils 80 ms et 110 ms s’appliquent respectivement à la médiane et au P99.
 
-La p-valeur de Pearson indique une non-rejection pour les graines déclarées. La garantie de DGIM découle des invariants, ainsi que la précision de rang historique de GK. La compression choisie simplifie GK. Le théorème d’espace de sa version originale demanderait sa stratégie de compression prouvée. Les blocs récents ont une borne propre qui tient compte de la frontière et la FIFO d’évaluation a un coût linéaire. Le jeu de données est entièrement synthétique et la charge n’est pas distribuée. L’effet d’une hystérésis et l’évaluation sur une trace réseau réelle sont des pistes ultérieures.
+La p-valeur de Pearson indique une non-rejection pour les graines déclarées. Les invariants établissent l’erreur de comptage de DGIM et l’erreur de rang historique de GK. La passe de compression employée ici a une borne d’espace de O(min(n, √(n/ε))) tuples. Les blocs récents ont une borne de rang qui tient compte de la frontière, et la FIFO d’évaluation a un coût linéaire. Les requêtes P50/P95/P99 réutilisent un tri. La [validation V4](FINAL_VALIDATION_V4.md) détaille les mesures appariées et les résultats d’une règle facultative de persistance. Le jeu de données est synthétique et la charge s’exécute sur une machine.
 
 ## Conclusion
 

@@ -6,6 +6,7 @@ import json
 from pathlib import Path
 import random
 import sys
+from time import monotonic
 
 import streamlit as st
 
@@ -54,12 +55,14 @@ def reset():
     state.history = deque(maxlen=500)
     state.mode = "Scénario"
     state.play = False
+    state.last_tick = None
 
 
 if submitted or "monitor" not in state:
     reset()
 
 batch = st.sidebar.slider("Événements par lot", 1, 500, 50)
+interval = st.sidebar.select_slider("Intervalle automatique (s)", options=(.3, .6, 1., 2.), value=.6)
 if st.sidebar.button("Réinitialiser"):
     reset()
 if st.sidebar.button("Simuler un incident"):
@@ -67,6 +70,9 @@ if st.sidebar.button("Simuler un incident"):
 if st.sidebar.button("Revenir à la normale"):
     state.mode = "Normal forcé"
 st.sidebar.caption(f"Mode actif · {state.mode}")
+st.sidebar.caption("Mode démonstration : oracle FIFO exact actif."
+                   if state.monitor.exact is not None else
+                   "Mode résumés seuls : oracle FIFO exact désactivé.")
 
 
 def advance(count):
@@ -80,22 +86,25 @@ def advance(count):
         state.history.append(state.monitor.add(x))
 
 
-@st.fragment(run_every="0.6s" if state.play else None)
+@st.fragment(run_every=interval if state.play else None)
 def live():
     monitor = state.monitor
     finished = monitor.gk.n >= state.config[1]
     controls = st.columns(4)
     if controls[0].button("Démarrer", disabled=finished or state.play):
         state.play = True
+        state.last_tick = None
         st.rerun()
     if controls[1].button("Pause", disabled=not state.play):
         state.play = False
         st.rerun()
-    if controls[2].button("Avancer d’un événement", disabled=finished):
+    if controls[2].button("Avancer d’un événement", disabled=finished or state.play):
         advance(1)
-    if controls[3].button("Avancer d’un lot", disabled=finished):
+    if controls[3].button("Avancer d’un lot", disabled=finished or state.play):
         advance(batch)
-    if state.play:
+    now = monotonic()
+    if state.play and (state.last_tick is None or now - state.last_tick >= interval):
+        state.last_tick = now
         advance(batch)
         if monitor.gk.n >= state.config[1]:
             state.play = False
@@ -126,7 +135,8 @@ def live():
             writer.writeheader()
             writer.writerows(history)
             csv_data = handle.getvalue()
-        st.download_button("Exporter les dernières mesures", csv_data, "latences.csv", "text/csv")
+        st.download_button("Exporter les 500 dernières observations", csv_data, "latences.csv", "text/csv",
+                           on_click="ignore")
     with reservoir:
         st.write(f"Capacité {monitor.uniform.k} · {monitor.uniform.n} observations · probabilité "
                  f"{min(1, monitor.uniform.k / monitor.uniform.n):.3f} par position.")
@@ -157,7 +167,9 @@ def live():
             tuples.append({"Valeur": value, "g": gap, "Δ": delta,
                            "Rang inférieur": lower, "Rang supérieur": lower + delta})
         st.dataframe(tuples, hide_index=True)
-        st.write(f"Fenêtre approchée : {monitor.recent.state_size} valeurs pondérées, borne de rang {monitor.recent.rank_bound}.")
+        st.write(f"Fenêtre approchée : {monitor.recent.state_size} représentants, "
+                 f"budget effectif de {monitor.recent.rank_bound} rangs.")
+        st.caption("ε règle le regroupement des blocs. Le budget récent inclut la compression et le bloc frontière.")
         st.write(f"Bloc frontière : {monitor.recent.stale_count} positions périmées encore représentées.")
         with st.expander("Voir les blocs récents"):
             st.write("Bloc ouvert", monitor.recent.open_block())

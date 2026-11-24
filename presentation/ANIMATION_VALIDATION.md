@@ -1,6 +1,6 @@
 # Validation des animations
 
-La base contenait 41 pages statiques et huit PNG. La V3 contient 44 diapositives, 44 notes et **18 GIF incorporés avec 99 images distinctes au total**. Le paquet ZIP PPTX est valide. Chaque GIF est lié depuis sa diapositive via une relation d’image interne, avec type `image/gif`. Aucun téléchargement externe n’est nécessaire. Aucun XML de timing PowerPoint natif, aucune transition ni vidéo n’est utilisé.
+La V4 conserve 44 diapositives, 44 notes et **18 GIF incorporés avec 99 images distinctes au total**. Les empreintes SHA-256 des 18 GIF sont identiques à celles du PPTX de la V3. Le paquet ZIP PPTX est valide. Chaque GIF est lié depuis sa diapositive via une relation d’image interne de type `image/gif`.
 
 | Famille | Images par GIF |
 |---|---|

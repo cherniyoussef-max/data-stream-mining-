@@ -30,7 +30,7 @@
 \vspace{2mm}
 {\large Nasr elhak Khemiri, Wajdi Zayoud et Youssif Cherni}\par
 \vspace{4mm}
-\textbf{Résumé.} Nous étudions la sélection d’observations, le comptage récent et les quantiles dans un flux synthétique de latences. Sur 10\,000 tirages, Pearson donne $\chi^2=\Pearson$ et $p=\PearsonP$. Le pire écart relatif DGIM observé est \DgMax\ pour une borne de 50\,\%. Le rang GK reste dans son budget sur la grille testée. À $N=10\,000$, $\varepsilon=0{,}05$, les blocs retiennent 2\,000 entrées contre 10\,000 pour la FIFO. Sur le scénario de référence, l’alerte démarre à \AlertAt\ et se lève à \RecoverAt. Le modèle de latence est synthétique et la borne d’espace du GK original reste non établie pour notre variante.\par
+\textbf{Résumé.} Nous étudions la sélection, le comptage et les quantiles dans un flux synthétique de latences. Sur 10\,000 tirages, Pearson donne $\chi^2=\Pearson$ et $p=\PearsonP$. Le pire écart DGIM observé est \DgMax\ pour une borne de 50\,\%. La variante GK respecte son budget de rang sur la grille testée et possède une borne d’espace sous-linéaire plus faible que celle de GK classique. À $N=10\,000$, $\varepsilon=0{,}05$, les blocs retiennent 2\,000 entrées contre 10\,000 pour la FIFO. Les requêtes P50/P95/P99 partagent un seul tri. Sur la trace de référence, l’alerte de seuil démarre à \AlertAt\ et se lève à \RecoverAt. La persistance réduit certains faux positifs mais écarte l’incident isolé.\par
 \textbf{Mots-clés.} Flux de données, échantillonnage, fenêtre glissante, DGIM, GK, P99.\par
 \vspace{4mm}
 \end{@twocolumnfalse}]
@@ -153,7 +153,7 @@ r_{\max}(v_i)=r_{\min}(v_i)+\Delta_i.
 \end{equation}
 Insérer $g=1$, $\Delta=0$ aux extrémités ou $\max(0,\lfloor2\varepsilon n\rfloor-1)$ à l’intérieur. Fusionner un tuple dans son successeur si $g_i+g_{i+1}+\Delta_{i+1}\le\lfloor2\varepsilon n\rfloor$, en gardant le minimum et le maximum. Le nouveau cumul préserve le rang du successeur. Requête : prendre le prédécesseur du premier $r_{\max}>qn+\varepsilon n$. Par l’invariant $g+\Delta\le2\varepsilon n$ en régime comprimé, son $r_{\min}$ est supérieur à $qn-\varepsilon n$. En début de flux, les rangs exacts entiers sont disponibles. Les extrémités restent exactes.
 
-L’espace $O(\varepsilon^{-1}\log(\varepsilon n))$ est celui de la stratégie originale en régime asymptotique. Nous conservons la variante vérifiée en rang, avec étude empirique de son espace.
+Après balayage à l’instant $t$, hors du minimum, toute paire adjacente $(i,j)$ vérifie $g_i+g_j+\Delta_j>\lfloor 2\varepsilon t\rfloor$. Si $j$ est âgé d’au moins $a\ge 1/\varepsilon$, $\Delta_j\le2\varepsilon(t-a)$, donc $g_i+g_j>\varepsilon a$. Chaque $g$ compte au plus deux fois. Il y a donc au plus $2t/(\varepsilon a)$ tels successeurs et $a$ tuples plus jeunes. Le choix $a=\lceil\sqrt{t/\varepsilon}\rceil$ et les $O(1/\varepsilon)$ insertions entre balayages donnent $O(\min(n,\sqrt{n/\varepsilon}))$ tuples. C’est une borne plus faible que $O(\varepsilon^{-1}\log(\varepsilon n))$ du GK classique.
 \columnbreak
 \subsection{Résumé récent par blocs}
 À l’instant $t$, $m=\min(t,N)$, $B=\lfloor\sqrt N\rfloor$ et $S=\lceil\varepsilon B\rceil$. Le bloc ouvert garde les valeurs brutes. Un bloc fermé est trié en groupes de taille $h_j\le S$. Le maximum de chaque groupe reçoit son effectif comme poids. On expire un bloc entier quand sa fin sort de la fenêtre.
@@ -187,7 +187,7 @@ $\downarrow\qquad\qquad\downarrow$\\
 \tbl{Comparer les trois méthodes de quantiles.}
 {\footnotesize\begin{tabularx}{\columnwidth}{@{}lXX@{}}
 \toprule Méthode & Horizon et garantie & État\\\midrule
-GK & Historique, rang $\varepsilon n$ & Tuples, espace empirique pour la variante\\
+GK & Historique, rang $\varepsilon n$ & $O(\min(n,\sqrt{n/\varepsilon}))$ tuples\\
 FIFO & Récent, exact & $N$ valeurs, tri à la requête\\
 Blocs & Récent, budget $u+E$ & $O(\sqrt N/\varepsilon)$ entrées à précision fixe\\
 \bottomrule\end{tabularx}}
@@ -255,6 +255,8 @@ P99 médian (ms) & \FifoQuery & \BlockQuery\\\bottomrule
 \topic{Interprétation du coût}
 Dans cette configuration, la FIFO ajoute les éléments plus vite que les blocs. Sa requête trie davantage de valeurs. Pour $\varepsilon$ suffisamment petit, les blocs ne regroupent plus de valeurs et peuvent coûter plus que la FIFO. Les mesures d’allocation dépendent de l’environnement Python et du protocole d’ingestion.
 
+Le lot de trois quantiles trie les représentants une fois. À $N=1\,000$, $\varepsilon=0{,}05$, le gain mesuré est \QueryGain\ fois sur les trois requêtes, par rapport à trois tris successifs (médiane sur cinq répétitions).
+
 \fig{15_rang_recent.png}{45mm}{Erreur et budget de rang sur le scénario à incidents répétés.}
 \clearpage
 \section{Application de surveillance}
@@ -268,10 +270,10 @@ Pour le scénario de référence, les 1\,200 décisions approchées et exactes c
 \topic{Chronologie}
 Incident 401--800. Alerte à \AlertAt, soit deux événements après l’entrée en incident. Rétablissement à \RecoverAt, 197 événements après le retour du générateur. Le P99 historique vaut encore 182,51\,ms au rétablissement, contre 48,21\,ms pour l’approché récent. Les résultats sont liés au scénario et aux seuils.
 \columnbreak
-\fig{20_sensibilite.png}{53mm}{Balayage contrôlé en $N$ et $\varepsilon$, même flux, graine 42 et mêmes seuils.}
+\fig{22_alertes_strategies.png}{53mm}{F1 face aux étiquettes, moyenne sur trois graines et cinq scénarios.}
 
 \topic{Stabilité et réactivité}
-Sur ce flux, à $\varepsilon=0{,}05$, le F1 contre les étiquettes passe de \SmallF\ pour $N=50$ à \LargeF\ pour $N=500$. Une fenêtre longue peut conserver l’incident bien après la fin. Un petit $N$ fait du P99 une mesure très proche du maximum : un seul point élevé peut prolonger une décision. Les délais non observés dans les 1\,200 événements sont laissés indéfinis.
+À $\varepsilon=0{,}05$, le F1 du seuil passe de \SmallF\ pour $N=50$ à \LargeF\ pour $N=500$ sur la trace de référence. La variante facultative demande trois observations consécutives concordantes et au moins 15\,\% de latences lentes dans un horizon d’au plus 50 points. Sur les incidents répétés, le F1 moyen passe de \RepeatBase\ à \RepeatPersist. Sur le cas isolé il tombe à zéro, et le cas sous seuil reste manqué. Ces compromis dépendent de l’incident recherché.
 
 \fig{17_decisions.png}{48mm}{Décision approchée, décision exacte et étiquette. Petit décalage vertical pour distinguer les traits.}
 
@@ -282,13 +284,13 @@ Deux cycles démarrage/pause, changements de paramètres, navigation et téléch
 Les quatre algorithmes ont des rôles complémentaires. R produit un réservoir uniforme, A-Res privilégie les mesures pondérées, DGIM borne l’erreur de comptage sur une fenêtre et GK borne le rang historique. Les blocs récents permettent de prendre une décision sur l’état courant avec un budget explicite. Les essais donnent un résultat reproductible : une alerte approchée peut suivre la règle exacte tout en différant de l’étiquette d’incident.
 
 \topic{Limites}
-La charge est synthétique, l’ordre d’arrivée est supposé fiable et tous les événements ont une position unique. Aucune calibration de production n’est revendiquée. L’alerte combine des seuils simples, sans hystérésis. Une erreur de rang faible peut suffire à déplacer la valeur autour d’un seuil. Une fenêtre trop longue prolonge les alertes et une fenêtre trop courte devient sensible aux points extrêmes. Les blocs peuvent retourner un seuil périmé, et un $\varepsilon$ faible annule leur gain de taille. La variante GK ne dispose pas de preuve d’espace générale dans ce travail.
+La charge est synthétique et l’ordre d’arrivée est supposé fiable. Une erreur de rang faible peut déplacer la valeur autour d’un seuil. Une longue fenêtre prolonge les alertes. Une courte fenêtre est sensible aux extrêmes. La règle de seuil reste la référence et la persistance ajoute un délai de confirmation. Les blocs peuvent retourner un seuil périmé et un $\varepsilon$ faible annule leur gain de taille. La borne d’espace démontrée pour la variante GK est moins serrée que la borne classique.
 
 \topic{Perspectives testables}
-Évaluer le détecteur sur une trace contrôlée puis annotée. Comparer une règle avec hystérésis à la règle fixe en publiant les délais et les deux matrices. Vérifier la compression du GK original avant toute revendication de son espace. Pour un déploiement futur, Kafka peut transporter les événements, Flink ou Spark les traiter en flux et DataSketches fournir des résumés industrialisés. Le prototype Python sert à examiner les états et rejouer un scénario local.
+Évaluer les règles sur une trace réelle annotée et étudier une borne de compression plus serrée. Pour un déploiement futur, Kafka peut transporter les événements, Flink ou Spark les traiter en flux et DataSketches fournir des résumés industrialisés. Le prototype Python sert à examiner les états et rejouer des scénarios locaux.
 
 \topic{Reproduction}
-Installer \step{requirements.txt}, exécuter \step{python -m pytest -v}, puis \step{evaluation.benchmark}, \step{evaluation.final\_study} et \step{evaluation.sensitivity}. Les statistiques de l’article sont dérivées des CSV et JSON par \step{evaluation/article.py}.
+Installer \step{requirements-dev.txt}, exécuter \step{python -m pytest -v} puis les modules d’évaluation indiqués dans le README. Les statistiques de l’article sont dérivées des CSV et JSON par \step{evaluation/article.py}.
 
 \columnbreak
 \begingroup

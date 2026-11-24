@@ -35,7 +35,7 @@
 28. **Pourquoi garder les extrêmes ?** Ils répondent exactement aux requêtes q=0 et q=1.
 29. **Qu’est-ce qu’un quantile de doublons ?** Une même valeur couvre un intervalle de rangs possibles.
 30. **Que faire avec n très petit ?** Prendre le rang valide le plus proche si l’intervalle demandé ne contient aucun rang entier.
-31. **Prouvez-vous l’espace de GK original ?** Non. Notre variante a une preuve de rang et une croissance mesurée. Sa passe de compression est différente.
+31. **Quelle borne d’espace a votre variante GK ?** O(min(n, √(n/ε))) tuples. Les paires anciennes consomment une part du cumul des rangs. Les tuples récents sont bornés par le nombre d’insertions. La borne classique logarithmique est plus serrée.
 32. **Pourquoi deux P99 ?** L’historique résume toutes les latences. Le récent suit les N dernières positions.
 33. **Comment fermer un bloc récent ?** Trier, regrouper des rangs voisins, conserver leur maximum et leur effectif.
 34. **Pourquoi peut-il rester du périmé ?** Un bloc à cheval sur la frontière est retiré seulement à son expiration complète.
@@ -63,5 +63,7 @@
 53. **Avez-vous utilisé Kafka ?** Non. La simulation locale suffit à la question étudiée.
 54. **Avez-vous implémenté les sept articles ?** Les articles situent les méthodes. Les quatre algorithmes historiques et les blocs constituent le code testé.
 55. **Quel est votre apport ?** Audit, implémentation, tests, étude comparative et démonstration reproductible.
-56. **Que mesurer ensuite ?** Une trace réelle, la stabilité des alertes selon les seuils et une variante GK avec preuve d’espace complète.
+56. **Que mesurer ensuite ?** La stabilité des politiques d’alerte sur une trace réelle annotée et l’effet d’une compression conforme au GK classique.
 57. **Comment reproduire le projet ?** Installer les dépendances, lancer pytest, les deux modules d’expérience et le tableau de bord selon le README.
+58. **Pourquoi regrouper P50, P95 et P99 ?** Les trois cibles portent sur les mêmes représentants. Un seul tri et un seul parcours cumulatif suffit pour obtenir les trois résultats.
+59. **En quoi la persistance change-t-elle l’alerte ?** Elle exige trois décisions concordantes et une proportion minimale de points lents à court terme. Elle filtre les pics isolés, au prix de ne pas les détecter.
