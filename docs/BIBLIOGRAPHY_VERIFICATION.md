@@ -11,7 +11,7 @@
 | Xiangyang Gou, Yinda Zhang, Zhoujing Hu, Long He, Ke Wang, Xilai Liu, Tong Yang, Yi Wang et Bin Cui, 2023 (en ligne 2022) | IEEE TKDE, 10.1109/TKDE.2022.3151140 | [Manuscrit accepté](https://skyelves.github.io/files/TKDE22-A_Sketch_Framework_for_Approximate_Data_Stream_Processing_in_Sliding_Windows.pdf) | Non audité |
 | Lasantha Fernando, Harsh Bindra et Khuzaima Daudjee, 2023 | EDBT, 10.48786/edbt.2023.34 | [Actes](https://openproceedings.org/2023/conf/edbt/paper-9.pdf) | Non audité |
 | Binyang Dai, Xiao Hu et Ke Yi, 2024 | PACMMOD 2(3), 26 p., 10.1145/3654921 | [Manuscrit](https://arxiv.org/abs/2404.03194) | Non audité |
-| Elena Gribelyuk, Pachara Sawettamalya, Hongxun Wu et Huacheng Yu, 2024 | PACMMOD 2(2), PODS, article 109, 25 p., 10.1145/3651610 | [ACM](https://doi.org/10.1145/3651610) | Pseudocode et preuve, dépôt non audité |
+| Elena Gribelyuk, Pachara Sawettamalya, Hongxun Wu et Huacheng Yu, 2024 | PACMMOD 2(2), PODS, article 109, 25 p., 10.1145/3651610 | [ACM](https://doi.org/10.1145/3651610), [texte intégral NSF](https://par.nsf.gov/servlets/purl/10526808) | Pseudocode et preuve, dépôt non audité |
 | Meghal Gupta, Mihir Singhal et Hongxun Wu, 2024 | FOCS, 1137–1158, 10.1109/FOCS61266.2024.00075 | [Manuscrit](https://arxiv.org/abs/2404.03847) | Preuve, dépôt non audité |
 | Jinhan Xie, Xiaodong Yan, Bei Jiang et Linglong Kong, 2025 (DOI 2024) | Journal of Econometrics 249(A), article 105924, 10.1016/j.jeconom.2024.105924 | [Elsevier](https://www.sciencedirect.com/science/article/pii/S0304407624002756) | Non audité |
 

@@ -4,9 +4,9 @@
     "title": "Échantillonnage et fenêtres glissantes",
     "focus": "Surveillance des latences en temps réel",
     "oral": "Nous sommes étudiants en Master D3S à l’ISTIC. Nous étudions comment examiner un flux de latences sans stocker toutes ses mesures. Le problème se découpe en échantillonnage, comptage et quantiles.",
-    "owner": "Nasr elhak Khemiri",
     "number": 1,
-    "duration": 24,
+    "owner": "Nasr elhak Khemiri",
+    "duration": 18,
     "cue": "Pointer les termes clés avant l’explication.",
     "transition": "Passer à « Les mesures arrivent sans taille finale ».",
     "frameNotes": ""
@@ -16,10 +16,10 @@
     "title": "Les mesures arrivent sans taille finale",
     "focus": "Une observation à la fois",
     "oral": "Une mesure élevée peut correspondre à un pic isolé. Quand les latences élevées se succèdent, l’effet apparaît aussi dans le P99 de la fenêtre. Suivre l’arrivée et les deux P99 dans la trace.",
-    "owner": "Nasr elhak Khemiri",
     "anim": "flux",
     "number": 2,
-    "duration": 28,
+    "owner": "Nasr elhak Khemiri",
+    "duration": 20,
     "cue": "Observer le média « Arrivées sur le réseau » et commenter les états indiqués.",
     "transition": "Passer à « Question et objectifs du projet ».",
     "frameNotes": "Événement 200 · Normal. État exact : Normal. Fenêtre 200, seuil P99 110 ms.\nL’incident est injecté aux événements 401 à 800.\nÉvénement 400 · Normal. État exact : Normal. Fenêtre 200, seuil P99 110 ms.\nL’incident est injecté aux événements 401 à 800.\nÉvénement 401 · Normal. État exact : Normal. Fenêtre 200, seuil P99 110 ms.\nL’incident est injecté aux événements 401 à 800.\nÉvénement 403 · Alerte. État exact : Alerte. Fenêtre 200, seuil P99 110 ms.\nL’incident est injecté aux événements 401 à 800.\nÉvénement 600 · Alerte. État exact : Alerte. Fenêtre 200, seuil P99 110 ms.\nL’incident est injecté aux événements 401 à 800."
@@ -29,14 +29,14 @@
     "title": "Question et objectifs du projet",
     "focus": "Conserver un échantillon et mesurer l’état récent",
     "oral": "La question est de savoir quels résumés donnent une estimation suffisamment précise avec peu d’état. Les quatre méthodes imposées sont R, A-Res, DGIM et GK. Notre prototype combine ces méthodes et des blocs récents pour la surveillance.",
-    "owner": "Nasr elhak Khemiri",
     "items": [
       "Échantillon de taille k sur un flux inconnu",
       "Comptage des 1 et quantiles approchés",
       "Validation T1–T5 et démonstration reproductible"
     ],
     "number": 3,
-    "duration": 24,
+    "owner": "Nasr elhak Khemiri",
+    "duration": 22,
     "cue": "Pointer les termes clés avant l’explication.",
     "transition": "Passer à « Contributions ».",
     "frameNotes": ""
@@ -46,9 +46,9 @@
     "title": "Contributions",
     "focus": "Implémentations, preuves et évaluation",
     "oral": "Nous avons implémenté les algorithmes classiques, formalisé le budget des blocs, comparé les décisions à deux références et testé l’interface dans Chrome. Nous avons gardé l’oracle FIFO facultatif afin de distinguer les coûts.",
-    "owner": "Nasr elhak Khemiri",
     "number": 4,
-    "duration": 24,
+    "owner": "Nasr elhak Khemiri",
+    "duration": 20,
     "cue": "Pointer les termes clés avant l’explication.",
     "transition": "Passer à « Plan de la soutenance ».",
     "frameNotes": ""
@@ -57,8 +57,7 @@
     "section": 0,
     "title": "Plan de la soutenance",
     "focus": "Six parties de la question à l’application",
-    "oral": "Je présente le contexte et les quatre modèles de fenêtre. Wajdi situe sept travaux scientifiques et ouvre la partie méthodes. Youssif poursuit avec la fenêtre récente, les outils et la démonstration.",
-    "owner": "Nasr elhak Khemiri",
+    "oral": "Je présente le contexte, les fenêtres et les trois premières études. Wajdi poursuit la revue puis explique les quatre algorithmes. Youssif présente les quantiles récents, les tests et la démonstration.",
     "items": [
       "Introduction",
       "Fondements théoriques",
@@ -68,7 +67,8 @@
       "Conclusion et application concrète"
     ],
     "number": 5,
-    "duration": 24,
+    "owner": "Nasr elhak Khemiri",
+    "duration": 18,
     "cue": "Pointer les termes clés avant l’explication.",
     "transition": "Passer à « Données, information, connaissance, décision ».",
     "frameNotes": ""
@@ -78,7 +78,6 @@
     "title": "Données, information, connaissance, décision",
     "focus": "Du signal brut à une action justifiable",
     "oral": "Une mesure de 156 ms est une donnée. Le P99 et les dépassements sont des informations. Une hausse durable de la fenêtre indique une détérioration. L’opérateur décide alors d’examiner l’alerte, puis de confirmer le rétablissement.",
-    "owner": "Nasr elhak Khemiri",
     "items": [
       "156 ms → mesure brute",
       "P99 et bits lents → indicateurs",
@@ -86,7 +85,8 @@
       "Alerte → diagnostic ou confirmation du retour"
     ],
     "number": 6,
-    "duration": 24,
+    "owner": "Nasr elhak Khemiri",
+    "duration": 21,
     "cue": "Pointer les termes clés avant l’explication.",
     "transition": "Passer à « Médiane, P99 et unités d’erreur ».",
     "frameNotes": ""
@@ -96,14 +96,14 @@
     "title": "Médiane, P99 et unités d’erreur",
     "focus": "Le haut de la distribution réagit aux extrêmes",
     "oral": "Dans la série [20, 21, 22, 23, 180], la médiane vaut 22 et le P99 au rang supérieur vaut 180. Une petite erreur de rang peut donc produire une grande erreur en millisecondes.",
-    "owner": "Nasr elhak Khemiri",
     "items": [
       "Rang médian : 3 sur 5",
       "P99 : ceil(0,99 × 5) = 5",
       "Écart de rang ≠ écart de valeur"
     ],
     "number": 7,
-    "duration": 24,
+    "owner": "Nasr elhak Khemiri",
+    "duration": 20,
     "cue": "Pointer les termes clés avant l’explication.",
     "transition": "Passer à « Fenêtre à repère fixe ».",
     "frameNotes": ""
@@ -113,10 +113,10 @@
     "title": "Fenêtre à repère fixe",
     "focus": "Landmark",
     "oral": "Le repère B reste fixe. La fenêtre grandit à chaque arrivée et l’influence des anciens points est conservée.",
-    "owner": "Nasr elhak Khemiri",
     "anim": "landmark",
     "number": 8,
-    "duration": 28,
+    "owner": "Nasr elhak Khemiri",
+    "duration": 13,
     "cue": "Observer le média « Landmark » et commenter les états indiqués.",
     "transition": "Passer à « Fenêtres disjointes ».",
     "frameNotes": "Arrivée 3. Le repère B reste fixe et les nouveaux points agrandissent la fenêtre.\nArrivée 4. Le repère B reste fixe et les nouveaux points agrandissent la fenêtre.\nArrivée 5. Le repère B reste fixe et les nouveaux points agrandissent la fenêtre.\nArrivée 6. Le repère B reste fixe et les nouveaux points agrandissent la fenêtre.\nArrivée 7. Le repère B reste fixe et les nouveaux points agrandissent la fenêtre."
@@ -126,10 +126,10 @@
     "title": "Fenêtres disjointes",
     "focus": "Tumbling",
     "oral": "Le passage de la troisième à la quatrième position ouvre un nouveau bloc. Une observation appartient à un seul bilan.",
-    "owner": "Nasr elhak Khemiri",
     "anim": "tumbling",
     "number": 9,
-    "duration": 28,
+    "owner": "Nasr elhak Khemiri",
+    "duration": 14,
     "cue": "Observer le média « Tumbling » et commenter les états indiqués.",
     "transition": "Passer à « Fenêtre de taille fixe ».",
     "frameNotes": "Arrivée 3. Un nouveau bloc commence après trois positions. Les blocs sont disjoints.\nArrivée 4. Un nouveau bloc commence après trois positions. Les blocs sont disjoints.\nArrivée 5. Un nouveau bloc commence après trois positions. Les blocs sont disjoints.\nArrivée 6. Un nouveau bloc commence après trois positions. Les blocs sont disjoints.\nArrivée 7. Un nouveau bloc commence après trois positions. Les blocs sont disjoints."
@@ -139,10 +139,10 @@
     "title": "Fenêtre de taille fixe",
     "focus": "Sliding window",
     "oral": "Trois positions sont mises en évidence. Quand une valeur arrive, la plus ancienne des trois sort. Nos fenêtres de surveillance utilisent les indices d’événement.",
-    "owner": "Nasr elhak Khemiri",
     "anim": "glissante",
     "number": 10,
-    "duration": 28,
+    "owner": "Nasr elhak Khemiri",
+    "duration": 16,
     "cue": "Observer le média « Glissante » et commenter les états indiqués.",
     "transition": "Passer à « Décroissance exponentielle ».",
     "frameNotes": "Arrivée 3. La fenêtre garde trois positions. La plus ancienne sort à chaque arrivée.\nArrivée 4. La fenêtre garde trois positions. La plus ancienne sort à chaque arrivée.\nArrivée 5. La fenêtre garde trois positions. La plus ancienne sort à chaque arrivée.\nArrivée 6. La fenêtre garde trois positions. La plus ancienne sort à chaque arrivée.\nArrivée 7. La fenêtre garde trois positions. La plus ancienne sort à chaque arrivée."
@@ -151,13 +151,13 @@
     "section": 1,
     "title": "Décroissance exponentielle",
     "focus": "Poids en fonction de l’âge",
-    "oral": "L’arrivée reçoit le poids 1 et les poids précédents sont divisés par deux. Les anciens points perdent de l’influence graduellement. Je passe la parole à Wajdi pour les travaux récents.",
-    "owner": "Nasr elhak Khemiri",
+    "oral": "L’arrivée reçoit le poids 1 et les poids précédents sont divisés par deux. Les anciens points perdent de l’influence graduellement. Les travaux qui suivent donnent d’autres façons de gérer un historique.",
     "anim": "decroissance",
     "number": 11,
-    "duration": 28,
+    "owner": "Nasr elhak Khemiri",
+    "duration": 19,
     "cue": "Observer le média « Decroissance » et commenter les états indiqués.",
-    "transition": "Je passe la parole à Wajdi, qui présente « Tirage pondéré parallèle ».",
+    "transition": "Passer à « Tirage pondéré parallèle ».",
     "frameNotes": "Arrivée 3. À chaque arrivée les poids précédents sont divisés par deux.\nArrivée 4. À chaque arrivée les poids précédents sont divisés par deux.\nArrivée 5. À chaque arrivée les poids précédents sont divisés par deux.\nArrivée 6. À chaque arrivée les poids précédents sont divisés par deux.\nArrivée 7. À chaque arrivée les poids précédents sont divisés par deux."
   },
   {
@@ -165,13 +165,14 @@
     "title": "Tirage pondéré parallèle",
     "focus": "Hübschle-Schneider et Sanders · ACM TOMS 2022",
     "oral": "Le coût séquentiel devient dominant sur des lots pondérés. L’objectif est de distribuer le travail sans changer la loi de tirage.",
-    "owner": "Wajdi Zayoud",
     "source": "https://doi.org/10.1145/3549934",
+    "articleTitle": "Parallel Weighted Random Sampling",
     "items": [
       "Le coût séquentiel devient dominant sur des lots pondérés. L’objectif est de distribuer le travail sans changer la loi de tirage."
     ],
     "number": 12,
-    "duration": 12,
+    "owner": "Nasr elhak Khemiri",
+    "duration": 14,
     "cue": "Pointer les termes clés avant l’explication.",
     "transition": "Passer à « Table alias et lots ».",
     "frameNotes": ""
@@ -181,10 +182,11 @@
     "title": "Table alias et lots",
     "focus": "Hübschle-Schneider et Sanders · ACM TOMS 2022",
     "oral": "Le tableau 1 distingue les coûts de construction et de requête selon la règle et le modèle parallèle. La masse 3 ou 9 de l’animation est un exemple pédagogique.",
-    "owner": "Wajdi Zayoud",
     "source": "https://doi.org/10.1145/3549934",
+    "articleTitle": "Parallel Weighted Random Sampling",
     "anim": "a1",
     "number": 13,
+    "owner": "Nasr elhak Khemiri",
     "duration": 18,
     "cue": "Observer le média « Lots pondérés distribués » et commenter les états indiqués.",
     "transition": "Passer à « Expiration pour les sketches ».",
@@ -195,13 +197,14 @@
     "title": "Expiration pour les sketches",
     "focus": "Gou et al. · IEEE TKDE 2023",
     "oral": "Un historique complet ne suffit pas à isoler les fréquences récentes. L’étude utilise notamment CAIDA, Web, Zipf et StackOverflow (§8.1).",
-    "owner": "Wajdi Zayoud",
     "source": "https://doi.org/10.1109/TKDE.2022.3151140",
+    "articleTitle": "A Sketch Framework for Approximate Data Stream Processing in Sliding Windows",
     "items": [
       "Un historique complet ne suffit pas à isoler les fréquences récentes. L’étude utilise notamment CAIDA, Web, Zipf et StackOverflow (§8.1)."
     ],
     "number": 14,
-    "duration": 12,
+    "owner": "Nasr elhak Khemiri",
+    "duration": 14,
     "cue": "Pointer les termes clés avant l’explication.",
     "transition": "Passer à « Zones temporelles ».",
     "frameNotes": ""
@@ -211,11 +214,12 @@
     "title": "Zones temporelles",
     "focus": "Gou et al. · IEEE TKDE 2023",
     "oral": "Le cadre adapte des sketches à une frontière temporelle. Les expériences dépendent de la requête et du budget ; notre P99 traite un autre agrégat.",
-    "owner": "Wajdi Zayoud",
     "source": "https://doi.org/10.1109/TKDE.2022.3151140",
+    "articleTitle": "A Sketch Framework for Approximate Data Stream Processing in Sliding Windows",
     "anim": "a2",
     "number": 15,
-    "duration": 18,
+    "owner": "Nasr elhak Khemiri",
+    "duration": 16,
     "cue": "Observer le média « Un sketch qui expire » et commenter les états indiqués.",
     "transition": "Passer à « Comparer des esquisses de quantiles ».",
     "frameNotes": "Zones temporelles. Chaque zone couvre un intervalle.\nMise à jour. Le sketch compte par zone et interroge l’intervalle actif.\nFrontière déplacée. La sortie de la première zone évite de compter des fréquences anciennes."
@@ -225,13 +229,14 @@
     "title": "Comparer des esquisses de quantiles",
     "focus": "Fernando, Bindra et Daudjee · EDBT 2023",
     "oral": "Même problème, cinq méthodes, mais des choix de représentation et d’erreur différents. Jeux Pareto, Uniforme, NYT et Power.",
-    "owner": "Wajdi Zayoud",
     "source": "https://doi.org/10.48786/edbt.2023.34",
+    "articleTitle": "An Experimental Analysis of Quantile Sketches over Data Streams",
     "items": [
       "Même problème, cinq méthodes, mais des choix de représentation et d’erreur différents. Jeux Pareto, Uniforme, NYT et Power."
     ],
     "number": 16,
-    "duration": 12,
+    "owner": "Nasr elhak Khemiri",
+    "duration": 13,
     "cue": "Pointer les termes clés avant l’explication.",
     "transition": "Passer à « Résultat conditionné au jeu ».",
     "frameNotes": ""
@@ -241,13 +246,14 @@
     "title": "Résultat conditionné au jeu",
     "focus": "Fernando, Bindra et Daudjee · EDBT 2023",
     "oral": "Dans la figure 6b, les cinq méthodes restent sous 1 % d’erreur relative moyenne sur le jeu uniforme. La figure 6a montre que la queue Pareto change le résultat.",
-    "owner": "Wajdi Zayoud",
     "source": "https://doi.org/10.48786/edbt.2023.34",
+    "articleTitle": "An Experimental Analysis of Quantile Sketches over Data Streams",
     "anim": "a3",
     "number": 17,
+    "owner": "Nasr elhak Khemiri",
     "duration": 18,
     "cue": "Observer le média « Un même flux, plusieurs esquisses » et commenter les états indiqués.",
-    "transition": "Passer à « Sélection sur des jointures ».",
+    "transition": "Je passe la parole à Wajdi, qui présente « Sélection sur des jointures ».",
     "frameNotes": "Entrée commune. Même entrée pour chaque méthode dans une expérience.\nCinq résumés. Les représentations et notions d’erreur diffèrent.\nLecture de la figure 6b. Le résultat publié est propre à ce jeu et à ce protocole."
   },
   {
@@ -255,12 +261,13 @@
     "title": "Sélection sur des jointures",
     "focus": "Dai, Hu et Yi · SIGMOD 2024",
     "oral": "La taille d’une jointure dépasse parfois celle des entrées. L’objectif est d’échantillonner ses résultats sans les matérialiser.",
-    "owner": "Wajdi Zayoud",
     "source": "https://doi.org/10.1145/3654921",
+    "articleTitle": "Reservoir Sampling over Joins",
     "items": [
       "La taille d’une jointure dépasse parfois celle des entrées. L’objectif est d’échantillonner ses résultats sans les matérialiser."
     ],
     "number": 18,
+    "owner": "Wajdi Zayoud",
     "duration": 12,
     "cue": "Pointer les termes clés avant l’explication.",
     "transition": "Passer à « Index et réservoir à prédicat ».",
@@ -271,11 +278,12 @@
     "title": "Index et réservoir à prédicat",
     "focus": "Dai, Hu et Yi · SIGMOD 2024",
     "oral": "L’index propose des candidats compatibles. La section expérimentale inclut le graphe Epinions et des requêtes relationnelles. Notre réservoir cible une autre population.",
-    "owner": "Wajdi Zayoud",
     "source": "https://doi.org/10.1145/3654921",
+    "articleTitle": "Reservoir Sampling over Joins",
     "anim": "a4",
     "number": 19,
-    "duration": 18,
+    "owner": "Wajdi Zayoud",
+    "duration": 15,
     "cue": "Observer le média « Réservoir de jointure » et commenter les états indiqués.",
     "transition": "Passer à « Résumé déterministe par comparaisons ».",
     "frameNotes": "Deux flux. Le réservoir cible les tuples joints.\nIndex de correspondance. L’index aide à trouver les candidats.\nSélection sous prédicat. Le réservoir est construit sans matérialiser toute la jointure."
@@ -284,14 +292,15 @@
     "section": 2,
     "title": "Résumé déterministe par comparaisons",
     "focus": "Gribelyuk, Sawettamalya, Wu et Yu · PODS 2024",
-    "oral": "Peut-on simplifier un sketch déterministe tout en conservant une bonne borne d’espace dans le modèle de comparaison ?",
-    "owner": "Wajdi Zayoud",
+    "oral": "Le modèle autorise seulement les comparaisons. Les auteurs conservent une erreur additive en rang pour toutes les requêtes et analysent une règle de compression différente du balayage de notre classe GK.",
     "source": "https://doi.org/10.1145/3651610",
+    "articleTitle": "Simple & Optimal Quantile Sketch: Combining Greenwald-Khanna with Khanna-Greenwald",
     "items": [
-      "Peut-on simplifier un sketch déterministe tout en conservant une bonne borne d’espace dans le modèle de comparaison ?"
+      "Le modèle autorise seulement les comparaisons. Les auteurs conservent une erreur additive en rang pour toutes les requêtes et analysent une règle de compression différente du balayage de notre classe GK."
     ],
     "number": 20,
-    "duration": 12,
+    "owner": "Wajdi Zayoud",
+    "duration": 19,
     "cue": "Pointer les termes clés avant l’explication.",
     "transition": "Passer à « Une borne en éléments stockés ».",
     "frameNotes": ""
@@ -300,12 +309,13 @@
     "section": 2,
     "title": "Une borne en éléments stockés",
     "focus": "Gribelyuk, Sawettamalya, Wu et Yu · PODS 2024",
-    "oral": "Le résumé officiel annonce une borne asymptotique de (2+o(1)) ε⁻¹ log(εn). Notre passe sur les tuples utilise une autre compression.",
-    "owner": "Wajdi Zayoud",
+    "oral": "La borne asymptotique est de (2+o(1)) ε⁻¹ log(εn) éléments stockés. Chaque représentant est partagé par deux partitions, et les fusions tiennent compte de l’ordre des dates d’insertion. Notre preuve utilise la masse des gaps adjacents.",
     "source": "https://doi.org/10.1145/3651610",
+    "articleTitle": "Simple & Optimal Quantile Sketch: Combining Greenwald-Khanna with Khanna-Greenwald",
     "anim": "a5",
     "number": 21,
-    "duration": 18,
+    "owner": "Wajdi Zayoud",
+    "duration": 21,
     "cue": "Observer le média « Compression déterministe » et commenter les états indiqués.",
     "transition": "Passer à « Estimation sur univers entier ».",
     "frameNotes": "Univers totalement ordonné. Les comparaisons ordonnent les éléments.\nGrouper dans une marge. Illustration de la marge additive, sans exécuter l’algorithme publié.\nÉnoncé asymptotique. La borne de l’article se compte en éléments stockés."
@@ -315,13 +325,14 @@
     "title": "Estimation sur univers entier",
     "focus": "Gupta, Singhal et Wu · FOCS 2024",
     "oral": "Avec un univers entier borné, peut-on gagner de la place par rapport au modèle qui autorise seulement les comparaisons ?",
-    "owner": "Wajdi Zayoud",
     "source": "https://doi.org/10.1109/FOCS61266.2024.00075",
+    "articleTitle": "Optimal Quantile Estimation: Beyond the Comparison Model",
     "items": [
       "Avec un univers entier borné, peut-on gagner de la place par rapport au modèle qui autorise seulement les comparaisons ?"
     ],
     "number": 22,
-    "duration": 12,
+    "owner": "Wajdi Zayoud",
+    "duration": 14,
     "cue": "Pointer les termes clés avant l’explication.",
     "transition": "Passer à « L’hypothèse du modèle est essentielle ».",
     "frameNotes": ""
@@ -331,11 +342,12 @@
     "title": "L’hypothèse du modèle est essentielle",
     "focus": "Gupta, Singhal et Wu · FOCS 2024",
     "oral": "Les opérations sur l’univers permettent O(1/ε) mots dans le cadre théorique étudié. Le découpage illustré explique l’information disponible, pas le pseudocode exact.",
-    "owner": "Wajdi Zayoud",
     "source": "https://doi.org/10.1109/FOCS61266.2024.00075",
+    "articleTitle": "Optimal Quantile Estimation: Beyond the Comparison Model",
     "anim": "a6",
     "number": 23,
-    "duration": 18,
+    "owner": "Wajdi Zayoud",
+    "duration": 15,
     "cue": "Observer le média « Exploiter un univers d’entiers » et commenter les états indiqués.",
     "transition": "Passer à « Inférence conditionnelle ».",
     "frameNotes": "Latences entières. On connaît l’univers de valeurs de l’exemple.\nDécoupage numérique. Les opérations sur les entiers fournissent une information supplémentaire.\nGarantie propre au modèle. La borne ne se transpose pas au GK par comparaison."
@@ -345,13 +357,14 @@
     "title": "Inférence conditionnelle",
     "focus": "Xie, Yan, Jiang et Kong · Journal of Econometrics 2025",
     "oral": "Une régression quantile suit un quantile de réponse associé à des covariables. Les lignes historiques ne sont pas conservées intégralement.",
-    "owner": "Wajdi Zayoud",
     "source": "https://doi.org/10.1016/j.jeconom.2024.105924",
+    "articleTitle": "Statistical Inference for Smoothed Quantile Regression with Streaming Data",
     "items": [
       "Une régression quantile suit un quantile de réponse associé à des covariables. Les lignes historiques ne sont pas conservées intégralement."
     ],
     "number": 24,
-    "duration": 12,
+    "owner": "Wajdi Zayoud",
+    "duration": 14,
     "cue": "Pointer les termes clés avant l’explication.",
     "transition": "Passer à « Mise à jour d’un modèle par lots ».",
     "frameNotes": ""
@@ -361,11 +374,12 @@
     "title": "Mise à jour d’un modèle par lots",
     "focus": "Xie, Yan, Jiang et Kong · Journal of Econometrics 2025",
     "oral": "Le lissage et les résumés de lots rendent la mise à jour possible. Les applications de l’article incluent les vélos à Séoul et les fonds indiciels.",
-    "owner": "Wajdi Zayoud",
     "source": "https://doi.org/10.1016/j.jeconom.2024.105924",
+    "articleTitle": "Statistical Inference for Smoothed Quantile Regression with Streaming Data",
     "anim": "a7",
     "number": 25,
-    "duration": 18,
+    "owner": "Wajdi Zayoud",
+    "duration": 16,
     "cue": "Observer le média « Quantile conditionnel en ligne » et commenter les états indiqués.",
     "transition": "Passer à « Comparaison fonctionnelle ».",
     "frameNotes": "Mesures et covariable. Le modèle utilise une variable explicative.\nAjustement par lot. La régression quantile est mise à jour après l’arrivée.\nDeux charges, deux cibles. Les quantiles dépendent de la charge. Notre P99 est marginal."
@@ -375,7 +389,6 @@
     "title": "Comparaison fonctionnelle",
     "focus": "Sept travaux, plusieurs populations et cibles",
     "oral": "Lire les deux colonnes. L’expiration d’une fréquence, l’uniformité d’une jointure et l’inférence conditionnelle s’appliquent à des populations et à des objectifs différents.",
-    "owner": "Wajdi Zayoud",
     "table": [
       [
         "Article",
@@ -411,7 +424,8 @@
       ]
     ],
     "number": 26,
-    "duration": 12,
+    "owner": "Wajdi Zayoud",
+    "duration": 15,
     "cue": "Pointer les termes clés avant l’explication.",
     "transition": "Passer à « Comparaison scientifique ».",
     "frameNotes": ""
@@ -421,7 +435,6 @@
     "title": "Comparaison scientifique",
     "focus": "La garantie dépend du problème et du modèle",
     "oral": "Deux articles formalisent l’espace dans des modèles différents. Fernando et ses collègues étudient des mesures. D’autres articles traitent l’expiration, la loi de tirage ou l’inférence. Aucune méthode avancée n’est présentée comme implémentée dans le prototype.",
-    "owner": "Wajdi Zayoud",
     "table": [
       [
         "Axe",
@@ -445,7 +458,8 @@
       ]
     ],
     "number": 27,
-    "duration": 12,
+    "owner": "Wajdi Zayoud",
+    "duration": 21,
     "cue": "Pointer les termes clés avant l’explication.",
     "transition": "Passer à « Architecture logicielle ».",
     "frameNotes": ""
@@ -455,10 +469,10 @@
     "title": "Architecture logicielle",
     "focus": "Un moteur commun à la simulation, aux tests et à l’interface",
     "oral": "Le générateur synthétique envoie une mesure à Monitor.add. Le moteur met à jour chaque résumé et, sur demande, l’oracle exact. Le CLI et Streamlit consomment le même état. Les scripts d’évaluation exportent les mesures.",
-    "owner": "Wajdi Zayoud",
     "arch": true,
     "number": 28,
-    "duration": 12,
+    "owner": "Wajdi Zayoud",
+    "duration": 20,
     "cue": "Pointer les termes clés avant l’explication.",
     "transition": "Passer à « Algorithm R ».",
     "frameNotes": ""
@@ -468,10 +482,10 @@
     "title": "Algorithm R",
     "focus": "O(k) entrées et mise à jour O(1)",
     "oral": "Avec k égal à trois, la trace montre les trois admissions initiales, les remplacements D puis E, le rejet F, l’admission G et le rejet H. Une position a une probabilité k/n. T1 compare les fréquences à 1000.",
-    "owner": "Wajdi Zayoud",
     "anim": "reservoir",
     "number": 29,
-    "duration": 23,
+    "owner": "Wajdi Zayoud",
+    "duration": 22,
     "cue": "Observer le média « Algorithm R » et commenter les états indiqués.",
     "transition": "Passer à « Réservoir A-Res ».",
     "frameNotes": "A arrive · remplissage. Capacité k=3 · 1 observations traitées · identifiant distinct par position.\nB arrive · remplissage. Capacité k=3 · 2 observations traitées · identifiant distinct par position.\nC arrive · remplissage. Capacité k=3 · 3 observations traitées · identifiant distinct par position.\nD arrive · j=0 · remplacement. Capacité k=3 · 4 observations traitées · identifiant distinct par position.\nE arrive · j=0 · remplacement. Capacité k=3 · 5 observations traitées · identifiant distinct par position.\nF arrive · j=5 · rejet. Capacité k=3 · 6 observations traitées · identifiant distinct par position.\nG arrive · j=2 · remplacement. Capacité k=3 · 7 observations traitées · identifiant distinct par position.\nH arrive · j=3 · rejet. Capacité k=3 · 8 observations traitées · identifiant distinct par position."
@@ -481,10 +495,10 @@
     "title": "Réservoir A-Res",
     "focus": "Clé U^(1/w) et minimum du tas",
     "oral": "L’animation impose les mêmes U que l’exercice. C a une priorité supérieure à A et l’éjecte. D est rejeté. Le test T2 compare les probabilités pour k égal à un, deux ou trois.",
-    "owner": "Wajdi Zayoud",
     "anim": "ares",
     "number": 30,
-    "duration": 23,
+    "owner": "Wajdi Zayoud",
+    "duration": 20,
     "cue": "Observer le média « A-Res » et commenter les états indiqués.",
     "transition": "Passer à « DGIM : compter les bits égaux à 1 ».",
     "frameNotes": "A · poids 1 · U=0.25 · inséré. Clé équivalente U^(1/w) = 0.2500. Minimum ρ avant l’arrivée : vide.\nB · poids 2 · U=0.25 · inséré. Clé équivalente U^(1/w) = 0.5000. Minimum ρ avant l’arrivée : -0.327.\nC · poids 4 · U=0.25 · remplace le minimum. Clé équivalente U^(1/w) = 0.7071. Minimum ρ avant l’arrivée : -0.327.\nD · poids 2 · U=0.16 · rejeté. Clé équivalente U^(1/w) = 0.4000. Minimum ρ avant l’arrivée : 0.367."
@@ -494,10 +508,10 @@
     "title": "DGIM : compter les bits égaux à 1",
     "focus": "Au plus deux groupes par taille, erreur relative ≤50 %",
     "oral": "À sept, deux fusions se propagent. Observer le huitième bit puis les zéros. À douze, l’ancien groupe expire. La borne utilise les bits égaux à 1 plus récents et le demi-compte du groupe frontière.",
-    "owner": "Wajdi Zayoud",
     "anim": "dgim",
     "number": 31,
-    "duration": 23,
+    "owner": "Wajdi Zayoud",
+    "duration": 34,
     "cue": "Observer le média « DGIM · groupes du plus récent au plus ancien » et commenter les états indiqués.",
     "transition": "Passer à « GK : retrouver un rang historique ».",
     "frameNotes": "t=1 · bit 1 · fenêtre 1. Exact 1 · estimé 1 · erreur 0.0%.\nAucune fusion.\nt=2 · bit 1 · fenêtre 11. Exact 2 · estimé 2 · erreur 0.0%.\nAucune fusion.\nt=3 · bit 1 · fenêtre 111. Exact 3 · estimé 2 · erreur 33.3%.\nFusions : 1+1→2\nt=4 · bit 1 · fenêtre 1111. Exact 4 · estimé 3 · erreur 25.0%.\nAucune fusion.\nt=5 · bit 1 · fenêtre 11111. Exact 5 · estimé 4 · erreur 20.0%.\nFusions : 1+1→2\nt=6 · bit 1 · fenêtre 111111. Exact 6 · estimé 5 · erreur 16.7%.\nAucune fusion.\nt=7 · bit 1 · fenêtre 1111111. Exact 7 · estimé 5 · erreur 28.6%.\nFusions : 1+1→2 ; 2+2→4\nt=8 · bit 1 · fenêtre 11111111. Exact 8 · estimé 6 · erreur 25.0%.\nAucune fusion.\nt=9 · bit 0 · fenêtre 11111110. Exact 7 · estimé 6 · erreur 14.3%.\nAucune fusion.\nt=10 · bit 0 · fenêtre 11111100. Exact 6 · estimé 6 · erreur 0.0%.\nAucune fusion.\nt=11 · bit 0 · fenêtre 11111000. Exact 5 · estimé 6 · erreur 20.0%.\nAucune fusion.\nt=12 · bit 0 · fenêtre 11110000. Exact 4 · estimé 3 · erreur 25.0%.\nExpiration du plus ancien. Aucune fusion.\nt=13 · bit 0 · fenêtre 11100000. Exact 3 · estimé 3 · erreur 0.0%.\nAucune fusion.\nt=14 · bit 0 · fenêtre 11000000. Exact 2 · estimé 2 · erreur 0.0%.\nExpiration du plus ancien. Aucune fusion.\nt=15 · bit 0 · fenêtre 10000000. Exact 1 · estimé 1 · erreur 0.0%.\nExpiration du plus ancien. Aucune fusion.\nt=16 · bit 0 · fenêtre 00000000. Exact 0 · estimé 0 · erreur 0.0%.\nExpiration du plus ancien. Aucune fusion."
@@ -507,10 +521,10 @@
     "title": "GK : retrouver un rang historique",
     "focus": "Tuples (valeur, g, Δ) et tolérance εn",
     "oral": "Suivre les six arrivées. Le prédécesseur admissible donne 4 pour une cible de rang 3. L’erreur est de 1. Après compression, le coût des paires anciennes et le comptage des insertions récentes donnent une borne en O(min(n, √(n/ε))) tuples pour notre variante.",
-    "owner": "Wajdi Zayoud",
     "anim": "gk",
     "number": 32,
-    "duration": 23,
+    "owner": "Wajdi Zayoud",
+    "duration": 24,
     "cue": "Observer le média « GK · résumé historique » et commenter les états indiqués.",
     "transition": "Je passe la parole à Youssif, qui présente « Quantiles récents par blocs ».",
     "frameNotes": "Insérer 5 · n=1. g : incrément du rang inférieur. Δ : marge jusqu’au rang supérieur.\nBudget de compression : ⌊2εn⌋ = 0.\nInsérer 1 · n=2. g : incrément du rang inférieur. Δ : marge jusqu’au rang supérieur.\nBudget de compression : ⌊2εn⌋ = 1.\nInsérer 3 · n=3. g : incrément du rang inférieur. Δ : marge jusqu’au rang supérieur.\nBudget de compression : ⌊2εn⌋ = 1.\nInsérer 2 · n=4. g : incrément du rang inférieur. Δ : marge jusqu’au rang supérieur.\nBudget de compression : ⌊2εn⌋ = 2.\nInsérer 4 · n=5. g : incrément du rang inférieur. Δ : marge jusqu’au rang supérieur.\nBudget de compression : ⌊2εn⌋ = 2.\nInsérer 6 · n=6. g : incrément du rang inférieur. Δ : marge jusqu’au rang supérieur.\nBudget de compression : ⌊2εn⌋ = 3.\nSélection du quantile q=0,5. Le tuple de 4 a pour bornes [3,4]. Erreur de rang 1, dans la marge 1,5."
@@ -520,10 +534,10 @@
     "title": "Quantiles récents par blocs",
     "focus": "État brut entre les fermetures, résumés pondérés après tri",
     "oral": "Le bloc ouvert reste exact. Un groupe fermé transmet un maximum et son effectif. Le premier bloc peut retenir des valeurs périmées. À t égal à 20, il expire et la valeur 99 ne contribue plus.",
-    "owner": "Youssif Cherni",
     "anim": "blocs",
     "number": 33,
-    "duration": 28,
+    "owner": "Youssif Cherni",
+    "duration": 21,
     "cue": "Observer le média « Quantiles récents » et commenter les états indiqués.",
     "transition": "Passer à « Borne de rang récente ».",
     "frameNotes": "t=1 · B=4 · S=2 · fenêtre [99…99]. F : bloc fermé, O : bloc ouvert. Périmés : 0. Budget : 0.\nP99 récent 99. Maximum actif 99.\nt=3 · B=4 · S=2 · fenêtre [99…2]. F : bloc fermé, O : bloc ouvert. Périmés : 0. Budget : 0.\nP99 récent 99. Maximum actif 99.\nt=4 · B=4 · S=2 · fenêtre [99…3]. F : bloc fermé, O : bloc ouvert. Périmés : 0. Budget : 1.\nP99 récent 99. Maximum actif 99.\nt=8 · B=4 · S=2 · fenêtre [99…7]. F : bloc fermé, O : bloc ouvert. Périmés : 0. Budget : 2.\nP99 récent 99. Maximum actif 99.\nt=16 · B=4 · S=2 · fenêtre [99…15]. F : bloc fermé, O : bloc ouvert. Périmés : 0. Budget : 4.\nP99 récent 99. Maximum actif 99.\nt=17 · B=4 · S=2 · fenêtre [1…16]. F : bloc fermé, O : bloc ouvert. Périmés : 1. Budget : 5.\nP99 récent 99. Maximum actif 16.\nt=19 · B=4 · S=2 · fenêtre [3…18]. F : bloc fermé, O : bloc ouvert. Périmés : 3. Budget : 7.\nP99 récent 99. Maximum actif 18.\nt=20 · B=4 · S=2 · fenêtre [4…19]. F : bloc fermé, O : bloc ouvert. Périmés : 0. Budget : 4.\nP99 récent 19. Maximum actif 19."
@@ -533,14 +547,14 @@
     "title": "Borne de rang récente",
     "focus": "Budget = périmés + omissions des groupes",
     "oral": "Pour une cible k, la cible de la population retenue peut augmenter d’au plus u. La compression sous-compte chaque seuil d’au plus S−1 par bloc. Donc C strict est inférieur à k+u+E et C large vaut au moins k−u. Un seuil périmé se juge par ces comptes.",
-    "owner": "Youssif Cherni",
     "items": [
       "u < B positions périmées au plus",
       "E = nombre de blocs fermés × (S − 1)",
       "FIFO exacte facultative, P99 récent séparé de GK"
     ],
     "number": 34,
-    "duration": 24,
+    "owner": "Youssif Cherni",
+    "duration": 26,
     "cue": "Pointer les termes clés avant l’explication.",
     "transition": "Passer à « Tests T1 à T5 ».",
     "frameNotes": ""
@@ -549,28 +563,36 @@
     "section": 3,
     "title": "Tests T1 à T5",
     "focus": "Garanties et mesures jouent des rôles distincts",
-    "oral": "T1 donne p = 0.6422. T2 teste les marginales pondérées. T3 et T4 contrôlent le compte et la structure de DGIM. T5 compare les rangs avec et sans doublons. Le journal final compte 92 tests.",
-    "owner": "Youssif Cherni",
+    "oral": "T1 et T2 comparent les fréquences d’inclusion aux probabilités calculées. T3 mesure l’erreur du compteur. T4 vérifie ses invariants à chaque insertion. T5 compare les rangs avec et sans doublons. Le journal final compte 92 tests réussis.",
     "table": [
       [
-        "Tests",
-        "Preuve expérimentale"
+        "Test",
+        "Résultat observé ou invariant vérifié"
       ],
       [
-        "T1–T2",
-        "Inclusion uniforme et pondérée"
+        "T1 · Réservoir uniforme",
+        "10 000 essais, n=100, k=10 · p de Pearson = 0,6422"
       ],
       [
-        "T3–T4",
-        "Erreur relative et invariants par insertion"
+        "T2 · A-Res",
+        "Poids 1, 2, 4 et k=1 · 13,88 % / 28,97 % / 57,15 %"
       ],
       [
-        "T5",
-        "Rangs exacts et cas près de zéro"
+        "T3 · Compte DGIM",
+        "Erreur max. 33,33 % au benchmark · borne 50 %"
+      ],
+      [
+        "T4 · Structure DGIM",
+        "≤2 groupes par taille · ≤2 × bit_length(N) groupes"
+      ],
+      [
+        "T5 · Rang GK",
+        "648 requêtes du benchmark dans le budget · extrêmes exacts testés"
       ]
     ],
     "number": 35,
-    "duration": 24,
+    "owner": "Youssif Cherni",
+    "duration": 22,
     "cue": "Pointer les termes clés avant l’explication.",
     "transition": "Passer à « Mémoire et temps, même horizon ».",
     "frameNotes": ""
@@ -580,10 +602,10 @@
     "title": "Mémoire et temps, même horizon",
     "focus": "FIFO et blocs récents jusqu’à N = 50 000",
     "oral": "La FIFO insère rapidement mais trie davantage de valeurs à la requête. À N=10 000 et epsilon 0,05, les blocs gardent 2 000 entrées. P50, P95 et P99 partagent désormais un tri et un parcours. À précision plus fine, les groupes peuvent rester unitaires.",
-    "owner": "Youssif Cherni",
     "img": "results/figures/18_memoire_echelle.png",
     "number": 36,
-    "duration": 24,
+    "owner": "Youssif Cherni",
+    "duration": 25,
     "cue": "Montrer la figure, puis lire les axes et la référence.",
     "transition": "Passer à « Technologies du prototype ».",
     "frameNotes": ""
@@ -593,7 +615,6 @@
     "title": "Technologies du prototype",
     "focus": "Le noyau s’exécute localement",
     "oral": "Python rend les algorithmes lisibles. heapq expose le minimum d’A-Res. pytest automatise les assertions et SciPy évalue le chi carré. Matplotlib lit les mesures et Streamlit offre le pilotage.",
-    "owner": "Youssif Cherni",
     "table": [
       [
         "Outil",
@@ -617,7 +638,8 @@
       ]
     ],
     "number": 37,
-    "duration": 24,
+    "owner": "Youssif Cherni",
+    "duration": 18,
     "cue": "Pointer les termes clés avant l’explication.",
     "transition": "Passer à « Plateformes étudiées ».",
     "frameNotes": ""
@@ -627,7 +649,6 @@
     "title": "Plateformes étudiées",
     "focus": "Options pour une mise en production future",
     "oral": "Kafka transporte des événements. Flink et Spark peuvent les traiter en flux réparti. DataSketches fournit des structures approchées réutilisables. Notre prototype sert à examiner les états et n’en déploie aucune.",
-    "owner": "Youssif Cherni",
     "table": [
       [
         "Plateforme",
@@ -651,7 +672,8 @@
       ]
     ],
     "number": 38,
-    "duration": 24,
+    "owner": "Youssif Cherni",
+    "duration": 18,
     "cue": "Pointer les termes clés avant l’explication.",
     "transition": "Passer à « Tableau de bord Streamlit ».",
     "frameNotes": ""
@@ -660,11 +682,12 @@
     "section": 5,
     "title": "Tableau de bord Streamlit",
     "focus": "Navigation, paramètres et oracle optionnel",
-    "oral": "Montrer la configuration de 200 positions et les indicateurs récents. Les onglets exposent réservoirs, groupes DGIM et tuples GK. Dans Chrome, le test alterne démarrage et pause et contrôle le CSV téléchargé.",
-    "owner": "Youssif Cherni",
+    "oral": "Dans Streamlit, avancer d’un événement, lancer un lot automatique et mettre en pause. Déclencher l’incident, avancer d’un lot, puis montrer le P99 récent et l’état d’alerte. Pointer le budget de rang dans l’onglet Quantiles.",
     "img": "presentation/screenshots/alerte.png",
+    "demoSeconds": 35,
     "number": 39,
-    "duration": 24,
+    "owner": "Youssif Cherni",
+    "duration": 55,
     "cue": "Montrer la figure, puis lire les axes et la référence.",
     "transition": "Passer à « Incident, détection et retour ».",
     "frameNotes": ""
@@ -674,10 +697,10 @@
     "title": "Incident, détection et retour",
     "focus": "Trace réelle du scénario simulé",
     "oral": "Le générateur introduit l’incident à 401. L’alerte arrive à 403. Après le retour à 801, le P99 récent diminue au fil des expirations. Le rétablissement apparaît à 998 pendant que l’historique reste élevé.",
-    "owner": "Youssif Cherni",
     "anim": "incident",
     "number": 40,
-    "duration": 28,
+    "owner": "Youssif Cherni",
+    "duration": 22,
     "cue": "Observer le média « Détection et rétablissement » et commenter les états indiqués.",
     "transition": "Passer à « Deux références d’alerte ».",
     "frameNotes": "Événement 200 · Normal. État exact : Normal. Fenêtre 200, seuil P99 110 ms.\nL’incident est injecté aux événements 401 à 800.\nÉvénement 400 · Normal. État exact : Normal. Fenêtre 200, seuil P99 110 ms.\nL’incident est injecté aux événements 401 à 800.\nÉvénement 401 · Normal. État exact : Normal. Fenêtre 200, seuil P99 110 ms.\nL’incident est injecté aux événements 401 à 800.\nÉvénement 403 · Alerte. État exact : Alerte. Fenêtre 200, seuil P99 110 ms.\nL’incident est injecté aux événements 401 à 800.\nÉvénement 600 · Alerte. État exact : Alerte. Fenêtre 200, seuil P99 110 ms.\nL’incident est injecté aux événements 401 à 800.\nÉvénement 800 · Alerte. État exact : Alerte. Fenêtre 200, seuil P99 110 ms.\nL’incident est injecté aux événements 401 à 800.\nÉvénement 801 · Alerte. État exact : Alerte. Fenêtre 200, seuil P99 110 ms.\nL’incident est injecté aux événements 401 à 800.\nÉvénement 925 · Alerte. État exact : Alerte. Fenêtre 200, seuil P99 110 ms.\nL’incident est injecté aux événements 401 à 800.\nÉvénement 998 · Rétablissement. État exact : Rétablissement. Fenêtre 200, seuil P99 110 ms.\nL’incident est injecté aux événements 401 à 800.\nÉvénement 1200 · Normal. État exact : Normal. Fenêtre 200, seuil P99 110 ms.\nL’incident est injecté aux événements 401 à 800."
@@ -687,10 +710,10 @@
     "title": "Deux références d’alerte",
     "focus": "Règle exacte et étiquette du générateur",
     "oral": "Le scénario de référence produit 1200 décisions identiques à la règle exacte. Contre les étiquettes, F1 vaut 0.80, avec 197 faux positifs et 2 manqués. Les fausses alertes incluent le délai de vidange.",
-    "owner": "Youssif Cherni",
     "img": "results/figures/21_confusion.png",
     "number": 41,
-    "duration": 24,
+    "owner": "Youssif Cherni",
+    "duration": 20,
     "cue": "Montrer la figure, puis lire les axes et la référence.",
     "transition": "Passer à « Deux stratégies sur cinq scénarios ».",
     "frameNotes": ""
@@ -700,10 +723,10 @@
     "title": "Deux stratégies sur cinq scénarios",
     "focus": "F1 moyen face aux étiquettes d’incident",
     "oral": "Pour les incidents répétés, le F1 passe de 0.34 à 0.79. La persistance réduit les faux positifs, mais écarte l’incident isolé. Les deux règles manquent le scénario sous seuil. La règle de seuil reste la référence du tableau de bord.",
-    "owner": "Youssif Cherni",
     "img": "results/figures/22_alertes_strategies.png",
     "number": 42,
-    "duration": 24,
+    "owner": "Youssif Cherni",
+    "duration": 23,
     "cue": "Montrer la figure, puis lire les axes et la référence.",
     "transition": "Passer à « Conclusion et perspectives ».",
     "frameNotes": ""
@@ -713,14 +736,14 @@
     "title": "Conclusion et perspectives",
     "focus": "Des résumés distincts rendent les décisions interprétables",
     "oral": "R et A-Res échantillonnent, DGIM compte et les deux horizons de quantiles répondent à des usages distincts. La règle facultative favorise les incidents soutenus. Une trace annotée et une meilleure borne pour GK restent des pistes.",
-    "owner": "Youssif Cherni",
     "items": [
       "T1–T5 validés, budget de rang récent explicite",
       "P50/P95/P99 récupérés avec un seul tri",
       "GK : borne sous-linéaire propre à la variante"
     ],
     "number": 43,
-    "duration": 24,
+    "owner": "Youssif Cherni",
+    "duration": 21,
     "cue": "Pointer les termes clés avant l’explication.",
     "transition": "Passer à « Références et questions ».",
     "frameNotes": ""
@@ -730,7 +753,6 @@
     "title": "Références et questions",
     "focus": "Douze notices dans le rapport et le BibTeX",
     "oral": "Les fondations viennent de Vitter, Efraimidis–Spirakis, Datar et al., Greenwald–Khanna et Arasu–Manku. Les sept DOI récents sont indiqués dans leurs diapositives et dans le rapport.",
-    "owner": "Youssif Cherni",
     "items": [
       "Vitter, 1985 · Reservoir Sampling",
       "Efraimidis–Spirakis, 2006 · A-Res",
@@ -740,7 +762,8 @@
       "Merci. Questions et démonstration libre."
     ],
     "number": 44,
-    "duration": 24,
+    "owner": "Youssif Cherni",
+    "duration": 16,
     "cue": "Pointer les termes clés avant l’explication.",
     "transition": "Ouvrir les questions.",
     "frameNotes": ""

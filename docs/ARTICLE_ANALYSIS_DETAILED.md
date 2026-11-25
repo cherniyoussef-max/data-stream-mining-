@@ -52,11 +52,11 @@ Les résultats publiés ci-dessous sont distingués des mesures locales. Les exe
 
 **Contexte et objectif.** GK avait une borne d’espace optimale à l’ordre de grandeur dans le modèle de comparaison, avec une analyse délicate. Les auteurs demandent une construction déterministe plus simple, sans perdre l’ordre de grandeur optimal.
 
-**Méthode et garantie.** Le sketch combine le paradigme de GK et des idées issues de l’analyse de Khanna–Greenwald. La portée est l’erreur additive en rang sur univers totalement ordonné. L’énoncé publié borne l’état asymptotiquement par `(2+o(1)) ε⁻¹ log(εn)` éléments. C’est une preuve théorique, pas une performance mesurée sur des latences.
+**Méthode et garantie.** Le sketch partage les représentants entre deux partitions symétriques. La section 4 et la figure 2 détaillent les deux sens de fusion selon les instants d’insertion. La section 4.3 analyse la taille, en nombre d’éléments, dans le modèle de comparaison. La construction garantit une erreur additive en rang et utilise asymptotiquement au plus `(2+o(1)) ε⁻¹ log(εn)` éléments. [Texte intégral ACM archivé à la NSF](https://par.nsf.gov/servlets/purl/10526808)
 
 **Exemple.** Visualiser trois rangs, une marge additive puis un représentant. Le GIF A5 représente l’idée de compression et l’unité de la borne, sans simuler la construction exacte ni prétendre que tout regroupement préserve la garantie.
 
-**Bilan.** L’apport est la preuve d’espace pour une stratégie précise. La compression simplifiée du projet garde la preuve de rang et une évaluation de mémoire. [ACM, article 109](https://doi.org/10.1145/3651610).
+**Bilan.** L’apport est la preuve d’espace pour cette stratégie à deux partitions. Pour notre balayage, la preuve par gaps montre une borne différente, en O(min(n, √(n/ε))) tuples. [ACM, article 109](https://doi.org/10.1145/3651610).
 
 ## 6 · Gupta, Singhal et Wu — FOCS, 2024
 
@@ -86,7 +86,7 @@ Les résultats publiés ci-dessous sont distingués des mesures locales. Les exe
 | Gou et al. | [Manuscrit accepté](https://skyelves.github.io/files/TKDE22-A_Sketch_Framework_for_Approximate_Data_Stream_Processing_in_Sliding_Windows.pdf), §8.1 : mesures à chaque déplacement de N/10, puis moyenne. Pour l’appartenance, la métrique compte les erreurs des deux types. | [Code C++](https://github.com/sliding-sketch/Sliding-Sketch), référence [15]. |
 | Fernando et al. | [Actes](https://openproceedings.org/2023/conf/edbt/paper-9.pdf), fig. 6b et §4.5.2 : moyenne de l’erreur **relative en valeur** sous 0,01 dans le cas uniforme. §4.5.3 : 31,2 % de 14,7 millions de points NYT relèvent des dix valeurs les plus fréquentes, ce qui éclaire le cas des doublons. | Bibliothèques comparées identifiées, disponibilité d’un paquet d’expérience complet non vérifiée. |
 | Dai–Hu–Yi | [Version auteur](https://arxiv.org/html/2404.03194v2), §1 et §4 : maintenance de l’index acyclique en temps amorti O(log N) par insertion. §6.1 : Epinions contient 508 837 arêtes et les relations sont mélangées séparément. La complexité de la jointure globale est une question distincte. | [Code déclaré](https://github.com/hkustDB/Reservoir-Sampling-over-Joins), lien « Code » dans les références. |
-| Gribelyuk et al. | [Résumé ACM](https://doi.org/10.1145/3651610), article 109. L’énoncé du résultat asymptotique a été vérifié dans le résumé officiel, mais les tentatives de lecture intégrale des copies en ligne n’ont pas abouti. Aucun chiffre expérimental attribué. | Dépôt non vérifié. |
+| Gribelyuk et al. | [Texte intégral, article 109](https://par.nsf.gov/servlets/purl/10526808). Section 4, figure 2, théorème 10 et lemme 19. Borne sur le nombre d’éléments conservés pour l’erreur additive en rang, dans le modèle de comparaison. | Résultat théorique. Dépôt non vérifié. |
 | Gupta–Singhal–Wu | [Manuscrit complet](https://arxiv.org/pdf/2404.03847), théorème 1.2 et tableau 1. Les mots et bits font l’objet de colonnes distinctes. La discussion §1.1 limite l’argument d’optimalité général en mots au régime n ≤ poly(U). | Résultat théorique. Dépôt non vérifié. |
 | Xie et al. | [Résumé éditeur](https://www.sciencedirect.com/science/article/pii/S0304407624002756) et [programme de présentation](https://www.herbert.miami.edu/_assets/pdfs/faculty-research/business-conferences/quantile-regression-and-data-heterogeneity-workshop/preliminary-program-quantile-regression-data-heterogeneity-workshop.pdf). Le texte intégral éditeur n’a pas été accessible pendant la validation. Aucun chiffre de tableau ni assertion de couverture n’est repris. | Dépôt non vérifié. |
 

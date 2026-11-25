@@ -1,5 +1,5 @@
 ============================= test session starts ==============================
-platform linux -- Python 3.13.9, pytest-9.2.0, pluggy-1.7.0 -- <validation-temp>/bin/python
+platform linux -- Python 3.13.9, pytest-9.2.0, pluggy-1.7.0 -- <validation-temp>/venv/bin/python
 cachedir: .pytest_cache
 hypothesis profile 'default'
 rootdir: <checkout>
@@ -101,4 +101,4 @@ tests.py::test_dgim_count PASSED                                         [ 97%]
 tests.py::test_gk_quantile PASSED                                        [ 98%]
 tests.py::test_reservoir_chi2_uniformity PASSED                          [100%]
 
-============================== 92 passed in 7.00s ==============================
+============================== 92 passed in 7.18s ==============================

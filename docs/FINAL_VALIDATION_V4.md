@@ -1,6 +1,6 @@
 # Validation finale du projet 4 · V4
 
-Base `3e79273`, branche locale `codex/project4-final-v4`. Essais réalisés sous Linux x86-64 avec Python 3.13.9, dans un environnement virtuel isolé. Les versions du benchmark figurent dans [environment.json](../results/environment.json).
+Validation du 25 novembre 2026 pour `v1.0.0`, sur `codex/project4-release-v1.0.0`. Référence GitHub `3e79273` (V3), reprise de la V4 locale `9c3d7ca`. Les essais ont été rejoués sous Linux x86-64 avec Python 3.13.9 dans un nouvel environnement virtuel isolé. L’installation des deux fichiers de dépendances et `pip check` réussissent. Les versions du benchmark figurent dans [environment.json](../results/environment.json).
 
 ## Vérification et corrections
 
@@ -8,19 +8,19 @@ Base `3e79273`, branche locale `codex/project4-final-v4`. Essais réalisés sous
 |---|---|
 | V3 intacte dans l’environnement isolé | 86 réussites, 1 échec de chemin dans AppTest avec Streamlit 1.67.0 |
 | V3 intacte avec Streamlit 1.51.0 | 87 réussites |
-| V4, `python -m pytest -v` | 92 réussites, dont 5 nouveaux tests |
+| V4, `python -m pytest -v` | 92 réussites en 7,18 s, dont 5 tests ajoutés depuis V3 |
 | Démonstration CLI | Alerte à 403 et rétablissement à 998 |
 | Benchmark rapide et complet | 2 710 et 6 758 lignes, zéro dépassement DGIM/GK dans chacun |
 | Étude finale et sensibilité | 6 000 requêtes récentes, erreur maximale de 6 rangs et zéro dépassement, 12 configurations N/ε |
 | Études appariées | 1 200 états comparés, 30 lignes de scores d’alerte |
-| Chrome et Playwright | Cadence, pause, reset, changement des paramètres, deux modes mémoire, contrôles manuels bloqués pendant la lecture et téléchargement sans avancement, 500 lignes et zéro erreur console |
-| PDF et PPTX | Article de 8 pages, 44 diapositives et 44 notes, 18 GIF identiques à V3 et 99 images d’animation. Lecture des GIF extraits dans Chrome et ouverture du PPTX dans LibreOffice Impress |
+| Chrome et Playwright | Intervalles de 0,6 et 2 s, pause, réinitialisation, avancement manuel, changement de paramètres, deux modes mémoire et téléchargement sans avancement, 500 lignes et zéro erreur console |
+| PDF et PPTX | Huit pages inspectées et 12 DOI cliquables. 44 diapositives et 44 notes, 18 GIF identiques en octets à V4 et 99 images d’animation, titres des sept articles et résultats T1–T5 visibles en diapositive 35. Lecture des GIF extraits dans Chrome et ouverture du PPTX dans LibreOffice Impress |
 
 Le test AppTest utilise désormais le chemin absolu construit à partir de son fichier. Aucune assertion V3 n’a été retirée. Les nouvelles propriétés couvrent entre autres la masse des rangs et les paires survivantes de GK, le modulo et les sous-fenêtres de DGIM, ainsi que les doublons, le démarrage et le bloc frontière des quantiles récents. Les journaux [V3](../results/pytest_baseline_v4.txt), [V4](../results/pytest_results.txt) et [Chrome](../results/browser_validation/report.json) contiennent les sorties observées.
 
 ## Garanties
 
-- GK historique garde sa garantie de rang en εn avec la convention discrète aux extrémités. Le seuil de fusion est calculé exactement pour l’ε représenté en machine. La passe existante utilise O(min(n, √(n/ε))) tuples. La preuve compte les gaps des paires anciennes et le nombre de nouvelles insertions. La borne logarithmique du GK classique reste hors de la garantie de cette variante.
+- GK historique garde sa garantie de rang en εn avec les conventions discrètes. Le seuil de fusion est calculé exactement pour l’ε représenté en machine. La passe de droite à gauche protège les extrêmes, préserve la masse des gaps et interdit les paires encore fusionnables hors du minimum à la fin du balayage. Le comptage des paires anciennes, des tuples jeunes et des insertions entre deux balayages donne O(min(n, √(n/ε))) tuples. L’analyse suppose un ε fixe pendant le flux et un ordre stable des ex æquo. Elle compte des tuples et inclut le tampon à un facteur constant près. Les compteurs Python peuvent croître en taille avec log n. La borne logarithmique du GK classique reste hors de la garantie de cette variante.
 - Pour la fenêtre récente, le budget de rang est u + C(S − 1), avec u valeurs périmées encore représentées, C blocs fermés et S le nombre maximal de valeurs par groupe. Le nombre d’entrées est au plus B − 1 + (⌈N/B⌉ + 1)⌈B/S⌉, avec B = ⌊√N⌋. Le tableau de bord affiche u et le budget courant. La FIFO exacte peut être désactivée.
 - DGIM conserve sa borne relative de 50 % sur la fenêtre complète. Le benchmark a observé au maximum 33,33 % sur les cas échantillonnés.
 
@@ -32,9 +32,11 @@ La requête P50/P95/P99 trie les représentants une fois et partage le parcours 
 
 | N, ε | Mise à jour (ns) | Requête V3 → V4 (µs) | Débit V3 → V4 (év/s) | Pic V3 → V4 (octets) |
 |---|---:|---:|---:|---:|
-| 200, 0,01 | 281 | 62,0 → 27,4 | 13 086 → 24 738 | 4 120 → 3 656 |
-| 1 000, 0,05 | 272 | 161,6 → 74,4 | 5 243 → 11 560 | 11 728 → 11 360 |
-| 5 000, 0,05 | 240 | 495,6 → 210,9 | 1 893 → 4 386 | 27 960 → 27 592 |
+| 200, 0,01 | 276 | 57,4 → 25,6 | 13 770 → 25 975 | 4 120 → 3 656 |
+| 1 000, 0,05 | 243 | 157,8 → 70,1 | 5 563 → 11 925 | 11 728 → 11 360 |
+| 5 000, 0,05 | 234 | 489,1 → 205,8 | 1 873 → 4 389 | 27 960 → 27 592 |
+
+À N=1 000 et ε=0,05, le gain local est de 2,25× contre 2,17× lors de la précédente exécution V4. Les chronométrages dépendent de la charge de la machine.
 
 [Mesures et répétitions brutes](../results/query_benchmark.json)
 
@@ -56,7 +58,11 @@ La règle facultative utilise les seuils de médiane et de P99 de la référence
 
 ## Portée et traçabilité
 
-La [grille](REQUIREMENTS_TRACEABILITY.md) compte **46 PASS, 1 PARTIAL et 1 OPTIONAL**. R32 reste partiel. Les notices primaires de Gribelyuk et de Xie ont été contrôlées, et les détails qui nécessitent les textes intégraux ou des artefacts non accessibles restent signalés dans la [revue détaillée](ARTICLE_ANALYSIS_DETAILED.md). Les latences et les incidents sont synthétiques. La variante GK existante a été conservée et la comparaison avec une autre implémentation fidèle à l’algorithme original reste ouverte. La lecture dans Microsoft PowerPoint et la CI hébergée sont à vérifier. Le workflow GitHub Actions définit Python 3.11 et 3.13, les tests, le CLI et le profil rapide.
+La [grille](REQUIREMENTS_TRACEABILITY.md) compte **25 PASS sur les 25 exigences obligatoires transmises** et **46 PASS, 1 PARTIAL et 1 OPTIONAL** dans la grille interne. R32 reste partiel. Le texte intégral de Gribelyuk a été retrouvé et la preuve a été contrôlée. Pour Xie, la [revue détaillée](ARTICLE_ANALYSIS_DETAILED.md) s’appuie sur le résumé primaire. Les latences et les incidents sont synthétiques. Les scripts donnent un minutage estimé de 4 min 54 s, 4 min 42 s et 4 min 47 s à partir du texte, des GIF et de la démonstration guidée. La lecture dans Microsoft PowerPoint et les durées mesurées avec les orateurs restent à vérifier.
+
+Le commit de release descend de la V3 sur `main` et de la V4 validée. Les 92 tests réussissent aussi dans un clone local indépendant et après extraction du ZIP. Les fichiers extraits correspondent au commit. Les blobs du rapport (`ffe3ed27d9d7f44ce950361d388fbd4e67fd0acd`) et du PPTX (`433e6a4a739b1d68ad1f793cff05bdd3990823a1`) correspondent entre le commit, les fichiers locaux et le clone indépendant.
+
+La branche et le tag annoté `v1.0.0` sont préparés localement. Le clone GitHub de la V4, la CI hébergée et la comparaison des blobs GitHub sont conditionnés à la publication. Le workflow GitHub Actions définit Python 3.11 et 3.13, les tests, le CLI et le profil rapide.
 
 ## Reproduction
 

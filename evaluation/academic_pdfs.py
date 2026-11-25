@@ -69,7 +69,7 @@ def script_pdf(rows, target, title):
                 paragraph(f"À montrer : {row['focus']}   {row['cue']}"),
                 paragraph(f"Transition : {row['transition']}")]
         if row.get("source"):
-            body.append(paragraph(f"Source : {row['source']}"))
+            body.append(paragraph(f"{row['articleTitle']} · {row['source']}"))
         if row.get("oralGroup"):
             body.append(paragraph(f"Idée à retenir : {row['oralGroup']}"))
         if row.get("frameNotes"):

@@ -1,6 +1,8 @@
 \documentclass[11pt,a4paper,twocolumn]{article}
 \usepackage[margin=16mm,columnsep=6mm]{geometry}
-\usepackage{amsmath,graphicx,booktabs,tabularx,array,xcolor,hyperref}
+\usepackage{amsmath,graphicx,booktabs,tabularx,array,xcolor}
+\usepackage[numbers]{natbib}
+\usepackage{hyperref}
 \usepackage{fontspec}
 \setmainfont{Liberation Serif}
 \definecolor{navy}{HTML}{112841}
@@ -18,6 +20,8 @@
 \newcommand{\tbl}[1]{\refstepcounter{table}\small\textbf{Tableau \thetable.} #1\par}
 \newcommand{\step}[1]{\texttt{#1}}
 \newcommand{\columnbreak}{\newpage}
+\renewcommand{\refname}{Références bibliographiques}
+\providecommand{\doi}[1]{\href{https://doi.org/#1}{DOI}}
 \graphicspath{{../../results/figures/}{../../presentation/screenshots/}}
 \input{measurements}
 \begin{document}
@@ -111,7 +115,7 @@ Fernando et al. \cite{fernando2023} comparent KLL, Moments, DDSketch, UDDSketch 
 Dai et al. \cite{dai2024} utilisent un réservoir à prédicat et un index dynamique pour échantillonner une jointure sans matérialiser tous les résultats. La complexité presque linéaire s’interprète sous les hypothèses de leur cadre. Le protocole inclut des graphes Epinions et des requêtes relationnelles. Notre réservoir opère sur des positions indépendantes d’un flux unique, sans index de jointure.
 \columnbreak
 \topic{Compression déterministe}
-Gribelyuk et al. \cite{gribelyuk2024} combinent des idées de GK et de Khanna--Greenwald. Pour l’erreur additive de rang, ils démontrent dans leur modèle une borne asymptotique d’au plus $(2+o(1))\varepsilon^{-1}\log(\varepsilon n)$ éléments. Ce résultat est un repère scientifique pour distinguer une stratégie démontrée de notre passe simplifiée.
+Gribelyuk et al. \cite{gribelyuk2024} combinent des idées de GK et de Khanna--Greenwald. Pour l’erreur additive de rang, ils démontrent dans le modèle comparatif une borne asymptotique d’au plus $(2+o(1))\varepsilon^{-1}\log(\varepsilon n)$ éléments stockés. Notre passe utilise une autre règle de compression.
 
 \topic{Univers entier et limites du modèle}
 Gupta et al. \cite{gupta2024} exploitent les opérations d’un modèle à univers entier borné afin d’obtenir $O(1/\varepsilon)$ mots pour une estimation déterministe. Le passage d’éléments seulement comparables à des entiers manipulables est essentiel. La borne ne se transpose pas directement à notre liste de flottants.
@@ -295,7 +299,8 @@ Installer \step{requirements-dev.txt}, exécuter \step{python -m pytest -v} puis
 \columnbreak
 \begingroup
 \footnotesize
-\bibliographystyle{unsrt}
+\setlength{\bibsep}{5pt}
+\bibliographystyle{unsrtnat}
 \bibliography{references}
 \endgroup
 \end{document}

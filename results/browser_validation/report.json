@@ -1,13 +1,19 @@
 {
   "status": "passed",
   "browser": "152.0.7977.64",
-  "url": "http://127.0.0.1:18767",
-  "timer_config_seconds": 0.6,
-  "two_batch_elapsed_seconds": [
-    0.976,
-    1.063
+  "url": "http://127.0.0.1:18768",
+  "timer_runs": [
+    {
+      "interval_seconds": 0.6,
+      "two_batch_elapsed_seconds": 0.983,
+      "paused_observation_seconds": 1.4
+    },
+    {
+      "interval_seconds": 2.0,
+      "two_batch_elapsed_seconds": 2.495,
+      "paused_observation_seconds": 2.4
+    }
   ],
-  "paused_observation_seconds": 1.4,
   "download_rows": 500,
   "download_last_event": 551,
   "manual_controls_disabled_during_playback": true,

@@ -39,7 +39,11 @@ def run(url, output, executable):
         button("Avancer d’un lot").click()
         at(51)
         cadence = []
-        for _ in range(2):
+        speed = page.get_by_role("slider", name="Intervalle automatique (s)")
+        for seconds in (.6, 2.0):
+            if seconds == 2.0:
+                speed.press("End")
+            expect(speed).to_have_attribute("aria-valuetext", str(seconds))
             start = count()
             clock = time.monotonic()
             button("Démarrer").click()
@@ -49,13 +53,17 @@ def run(url, output, executable):
                 "(n) => Array.from(document.querySelectorAll('p')).some(p => p.innerText === n)",
                 arg=f"{start+100} / 1200 événements",
             )
-            cadence.append(round(time.monotonic()-clock, 3))
+            elapsed = round(time.monotonic()-clock, 3)
+            assert elapsed >= seconds - .1
             button("Pause").click()
             expect(button("Démarrer")).to_be_enabled()
             paused = count()
             assert (paused-start) % 50 == 0
-            page.wait_for_timeout(1400)
+            pause_observation = max(1.4, seconds + .4)
+            page.wait_for_timeout(round(1000 * pause_observation))
             at(paused)
+            cadence.append(dict(interval_seconds=seconds, two_batch_elapsed_seconds=elapsed,
+                                paused_observation_seconds=pause_observation))
 
         button("Simuler un incident").click()
         button("Avancer d’un lot").click()
@@ -107,8 +115,7 @@ def run(url, output, executable):
         version = browser.version
         browser.close()
     (output/"report.json").write_text(json.dumps({
-        "status": "passed", "browser": version, "url": url, "timer_config_seconds": .6,
-        "two_batch_elapsed_seconds": cadence, "paused_observation_seconds": 1.4,
+        "status": "passed", "browser": version, "url": url, "timer_runs": cadence,
         "download_rows": len(rows), "download_last_event": last,
         "manual_controls_disabled_during_playback": True,
         "download_without_advancing": True,

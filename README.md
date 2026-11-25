@@ -4,12 +4,13 @@ ISTIC, Master D3S · Nasr elhak Khemiri, Wajdi Zayoud, Youssif Cherni.
 
 Le projet maintient des échantillons d’un flux de taille inconnue et estime le nombre d’événements lents ainsi que les quantiles de latence. Les quatre algorithmes sont écrits en Python. Les exemples utilisent des données synthétiques reproductibles.
 
-Python 3.11 à 3.13 est la cible. La validation locale V4 a utilisé Python 3.13. Le workflow CI vérifie 3.11 et 3.13 lorsqu’il s’exécute sur GitHub.
+La version académique V4 correspond à `v1.0.0`. La validation locale a utilisé Python 3.13.9 et Streamlit 1.67.0 sous Linux. Le workflow CI est configuré pour Python 3.11 et 3.13.
 
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
 python -m pip install -r requirements-dev.txt
+python -m pip check
 python -m pytest -v
 python demo.py --seed 42 --events 1200
 python -m evaluation.benchmark --profile quick --output results/quick
@@ -17,7 +18,7 @@ python -m evaluation.benchmark --profile full
 python -m streamlit run dashboard/app.py --server.address 127.0.0.1
 ```
 
-Pour une exécution sans les tests, installer uniquement `requirements.txt`. Le navigateur de validation nécessite Playwright et Chrome. Le rapport et la soutenance utilisent `requirements-academic.txt`, Tectonic, Poppler, LibreOffice, DejaVu Sans et Liberation Serif. La [génération PowerPoint](presentation/README.md) réutilise le runtime Codex pour la mise en page. Le PPTX et le PDF déjà produits peuvent être ouverts sans ce runtime.
+Pour une exécution sans les tests, installer uniquement `requirements.txt`. Le navigateur de validation nécessite Playwright et Chrome. Le rapport et la soutenance utilisent `requirements-academic.txt`, Tectonic, Poppler, LibreOffice, DejaVu Sans et Liberation Serif. La [génération PowerPoint](presentation/README.md) réutilise le runtime Codex pour la mise en page. Le PPTX et le PDF déjà produits peuvent être ouverts sans ce runtime. L’étude finale lit les caractéristiques de la machine dans `/proc` sous Linux.
 
 Avec Streamlit lancé par la commande ci-dessus, exécuter dans un second terminal `python -m evaluation.browser --url http://127.0.0.1:8501 --chrome /usr/bin/google-chrome`.
 
@@ -43,7 +44,7 @@ flowchart LR
 - `dashboard/` fournit une vue locale interactive. `demo.py` exécute le même moteur en ligne de commande.
 - `docs/` contient l’audit, les exercices, le rapport et la préparation de la soutenance.
 
-La démo de référence signale l’incident à l’événement 403 et montre le rétablissement à 998. Le P99 historique reste élevé après l’incident, tandis que le P99 récent diminue. Le profil complet produit 14 figures et 6 758 lignes de mesures. Le test T1 donne p = 0,6422.
+La démo de référence signale l’incident à l’événement 403 et montre le rétablissement à 998. Le P99 historique reste élevé après l’incident, tandis que le P99 récent diminue. Le profil complet produit 14 figures et 6 758 lignes de mesures, avec zéro dépassement observé des bornes DGIM et GK. Le test T1 donne p = 0,6422. Le regroupement des trois requêtes de quantile donne un gain médian de 2,25× à N=1 000 et ε=0,05 lors de la validation de cette version.
 
 Voir [garanties](docs/MATHEMATICAL_GUARANTEES.md), [protocole](docs/EXPERIMENTAL_PROTOCOL.md), [résultats](docs/SCIENTIFIC_RESULTS.md), [revue scientifique](docs/STATE_OF_THE_ART_FINAL.md), [validation V4](docs/FINAL_VALIDATION_V4.md) et [guide de démonstration](docs/DEMONSTRATION_GUIDE.md).
 

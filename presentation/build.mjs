@@ -4,15 +4,22 @@ import { Presentation, PresentationFile } from "@oai/artifact-tool";
 const read = async path => JSON.parse(await fs.readFile(path,"utf8"));
 const analysis = await read("results/final_study.json");
 const manifest = await read("presentation/animations/trace.json");
-const statistic = (await read("results/statistical_results.json")).uniform;
+const {uniform: statistic, weighted} = await read("results/statistical_results.json");
+const benchmark = await read("results/benchmark_summary.json");
+const gkQueries = (await fs.readFile("results/metrics.csv", "utf8")).split("\n")
+  .filter(line => line.startsWith("GK,")).length;
+const bibliography = await fs.readFile("docs/report/references.bib", "utf8");
+const articleTitles = new Map([...bibliography.matchAll(/title=\{([^}]+)\}[^\n]*?doi=\{([^}]+)\}/g)]
+  .map(([, title, doi]) => [doi, title.replaceAll("\\&", "&")]));
 const nTests = (await fs.readFile("results/pytest_results.txt","utf8")).match(/(\d+) passed/)[1];
 const incident = analysis.alerts[1];
 const comparison = (await read("results/alert_comparison.json")).means;
+const decimal = (value, digits) => value.toFixed(digits).replace(".", ",");
 const names = ["Nasr elhak Khemiri","Wajdi Zayoud","Youssif Cherni"];
 const sections = ["Introduction","Fondements théoriques","État de l’art","Approches et méthodes","Technologies","Conclusion et application concrète"];
 const rows = [];
 function add(section,title,focus,oral,extra={}) {
-  rows.push({section,title,focus,oral,owner:names[section<2?0:section===2?1:2],...extra});
+  rows.push({section,title,focus,oral,...extra});
 }
 add(0,"Échantillonnage et fenêtres glissantes","Surveillance des latences en temps réel",
     "Nous sommes étudiants en Master D3S à l’ISTIC. Nous étudions comment examiner un flux de latences sans stocker toutes ses mesures. Le problème se découpe en échantillonnage, comptage et quantiles.");
@@ -25,7 +32,7 @@ add(0,"Question et objectifs du projet","Conserver un échantillon et mesurer l�
 add(0,"Contributions","Implémentations, preuves et évaluation",
     "Nous avons implémenté les algorithmes classiques, formalisé le budget des blocs, comparé les décisions à deux références et testé l’interface dans Chrome. Nous avons gardé l’oracle FIFO facultatif afin de distinguer les coûts.");
 add(0,"Plan de la soutenance","Six parties de la question à l’application",
-    "Je présente le contexte et les quatre modèles de fenêtre. Wajdi situe sept travaux scientifiques et ouvre la partie méthodes. Youssif poursuit avec la fenêtre récente, les outils et la démonstration.",
+    "Je présente le contexte, les fenêtres et les trois premières études. Wajdi poursuit la revue puis explique les quatre algorithmes. Youssif présente les quantiles récents, les tests et la démonstration.",
     {items:sections});
 add(1,"Données, information, connaissance, décision","Du signal brut à une action justifiable",
     "Une mesure de 156 ms est une donnée. Le P99 et les dépassements sont des informations. Une hausse durable de la fenêtre indique une détérioration. L’opérateur décide alors d’examiner l’alerte, puis de confirmer le rétablissement.",
@@ -37,7 +44,7 @@ for (const [key,title,focus,oral] of [
   ["landmark","Fenêtre à repère fixe","Landmark","Le repère B reste fixe. La fenêtre grandit à chaque arrivée et l’influence des anciens points est conservée."],
   ["tumbling","Fenêtres disjointes","Tumbling","Le passage de la troisième à la quatrième position ouvre un nouveau bloc. Une observation appartient à un seul bilan."],
   ["glissante","Fenêtre de taille fixe","Sliding window","Trois positions sont mises en évidence. Quand une valeur arrive, la plus ancienne des trois sort. Nos fenêtres de surveillance utilisent les indices d’événement."],
-  ["decroissance","Décroissance exponentielle","Poids en fonction de l’âge","L’arrivée reçoit le poids 1 et les poids précédents sont divisés par deux. Les anciens points perdent de l’influence graduellement. Je passe la parole à Wajdi pour les travaux récents."]
+  ["decroissance","Décroissance exponentielle","Poids en fonction de l’âge","L’arrivée reçoit le poids 1 et les poids précédents sont divisés par deux. Les anciens points perdent de l’influence graduellement. Les travaux qui suivent donnent d’autres façons de gérer un historique."]
 ]) add(1,title,focus,oral,{anim:key});
 
 const articles = [
@@ -45,14 +52,16 @@ const articles = [
   ["Expiration pour les sketches","Gou et al. · IEEE TKDE 2023","Un historique complet ne suffit pas à isoler les fréquences récentes. L’étude utilise notamment CAIDA, Web, Zipf et StackOverflow (§8.1).","Zones temporelles","Le cadre adapte des sketches à une frontière temporelle. Les expériences dépendent de la requête et du budget ; notre P99 traite un autre agrégat.", "10.1109/TKDE.2022.3151140"],
   ["Comparer des esquisses de quantiles","Fernando, Bindra et Daudjee · EDBT 2023","Même problème, cinq méthodes, mais des choix de représentation et d’erreur différents. Jeux Pareto, Uniforme, NYT et Power.","Résultat conditionné au jeu","Dans la figure 6b, les cinq méthodes restent sous 1 % d’erreur relative moyenne sur le jeu uniforme. La figure 6a montre que la queue Pareto change le résultat.", "10.48786/edbt.2023.34"],
   ["Sélection sur des jointures","Dai, Hu et Yi · SIGMOD 2024","La taille d’une jointure dépasse parfois celle des entrées. L’objectif est d’échantillonner ses résultats sans les matérialiser.","Index et réservoir à prédicat","L’index propose des candidats compatibles. La section expérimentale inclut le graphe Epinions et des requêtes relationnelles. Notre réservoir cible une autre population.", "10.1145/3654921"],
-  ["Résumé déterministe par comparaisons","Gribelyuk, Sawettamalya, Wu et Yu · PODS 2024","Peut-on simplifier un sketch déterministe tout en conservant une bonne borne d’espace dans le modèle de comparaison ?","Une borne en éléments stockés","Le résumé officiel annonce une borne asymptotique de (2+o(1)) ε⁻¹ log(εn). Notre passe sur les tuples utilise une autre compression.", "10.1145/3651610"],
+  ["Résumé déterministe par comparaisons","Gribelyuk, Sawettamalya, Wu et Yu · PODS 2024","Le modèle autorise seulement les comparaisons. Les auteurs conservent une erreur additive en rang pour toutes les requêtes et analysent une règle de compression différente du balayage de notre classe GK.","Une borne en éléments stockés","La borne asymptotique est de (2+o(1)) ε⁻¹ log(εn) éléments stockés. Chaque représentant est partagé par deux partitions, et les fusions tiennent compte de l’ordre des dates d’insertion. Notre preuve utilise la masse des gaps adjacents.", "10.1145/3651610"],
   ["Estimation sur univers entier","Gupta, Singhal et Wu · FOCS 2024","Avec un univers entier borné, peut-on gagner de la place par rapport au modèle qui autorise seulement les comparaisons ?","L’hypothèse du modèle est essentielle","Les opérations sur l’univers permettent O(1/ε) mots dans le cadre théorique étudié. Le découpage illustré explique l’information disponible, pas le pseudocode exact.", "10.1109/FOCS61266.2024.00075"],
   ["Inférence conditionnelle","Xie, Yan, Jiang et Kong · Journal of Econometrics 2025","Une régression quantile suit un quantile de réponse associé à des covariables. Les lignes historiques ne sont pas conservées intégralement.","Mise à jour d’un modèle par lots","Le lissage et les résumés de lots rendent la mise à jour possible. Les applications de l’article incluent les vélos à Séoul et les fonds indiciels.", "10.1016/j.jeconom.2024.105924"],
 ];
 for (const [index,[title,venue,problem,mechanism,result,doi]] of articles.entries()) {
   const source=`https://doi.org/${doi}`;
-  add(2,title,venue,problem,{source,items:[problem]});
-  add(2,mechanism,venue,result,{source,anim:`a${index+1}`});
+  const articleTitle=articleTitles.get(doi);
+  if(!articleTitle) throw new Error(`Titre introuvable pour ${doi}`);
+  add(2,title,venue,problem,{source,articleTitle,items:[problem]});
+  add(2,mechanism,venue,result,{source,articleTitle,anim:`a${index+1}`});
 }
 add(2,"Comparaison fonctionnelle","Sept travaux, plusieurs populations et cibles",
     "Lire les deux colonnes. L’expiration d’une fréquence, l’uniformité d’une jointure et l’inférence conditionnelle s’appliquent à des populations et à des objectifs différents.",
@@ -63,19 +72,19 @@ add(2,"Comparaison scientifique","La garantie dépend du problème et du modèle
 
 add(3,"Architecture logicielle","Un moteur commun à la simulation, aux tests et à l’interface",
     "Le générateur synthétique envoie une mesure à Monitor.add. Le moteur met à jour chaque résumé et, sur demande, l’oracle exact. Le CLI et Streamlit consomment le même état. Les scripts d’évaluation exportent les mesures.",
-    {owner:names[1],arch:true});
+    {arch:true});
 add(3,"Algorithm R","O(k) entrées et mise à jour O(1)",
     "Avec k égal à trois, la trace montre les trois admissions initiales, les remplacements D puis E, le rejet F, l’admission G et le rejet H. Une position a une probabilité k/n. T1 compare les fréquences à 1000.",
-    {owner:names[1],anim:"reservoir"});
+    {anim:"reservoir"});
 add(3,"Réservoir A-Res","Clé U^(1/w) et minimum du tas",
     "L’animation impose les mêmes U que l’exercice. C a une priorité supérieure à A et l’éjecte. D est rejeté. Le test T2 compare les probabilités pour k égal à un, deux ou trois.",
-    {owner:names[1],anim:"ares"});
+    {anim:"ares"});
 add(3,"DGIM : compter les bits égaux à 1","Au plus deux groupes par taille, erreur relative ≤50 %",
     "À sept, deux fusions se propagent. Observer le huitième bit puis les zéros. À douze, l’ancien groupe expire. La borne utilise les bits égaux à 1 plus récents et le demi-compte du groupe frontière.",
-    {owner:names[1],anim:"dgim"});
+    {anim:"dgim"});
 add(3,"GK : retrouver un rang historique","Tuples (valeur, g, Δ) et tolérance εn",
     "Suivre les six arrivées. Le prédécesseur admissible donne 4 pour une cible de rang 3. L’erreur est de 1. Après compression, le coût des paires anciennes et le comptage des insertions récentes donnent une borne en O(min(n, √(n/ε))) tuples pour notre variante.",
-    {owner:names[1],anim:"gk"});
+    {anim:"gk"});
 add(3,"Quantiles récents par blocs","État brut entre les fermetures, résumés pondérés après tri",
     "Le bloc ouvert reste exact. Un groupe fermé transmet un maximum et son effectif. Le premier bloc peut retenir des valeurs périmées. À t égal à 20, il expire et la valeur 99 ne contribue plus.",
     {anim:"blocs"});
@@ -83,8 +92,13 @@ add(3,"Borne de rang récente","Budget = périmés + omissions des groupes",
     "Pour une cible k, la cible de la population retenue peut augmenter d’au plus u. La compression sous-compte chaque seuil d’au plus S−1 par bloc. Donc C strict est inférieur à k+u+E et C large vaut au moins k−u. Un seuil périmé se juge par ces comptes.",
     {items:["u < B positions périmées au plus","E = nombre de blocs fermés × (S − 1)","FIFO exacte facultative, P99 récent séparé de GK"]});
 add(3,"Tests T1 à T5","Garanties et mesures jouent des rôles distincts",
-    `T1 donne p = ${statistic.p.toFixed(4)}. T2 teste les marginales pondérées. T3 et T4 contrôlent le compte et la structure de DGIM. T5 compare les rangs avec et sans doublons. Le journal final compte ${nTests} tests.`,
-    {table:[["Tests","Preuve expérimentale"],["T1–T2","Inclusion uniforme et pondérée"],["T3–T4","Erreur relative et invariants par insertion"],["T5","Rangs exacts et cas près de zéro"]]});
+    `T1 et T2 comparent les fréquences d’inclusion aux probabilités calculées. T3 mesure l’erreur du compteur. T4 vérifie ses invariants à chaque insertion. T5 compare les rangs avec et sans doublons. Le journal final compte ${nTests} tests réussis.`,
+    {table:[["Test","Résultat observé ou invariant vérifié"],
+      ["T1 · Réservoir uniforme",`10 000 essais, n=100, k=10 · p de Pearson = ${decimal(statistic.p,4)}`],
+      ["T2 · A-Res",`Poids 1, 2, 4 et k=1 · ${weighted[0].counts.map(count => decimal(100*count/weighted[0].trials,2)+" %").join(" / ")}`],
+      ["T3 · Compte DGIM",`Erreur max. ${decimal(100*benchmark.dgim_max_error,2)} % au benchmark · borne 50 %`],
+      ["T4 · Structure DGIM","≤2 groupes par taille · ≤2 × bit_length(N) groupes"],
+      ["T5 · Rang GK",`${gkQueries} requêtes du benchmark dans le budget · extrêmes exacts testés`]]});
 add(3,"Mémoire et temps, même horizon","FIFO et blocs récents jusqu’à N = 50 000",
     "La FIFO insère rapidement mais trie davantage de valeurs à la requête. À N=10 000 et epsilon 0,05, les blocs gardent 2 000 entrées. P50, P95 et P99 partagent désormais un tri et un parcours. À précision plus fine, les groupes peuvent rester unitaires.",
     {img:"results/figures/18_memoire_echelle.png"});
@@ -96,8 +110,8 @@ add(4,"Plateformes étudiées","Options pour une mise en production future",
     "Kafka transporte des événements. Flink et Spark peuvent les traiter en flux réparti. DataSketches fournit des structures approchées réutilisables. Notre prototype sert à examiner les états et n’en déploie aucune.",
     {table:[["Plateforme","Fonction"],["Kafka","Collecte et transport"],["Flink","Calcul et fenêtres"],["Spark Structured Streaming","Traitement distribué"],["Apache DataSketches","Résumés approchés prêts à l’emploi"]]});
 add(5,"Tableau de bord Streamlit","Navigation, paramètres et oracle optionnel",
-    "Montrer la configuration de 200 positions et les indicateurs récents. Les onglets exposent réservoirs, groupes DGIM et tuples GK. Dans Chrome, le test alterne démarrage et pause et contrôle le CSV téléchargé.",
-    {img:"presentation/screenshots/alerte.png"});
+    "Dans Streamlit, avancer d’un événement, lancer un lot automatique et mettre en pause. Déclencher l’incident, avancer d’un lot, puis montrer le P99 récent et l’état d’alerte. Pointer le budget de rang dans l’onglet Quantiles.",
+    {img:"presentation/screenshots/alerte.png",demoSeconds:35});
 add(5,"Incident, détection et retour","Trace réelle du scénario simulé",
     "Le générateur introduit l’incident à 401. L’alerte arrive à 403. Après le retour à 801, le P99 récent diminue au fil des expirations. Le rétablissement apparaît à 998 pendant que l’historique reste élevé.",
     {anim:"incident"});
@@ -149,19 +163,24 @@ for (const [i,row] of rows.entries()) {
   const slide=deck.slides.add();
   slide.background.fill="#FAFCFD";
   row.number=i+1;
-  row.duration=row.owner===names[1] ? (row.anim ? (row.section===2?18:23) : 12) : row.anim?28:24;
+  row.owner=names[row.number<=17?0:row.number<=32?1:2];
+  const speechSeconds=Math.ceil(row.oral.split(/\s+/).length*60/130)+4;
+  const animationSeconds=row.anim?Math.ceil(2*(manifest[row.anim].states.length-1)+3.8):0;
+  row.duration=Math.max(speechSeconds,animationSeconds)+(row.demoSeconds??0);
   row.cue=row.anim?`Observer le média « ${manifest[row.anim].title} » et commenter les états indiqués.`:
     row.img?"Montrer la figure, puis lire les axes et la référence.":"Pointer les termes clés avant l’explication.";
   const next=rows[i+1];
-  row.transition=next?next.owner===row.owner?`Passer à « ${next.title} ».`:
-    `Je passe la parole à ${next.owner.split(" ")[0]}, qui présente « ${next.title} ».`:"Ouvrir les questions.";
+  row.transition=next?row.number===17||row.number===32?
+    `Je passe la parole à ${names[row.number===17?1:2].split(" ")[0]}, qui présente « ${next.title} ».`:
+    `Passer à « ${next.title} ».`:"Ouvrir les questions.";
   box(slide,`${sections[row.section]} · ${i===0?"Master D3S · ISTIC":row.owner}`,64,27,1150,39,15,teal,true);
   box(slide,row.title,63,i===0?155:76,1158,i===0?120:91,i===0?50:34,navy,true);
-  box(slide,row.focus,65,i===0?304:157,1150,60,i===0?27:20,teal,true);
+  box(slide,row.articleTitle??row.focus,65,i===0?304:157,1150,60,i===0?27:20,teal,true);
+  if(row.articleTitle) box(slide,row.focus,65,222,1150,26,15,gray);
   if(i===0) {
     box(slide,names.join(" · "),66,445,1120,80,24,gray);
   } else if(row.anim) {
-    await image(slide,`presentation/animations/${row.anim}.png`,`animation:${row.anim}`,221,400);
+    await image(slide,`presentation/animations/${row.anim}.png`,`animation:${row.anim}`,row.articleTitle?253:221,row.articleTitle?368:400);
   } else if(row.img) {
     await image(slide,row.img,row.title,214,425);
   } else if(row.table) {
@@ -170,7 +189,8 @@ for (const [i,row] of rows.entries()) {
     architecture(slide);
   } else if(row.items) {
     for(const [index,item] of row.items.entries())
-      box(slide,item,82,235+index*58,1100,54,row.items.length===1?23:21,navy,index===0);
+      box(slide,item,82,(row.articleTitle?267:235)+index*58,1100,row.articleTitle?120:54,
+          row.items.length===1?23:21,navy,index===0);
   } else {
     box(slide,row.oral,66,233,1040,188,23,gray);
   }
@@ -178,7 +198,7 @@ for (const [i,row] of rows.entries()) {
   box(slide,`${String(i+1).padStart(2,"0")} / ${rows.length}`,65,665,1150,31,13,gray);
   const frameNotes=row.anim?manifest[row.anim].states.map(([h,e])=>`${h}. ${e}`).join("\n"):"";
   row.frameNotes=frameNotes;
-  slide.speakerNotes.text=[row.oral,row.cue,frameNotes,row.transition,row.source].filter(Boolean).join("\n\n");
+  slide.speakerNotes.text=[row.oral,row.cue,frameNotes,row.transition,row.articleTitle,row.source].filter(Boolean).join("\n\n");
 }
 await fs.writeFile("presentation/slides.json",JSON.stringify(rows,null,2)+"\n");
 await (await PresentationFile.exportPptx(deck)).save(process.argv[2]);

@@ -2,7 +2,7 @@
 
 Le PowerPoint comporte 44 diapositives et 18 GIF intégrés. En mode Diaporama, laisser dérouler le GIF puis avancer d’une diapositive. Les notes indiquent les états à commenter. Les visualisations scientifiques viennent de `results/figures/`. Les captures proviennent du test local Chrome.
 
-Le dossier contient les sources éditables `build.mjs`, `slides.json` et `QUESTIONS.md`. Le PDF statique montre la dernière image de chaque animation. Prévoir environ cinq minutes par orateur, hors démonstration libre et questions.
+Le dossier contient les sources éditables `build.mjs`, `slides.json` et `QUESTIONS.md`. Le PDF statique montre la dernière image de chaque animation. Les durées sont estimées d’après le texte à 130 mots par minute et la lecture des GIF. Prévoir 4 min 54 s pour Nasr (1–17), 4 min 42 s pour Wajdi (18–32) et 4 min 47 s pour Youssif (33–44), dont une démonstration guidée de 35 s. Les orateurs peuvent ajuster ces durées en répétition.
 
 Pour une version courte, s’appuyer sur le PDF statique ou ne commenter que l’état final, résumer les sept études avec le tableau comparatif et montrer la décision exacte puis le rétablissement. Pour la démo, ouvrir la fenêtre de 200 positions, avancer un événement, puis un lot. Démarrer et mettre en pause pour montrer la cadence. Forcer un incident et avancer par lots jusqu’à l’alerte. Revenir à la normale et avancer jusqu’au retour. Exporter le CSV.
 
